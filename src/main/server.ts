@@ -30,7 +30,7 @@ import CiscoIOSVisitor from "./parser/CiscoIOSVisitor.js";
 
 
 
-class CustomVisitor extends CiscoIOSVisitor {
+class CustomVisitor extends CiscoIOSVisitor<any> {
 
   visitChildren(ctx: ParserRuleContext) {
     if (!ctx) {
@@ -38,8 +38,8 @@ class CustomVisitor extends CiscoIOSVisitor {
     }
     if (ctx.children) {
       return ctx.children.map(child => {
-        if (child.children && child.children.length != 0) {
-          return child.accept(this);
+        if (child instanceof ParserRuleContext && child.children && child.children.length != 0) {
+          return (child as any).accept(this);
         } else {
           return child.getText();
         }
@@ -118,39 +118,82 @@ connection.onInitialize((params: InitializeParams) =>{
 
 
 
+// connection.onCompletion(
+	
+
+// 	(_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+// 		const document = documents.get(_textDocumentPosition.textDocument.uri);
+// 		if (!document) {
+// 			console.error("Document not found:", _textDocumentPosition.textDocument.uri);
+// 			return [];
+// 		}
+
+
+//         const text = "document.getText()"
+//         const chars = new CharStream(text);
+//         const lexer = new CiscoIOSLexer(chars);
+//         const tokens = new CommonTokenStream(lexer);
+//         const parser = new CiscoIOSParser(tokens);
+//         const tree = parser.config()
+//         tree.accept(new CustomVisitor())
+
+// 		return [
+//             {
+// 				label: "test1",
+// 				kind: CompletionItemKind.Keyword,
+// 				insertTextFormat: 2,
+// 				insertText: "test123"
+// 			}
+//         ];
+// 	}
+// );
+
 connection.onCompletion(
-	/**
+  /**
 	 * Benjamin Zwettler 09.04.2025
 	 * @param _textDocumentPosition The pass parameter contains the position of the text document in
 	 *  which code complete got requested.
 	 * @returns a list of completionItems for Client
 	 */
+  (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+    const document = documents.get(_textDocumentPosition.textDocument.uri);
+    if (!document) {
+      console.error("Document not found:", _textDocumentPosition.textDocument.uri);
+      return [];
+    }
 
-	(_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-		const document = documents.get(_textDocumentPosition.textDocument.uri);
-		if (!document) {
-			console.error("Document not found:", _textDocumentPosition.textDocument.uri);
-			return [];
-		}
+    const text = document.getText();  // richtig den Text des Dokuments holen
+    const chars = new CharStream(text);
+    const lexer = new CiscoIOSLexer(chars);
+    const tokens = new CommonTokenStream(lexer);
+    const parser = new CiscoIOSParser(tokens);
+    const tree = parser.config();
 
+    const visitor = new CustomVisitor();
+    const visitResult = tree.accept(visitor);
+    console.log("Visitor result:", visitResult);
+    
+    console.log(tree.getChildCount());
+    console.log();
+    
+    
+    tokens.fill()
+    tokens.tokens.forEach((token) => {
+      console.log(`Token: type=${token.type}, text='${token.text}', line=${token.line}, column=${token.column}`)
+    })
 
-        const text = "document.getText()"
-        const chars = new CharStream(text);
-        const lexer = new CiscoIOSLexer(chars);
-        const tokens = new CommonTokenStream(lexer);
-        const parser = new CiscoIOSParser(tokens);
-        const tree = parser.config()
-
-		return [
-            {
-				label: "test1",
-				kind: CompletionItemKind.Keyword,
-				insertTextFormat: 2,
-				insertText: "test123"
-			}
-        ];
-	}
+    // Hier kannst du visitResult auswerten und z.B. CompletionItems erzeugen.
+    return [
+      {
+        label: "test1",
+        kind: CompletionItemKind.Keyword,
+        insertTextFormat: 2,
+        insertText: "test123"
+      }
+    ];
+  }
 );
+
 
 
 
