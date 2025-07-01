@@ -57,14 +57,13 @@
     ]
   },
   "scripts": {
-  "compile": "tsc -p ./out",
-  "watch": "tsc -w -p ./out",
-  "antlr": "antlr4 -Dlanguage=JavaScript -o ./parser ./src/antlr/CiscoIOS.g4",
-  "antlr-ts": "antlr4ts -o ./parser ./src/antlr/CiscoIOS.g4",
-  "prepublish": "npm run compile",
-  "clean": "rm -rf out parser/*.js parser/*.tokens parser/*.interp"
-}
-,
+    "compile": "tsc -p ./out",
+    "watch": "tsc -w -p ./out",
+    "antlr": "antlr4 -Dlanguage=JavaScript -o ./parser ./src/antlr/CiscoIOS.g4",
+    "antlr-ts": "antlr4ts -o ./parser ./src/antlr/CiscoIOS.g4",
+    "prepublish": "npm run compile",
+    "clean": "rm -rf out parser/*.js parser/*.tokens parser/*.interp"
+  },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
@@ -73,6 +72,7 @@
     "@typescript-eslint/parser": "^8.25.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "antlr4ts-cli": "^0.5.0-alpha.4",
     "eslint": "^9.21.0",
     "ts-loader": "^9.5.2",
     "typescript": "^5.7.3",

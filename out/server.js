@@ -15,7 +15,7 @@ connection.onInitialize((params) => {
             textDocumentSync: node_1.TextDocumentSyncKind.Incremental,
             completionProvider: {
                 resolveProvider: true,
-                triggerCharacters: ["abcdefghijklmnopqrstuvwxyz"]
+                triggerCharacters: [..."abcdefghijklmnopqrstuvwxyz"]
             }
             //hoverProvider: true,
             // diagnosticProvider: {
@@ -49,4 +49,30 @@ connection.onInitialize((params) => {
     }
     return result;
 });
+connection.onCompletion(
+/**
+ * Benjamin Zwettler 09.04.2025
+ * @param _textDocumentPosition The pass parameter contains the position of the text document in
+ *  which code complete got requested.
+ * @returns a list of completionItems for Client
+ */
+(_textDocumentPosition) => {
+    const document = documents.get(_textDocumentPosition.textDocument.uri);
+    if (!document) {
+        console.error("Document not found:", _textDocumentPosition.textDocument.uri);
+        return [];
+    }
+    console.log("TEXT:");
+    console.log(document.getText());
+    return [
+        {
+            label: "test1",
+            kind: node_1.CompletionItemKind.Keyword,
+            insertTextFormat: 2,
+            insertText: "test123"
+        }
+    ];
+});
+documents.listen(connection);
+connection.listen();
 //# sourceMappingURL=server.js.map

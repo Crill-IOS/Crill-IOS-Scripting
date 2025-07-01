@@ -18,7 +18,7 @@ export function activate(context: ExtensionContext) {
     });
 
     const serverModule = context.asAbsolutePath(
-        path.join('dist','server.js')
+        path.join('out','server.js')
     );
 
     const serverOptions: ServerOptions = {

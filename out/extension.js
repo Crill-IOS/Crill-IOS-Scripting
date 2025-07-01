@@ -43,7 +43,7 @@ function activate(context) {
     const disposable = vscode_1.commands.registerCommand('lcs.helloWorld', () => {
         vscode_1.window.showInformationMessage('Hello World from CLS!');
     });
-    const serverModule = context.asAbsolutePath(path.join('dist', 'server.js'));
+    const serverModule = context.asAbsolutePath(path.join('out', 'server.js'));
     const serverOptions = {
         run: { module: serverModule, transport: node_1.TransportKind.ipc },
         debug: { module: serverModule, transport: node_1.TransportKind.ipc }

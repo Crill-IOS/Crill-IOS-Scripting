@@ -21,6 +21,7 @@ import {
 
 import antlr4 from 'antlr4';
 
+import Lexer from "./parser/CiscoIOSLexer"
 
 
 
@@ -42,7 +43,7 @@ connection.onInitialize((params: InitializeParams) =>{
 
             completionProvider: {
                 resolveProvider: true,
-                triggerCharacters: ["abcdefghijklmnopqrstuvwxyz"]
+                triggerCharacters: [..."abcdefghijklmnopqrstuvwxyz"]
             }
             
             //hoverProvider: true,
@@ -90,6 +91,40 @@ connection.onInitialize((params: InitializeParams) =>{
 
 	return result;
 });
+
+
+
+connection.onCompletion(
+	/**
+	 * Benjamin Zwettler 09.04.2025
+	 * @param _textDocumentPosition The pass parameter contains the position of the text document in
+	 *  which code complete got requested.
+	 * @returns a list of completionItems for Client
+	 */
+
+	(_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+		const document = documents.get(_textDocumentPosition.textDocument.uri);
+		if (!document) {
+			console.error("Document not found:", _textDocumentPosition.textDocument.uri);
+			return [];
+		}
+        console.log("TEXT:")
+        console.log(document.getText())
+
+		return [
+            {
+				label: "test1",
+				kind: CompletionItemKind.Keyword,
+				insertTextFormat: 2,
+				insertText: "test123"
+			}
+        ];
+	}
+);
+
+documents.listen(connection);
+
+connection.listen();
 
 
 
