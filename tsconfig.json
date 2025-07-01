@@ -6,7 +6,7 @@
 		"target": "ES2022",
 		"lib": ["ES2022"],
 		"sourceMap": true,
-		"rootDir": "src",
+		"rootDir": "src/main",
         "outDir": "out",
 		"strict": true
 	}

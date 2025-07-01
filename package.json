@@ -13,7 +13,7 @@
   "activationEvents": [
     "onLanguage:cls"
   ],
-  "main": "out/main/extension.js",
+  "main": "out/extension.js",
   "contributes": {
     "configuration": {
       "type": "object",
