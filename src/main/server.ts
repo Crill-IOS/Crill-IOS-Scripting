@@ -12,6 +12,7 @@ import {
 	InitializeResult,
 	DocumentDiagnosticReportKind,
     type DocumentDiagnosticReport,
+    AnnotatedTextEdit,
 } from "vscode-languageserver/node";
 
 import {
@@ -19,10 +20,33 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 
-import antlr4 from 'antlr4';
+import { InputStream, CommonTokenStream, CharStream , Lexer} from 'antlr4';
 
-import Lexer from "./parser/CiscoIOSLexer"
+import CiscoIOSLexer from "./parser/CiscoIOSLexer"
+import CiscoIOSParser from "./parser/CiscoIOSParser";
+import { ParserRuleContext } from "antlr4";
+import CiscoIOSVisitor from "./parser/CiscoIOSVisitor.js";
 
+
+
+
+class CustomVisitor extends CiscoIOSVisitor {
+
+  visitChildren(ctx: ParserRuleContext) {
+    if (!ctx) {
+      return;
+    }
+    if (ctx.children) {
+      return ctx.children.map(child => {
+        if (child.children && child.children.length != 0) {
+          return child.accept(this);
+        } else {
+          return child.getText();
+        }
+      });
+    }
+  }
+}
 
 
 const connection = createConnection(ProposedFeatures.all);
@@ -108,8 +132,14 @@ connection.onCompletion(
 			console.error("Document not found:", _textDocumentPosition.textDocument.uri);
 			return [];
 		}
-        console.log("TEXT:")
-        console.log(document.getText())
+
+
+        const text = "document.getText()"
+        const chars = new CharStream(text);
+        const lexer = new CiscoIOSLexer(chars);
+        const tokens = new CommonTokenStream(lexer);
+        const parser = new CiscoIOSParser(tokens);
+        const tree = parser.config()
 
 		return [
             {
@@ -121,6 +151,8 @@ connection.onCompletion(
         ];
 	}
 );
+
+
 
 documents.listen(connection);
 

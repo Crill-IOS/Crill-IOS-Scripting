@@ -1,21 +1,17 @@
-// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.9.0-SNAPSHOT
-
-
-import { ATN } from "antlr4ts/atn/ATN";
-import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
-import { CharStream } from "antlr4ts/CharStream";
-import { Lexer } from "antlr4ts/Lexer";
-import { LexerATNSimulator } from "antlr4ts/atn/LexerATNSimulator";
-import { NotNull } from "antlr4ts/Decorators";
-import { Override } from "antlr4ts/Decorators";
-import { RuleContext } from "antlr4ts/RuleContext";
-import { Vocabulary } from "antlr4ts/Vocabulary";
-import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
-
-import * as Utils from "antlr4ts/misc/Utils";
-
-
-export class CiscoIOSLexer extends Lexer {
+// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.13.2
+// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
+import {
+	ATN,
+	ATNDeserializer,
+	CharStream,
+	DecisionState, DFA,
+	Lexer,
+	LexerATNSimulator,
+	RuleContext,
+	PredictionContextCache,
+	Token
+} from "antlr4";
+export default class CiscoIOSLexer extends Lexer {
 	public static readonly T__0 = 1;
 	public static readonly T__1 = 2;
 	public static readonly T__2 = 3;
@@ -29,119 +25,97 @@ export class CiscoIOSLexer extends Lexer {
 	public static readonly IPADDR = 11;
 	public static readonly INT = 12;
 	public static readonly WS = 13;
+	public static readonly EOF = Token.EOF;
 
-	// tslint:disable:no-trailing-whitespace
-	public static readonly channelNames: string[] = [
-		"DEFAULT_TOKEN_CHANNEL", "HIDDEN",
-	];
-
-	// tslint:disable:no-trailing-whitespace
-	public static readonly modeNames: string[] = [
-		"DEFAULT_MODE",
-	];
+	public static readonly channelNames: string[] = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
+	public static readonly literalNames: (string | null)[] = [ null, "'interface'", 
+                                                            "'ip'", "'address'", 
+                                                            "'no'", "'shutdown'", 
+                                                            "'router'", 
+                                                            "'ospf'", "'network'", 
+                                                            "'area'" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             "ID", "IPADDR", 
+                                                             "INT", "WS" ];
+	public static readonly modeNames: string[] = [ "DEFAULT_MODE", ];
 
 	public static readonly ruleNames: string[] = [
 		"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
 		"ID", "IPADDR", "INT", "WS",
 	];
 
-	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'interface'", "'ip'", "'address'", "'no'", "'shutdown'", "'router'", 
-		"'ospf'", "'network'", "'area'",
-	];
-	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, "ID", "IPADDR", "INT", "WS",
-	];
-	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(CiscoIOSLexer._LITERAL_NAMES, CiscoIOSLexer._SYMBOLIC_NAMES, []);
-
-	// @Override
-	// @NotNull
-	public get vocabulary(): Vocabulary {
-		return CiscoIOSLexer.VOCABULARY;
-	}
-	// tslint:enable:no-trailing-whitespace
-
 
 	constructor(input: CharStream) {
 		super(input);
-		this._interp = new LexerATNSimulator(CiscoIOSLexer._ATN, this);
+		this._interp = new LexerATNSimulator(this, CiscoIOSLexer._ATN, CiscoIOSLexer.DecisionsToDFA, new PredictionContextCache());
 	}
 
-	// @Override
 	public get grammarFileName(): string { return "CiscoIOS.g4"; }
 
-	// @Override
+	public get literalNames(): (string | null)[] { return CiscoIOSLexer.literalNames; }
+	public get symbolicNames(): (string | null)[] { return CiscoIOSLexer.symbolicNames; }
 	public get ruleNames(): string[] { return CiscoIOSLexer.ruleNames; }
 
-	// @Override
-	public get serializedATN(): string { return CiscoIOSLexer._serializedATN; }
+	public get serializedATN(): number[] { return CiscoIOSLexer._serializedATN; }
 
-	// @Override
 	public get channelNames(): string[] { return CiscoIOSLexer.channelNames; }
 
-	// @Override
 	public get modeNames(): string[] { return CiscoIOSLexer.modeNames; }
 
-	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x02\x0F\x7F\b\x01" +
-		"\x04\x02\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06" +
-		"\x04\x07\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r" +
-		"\t\r\x04\x0E\t\x0E\x03\x02\x03\x02\x03\x02\x03\x02\x03\x02\x03\x02\x03" +
-		"\x02\x03\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03\x04\x03\x04\x03" +
-		"\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x05\x03\x05\x03\x05\x03" +
-		"\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03\x06\x03" +
-		"\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\x07\x03\b\x03\b\x03\b" +
-		"\x03\b\x03\b\x03\t\x03\t\x03\t\x03\t\x03\t\x03\t\x03\t\x03\t\x03\n\x03" +
-		"\n\x03\n\x03\n\x03\n\x03\v\x06\vY\n\v\r\v\x0E\vZ\x03\f\x06\f^\n\f\r\f" +
-		"\x0E\f_\x03\f\x03\f\x06\fd\n\f\r\f\x0E\fe\x03\f\x03\f\x06\fj\n\f\r\f\x0E" +
-		"\fk\x03\f\x03\f\x06\fp\n\f\r\f\x0E\fq\x03\r\x06\ru\n\r\r\r\x0E\rv\x03" +
-		"\x0E\x06\x0Ez\n\x0E\r\x0E\x0E\x0E{\x03\x0E\x03\x0E\x02\x02\x02\x0F\x03" +
-		"\x02\x03\x05\x02\x04\x07\x02\x05\t\x02\x06\v\x02\x07\r\x02\b\x0F\x02\t" +
-		"\x11\x02\n\x13\x02\v\x15\x02\f\x17\x02\r\x19\x02\x0E\x1B\x02\x0F\x03\x02" +
-		"\x05\x05\x021;C\\c|\x03\x022;\x05\x02\v\f\x0F\x0F\"\"\x02\x85\x02\x03" +
-		"\x03\x02\x02\x02\x02\x05\x03\x02\x02\x02\x02\x07\x03\x02\x02\x02\x02\t" +
-		"\x03\x02\x02\x02\x02\v\x03\x02\x02\x02\x02\r\x03\x02\x02\x02\x02\x0F\x03" +
-		"\x02\x02\x02\x02\x11\x03\x02\x02\x02\x02\x13\x03\x02\x02\x02\x02\x15\x03" +
-		"\x02\x02\x02\x02\x17\x03\x02\x02\x02\x02\x19\x03\x02\x02\x02\x02\x1B\x03" +
-		"\x02\x02\x02\x03\x1D\x03\x02\x02\x02\x05\'\x03\x02\x02\x02\x07*\x03\x02" +
-		"\x02\x02\t2\x03\x02\x02\x02\v5\x03\x02\x02\x02\r>\x03\x02\x02\x02\x0F" +
-		"E\x03\x02\x02\x02\x11J\x03\x02\x02\x02\x13R\x03\x02\x02\x02\x15X\x03\x02" +
-		"\x02\x02\x17]\x03\x02\x02\x02\x19t\x03\x02\x02\x02\x1By\x03\x02\x02\x02" +
-		"\x1D\x1E\x07k\x02\x02\x1E\x1F\x07p\x02\x02\x1F \x07v\x02\x02 !\x07g\x02" +
-		"\x02!\"\x07t\x02\x02\"#\x07h\x02\x02#$\x07c\x02\x02$%\x07e\x02\x02%&\x07" +
-		"g\x02\x02&\x04\x03\x02\x02\x02\'(\x07k\x02\x02()\x07r\x02\x02)\x06\x03" +
-		"\x02\x02\x02*+\x07c\x02\x02+,\x07f\x02\x02,-\x07f\x02\x02-.\x07t\x02\x02" +
-		"./\x07g\x02\x02/0\x07u\x02\x0201\x07u\x02\x021\b\x03\x02\x02\x0223\x07" +
-		"p\x02\x0234\x07q\x02\x024\n\x03\x02\x02\x0256\x07u\x02\x0267\x07j\x02" +
-		"\x0278\x07w\x02\x0289\x07v\x02\x029:\x07f\x02\x02:;\x07q\x02\x02;<\x07" +
-		"y\x02\x02<=\x07p\x02\x02=\f\x03\x02\x02\x02>?\x07t\x02\x02?@\x07q\x02" +
-		"\x02@A\x07w\x02\x02AB\x07v\x02\x02BC\x07g\x02\x02CD\x07t\x02\x02D\x0E" +
-		"\x03\x02\x02\x02EF\x07q\x02\x02FG\x07u\x02\x02GH\x07r\x02\x02HI\x07h\x02" +
-		"\x02I\x10\x03\x02\x02\x02JK\x07p\x02\x02KL\x07g\x02\x02LM\x07v\x02\x02" +
-		"MN\x07y\x02\x02NO\x07q\x02\x02OP\x07t\x02\x02PQ\x07m\x02\x02Q\x12\x03" +
-		"\x02\x02\x02RS\x07c\x02\x02ST\x07t\x02\x02TU\x07g\x02\x02UV\x07c\x02\x02" +
-		"V\x14\x03\x02\x02\x02WY\t\x02\x02\x02XW\x03\x02\x02\x02YZ\x03\x02\x02" +
-		"\x02ZX\x03\x02\x02\x02Z[\x03\x02\x02\x02[\x16\x03\x02\x02\x02\\^\x05\x19" +
-		"\r\x02]\\\x03\x02\x02\x02^_\x03\x02\x02\x02_]\x03\x02\x02\x02_`\x03\x02" +
-		"\x02\x02`a\x03\x02\x02\x02ac\x070\x02\x02bd\x05\x19\r\x02cb\x03\x02\x02" +
-		"\x02de\x03\x02\x02\x02ec\x03\x02\x02\x02ef\x03\x02\x02\x02fg\x03\x02\x02" +
-		"\x02gi\x070\x02\x02hj\x05\x19\r\x02ih\x03\x02\x02\x02jk\x03\x02\x02\x02" +
-		"ki\x03\x02\x02\x02kl\x03\x02\x02\x02lm\x03\x02\x02\x02mo\x070\x02\x02" +
-		"np\x05\x19\r\x02on\x03\x02\x02\x02pq\x03\x02\x02\x02qo\x03\x02\x02\x02" +
-		"qr\x03\x02\x02\x02r\x18\x03\x02\x02\x02su\t\x03\x02\x02ts\x03\x02\x02" +
-		"\x02uv\x03\x02\x02\x02vt\x03\x02\x02\x02vw\x03\x02\x02\x02w\x1A\x03\x02" +
-		"\x02\x02xz\t\x04\x02\x02yx\x03\x02\x02\x02z{\x03\x02\x02\x02{y\x03\x02" +
-		"\x02\x02{|\x03\x02\x02\x02|}\x03\x02\x02\x02}~\b\x0E\x02\x02~\x1C\x03" +
-		"\x02\x02\x02\n\x02Z_ekqv{\x03\b\x02\x02";
-	public static __ATN: ATN;
+	public static readonly _serializedATN: number[] = [4,0,13,125,6,-1,2,0,
+	7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,
+	7,9,2,10,7,10,2,11,7,11,2,12,7,12,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
+	0,1,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,4,1,4,1,4,1,
+	4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,
+	7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,9,4,9,87,8,9,11,9,12,
+	9,88,1,10,4,10,92,8,10,11,10,12,10,93,1,10,1,10,4,10,98,8,10,11,10,12,10,
+	99,1,10,1,10,4,10,104,8,10,11,10,12,10,105,1,10,1,10,4,10,110,8,10,11,10,
+	12,10,111,1,11,4,11,115,8,11,11,11,12,11,116,1,12,4,12,120,8,12,11,12,12,
+	12,121,1,12,1,12,0,0,13,1,1,3,2,5,3,7,4,9,5,11,6,13,7,15,8,17,9,19,10,21,
+	11,23,12,25,13,1,0,3,3,0,47,57,65,90,97,122,1,0,48,57,3,0,9,10,13,13,32,
+	32,131,0,1,1,0,0,0,0,3,1,0,0,0,0,5,1,0,0,0,0,7,1,0,0,0,0,9,1,0,0,0,0,11,
+	1,0,0,0,0,13,1,0,0,0,0,15,1,0,0,0,0,17,1,0,0,0,0,19,1,0,0,0,0,21,1,0,0,
+	0,0,23,1,0,0,0,0,25,1,0,0,0,1,27,1,0,0,0,3,37,1,0,0,0,5,40,1,0,0,0,7,48,
+	1,0,0,0,9,51,1,0,0,0,11,60,1,0,0,0,13,67,1,0,0,0,15,72,1,0,0,0,17,80,1,
+	0,0,0,19,86,1,0,0,0,21,91,1,0,0,0,23,114,1,0,0,0,25,119,1,0,0,0,27,28,5,
+	105,0,0,28,29,5,110,0,0,29,30,5,116,0,0,30,31,5,101,0,0,31,32,5,114,0,0,
+	32,33,5,102,0,0,33,34,5,97,0,0,34,35,5,99,0,0,35,36,5,101,0,0,36,2,1,0,
+	0,0,37,38,5,105,0,0,38,39,5,112,0,0,39,4,1,0,0,0,40,41,5,97,0,0,41,42,5,
+	100,0,0,42,43,5,100,0,0,43,44,5,114,0,0,44,45,5,101,0,0,45,46,5,115,0,0,
+	46,47,5,115,0,0,47,6,1,0,0,0,48,49,5,110,0,0,49,50,5,111,0,0,50,8,1,0,0,
+	0,51,52,5,115,0,0,52,53,5,104,0,0,53,54,5,117,0,0,54,55,5,116,0,0,55,56,
+	5,100,0,0,56,57,5,111,0,0,57,58,5,119,0,0,58,59,5,110,0,0,59,10,1,0,0,0,
+	60,61,5,114,0,0,61,62,5,111,0,0,62,63,5,117,0,0,63,64,5,116,0,0,64,65,5,
+	101,0,0,65,66,5,114,0,0,66,12,1,0,0,0,67,68,5,111,0,0,68,69,5,115,0,0,69,
+	70,5,112,0,0,70,71,5,102,0,0,71,14,1,0,0,0,72,73,5,110,0,0,73,74,5,101,
+	0,0,74,75,5,116,0,0,75,76,5,119,0,0,76,77,5,111,0,0,77,78,5,114,0,0,78,
+	79,5,107,0,0,79,16,1,0,0,0,80,81,5,97,0,0,81,82,5,114,0,0,82,83,5,101,0,
+	0,83,84,5,97,0,0,84,18,1,0,0,0,85,87,7,0,0,0,86,85,1,0,0,0,87,88,1,0,0,
+	0,88,86,1,0,0,0,88,89,1,0,0,0,89,20,1,0,0,0,90,92,3,23,11,0,91,90,1,0,0,
+	0,92,93,1,0,0,0,93,91,1,0,0,0,93,94,1,0,0,0,94,95,1,0,0,0,95,97,5,46,0,
+	0,96,98,3,23,11,0,97,96,1,0,0,0,98,99,1,0,0,0,99,97,1,0,0,0,99,100,1,0,
+	0,0,100,101,1,0,0,0,101,103,5,46,0,0,102,104,3,23,11,0,103,102,1,0,0,0,
+	104,105,1,0,0,0,105,103,1,0,0,0,105,106,1,0,0,0,106,107,1,0,0,0,107,109,
+	5,46,0,0,108,110,3,23,11,0,109,108,1,0,0,0,110,111,1,0,0,0,111,109,1,0,
+	0,0,111,112,1,0,0,0,112,22,1,0,0,0,113,115,7,1,0,0,114,113,1,0,0,0,115,
+	116,1,0,0,0,116,114,1,0,0,0,116,117,1,0,0,0,117,24,1,0,0,0,118,120,7,2,
+	0,0,119,118,1,0,0,0,120,121,1,0,0,0,121,119,1,0,0,0,121,122,1,0,0,0,122,
+	123,1,0,0,0,123,124,6,12,0,0,124,26,1,0,0,0,8,0,88,93,99,105,111,116,121,
+	1,6,0,0];
+
+	private static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!CiscoIOSLexer.__ATN) {
-			CiscoIOSLexer.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(CiscoIOSLexer._serializedATN));
+			CiscoIOSLexer.__ATN = new ATNDeserializer().deserialize(CiscoIOSLexer._serializedATN);
 		}
 
 		return CiscoIOSLexer.__ATN;
 	}
 
-}
 
+	static DecisionsToDFA = CiscoIOSLexer._ATN.decisionToState.map( (ds: DecisionState, index: number) => new DFA(ds, index) );
+}

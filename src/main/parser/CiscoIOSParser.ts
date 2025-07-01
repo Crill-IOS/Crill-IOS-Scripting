@@ -1,31 +1,24 @@
-// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.9.0-SNAPSHOT
+// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.13.2
+// noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
+import {
+	ATN,
+	ATNDeserializer, DecisionState, DFA, FailedPredicateException,
+	RecognitionException, NoViableAltException, BailErrorStrategy,
+	Parser, ParserATNSimulator,
+	RuleContext, ParserRuleContext, PredictionMode, PredictionContextCache,
+	TerminalNode, RuleNode,
+	Token, TokenStream,
+	Interval, IntervalSet
+} from 'antlr4';
+import CiscoIOSListener from "./CiscoIOSListener.js";
+import CiscoIOSVisitor from "./CiscoIOSVisitor.js";
 
-import { ATN } from "antlr4ts/atn/ATN";
-import { ATNDeserializer } from "antlr4ts/atn/ATNDeserializer";
-import { FailedPredicateException } from "antlr4ts/FailedPredicateException";
-import { NotNull } from "antlr4ts/Decorators";
-import { NoViableAltException } from "antlr4ts/NoViableAltException";
-import { Override } from "antlr4ts/Decorators";
-import { Parser } from "antlr4ts/Parser";
-import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
-import { ParserATNSimulator } from "antlr4ts/atn/ParserATNSimulator";
-import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
-import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
-import { RecognitionException } from "antlr4ts/RecognitionException";
-import { RuleContext } from "antlr4ts/RuleContext";
-//import { RuleVersion } from "antlr4ts/RuleVersion";
-import { TerminalNode } from "antlr4ts/tree/TerminalNode";
-import { Token } from "antlr4ts/Token";
-import { TokenStream } from "antlr4ts/TokenStream";
-import { Vocabulary } from "antlr4ts/Vocabulary";
-import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
+// for running tests with parameters, TODO: discuss strategy for typed parameters in CI
+// eslint-disable-next-line no-unused-vars
+type int = number;
 
-import * as Utils from "antlr4ts/misc/Utils";
-
-import { CiscoIOSListener } from "./CiscoIOSListener";
-
-export class CiscoIOSParser extends Parser {
+export default class CiscoIOSParser extends Parser {
 	public static readonly T__0 = 1;
 	public static readonly T__1 = 2;
 	public static readonly T__2 = 3;
@@ -39,6 +32,7 @@ export class CiscoIOSParser extends Parser {
 	public static readonly IPADDR = 11;
 	public static readonly INT = 12;
 	public static readonly WS = 13;
+	public static override readonly EOF = Token.EOF;
 	public static readonly RULE_config = 0;
 	public static readonly RULE_statement = 1;
 	public static readonly RULE_interface_stmt = 2;
@@ -46,37 +40,29 @@ export class CiscoIOSParser extends Parser {
 	public static readonly RULE_no_stmt = 4;
 	public static readonly RULE_router_stmt = 5;
 	public static readonly RULE_network_stmt = 6;
+	public static readonly literalNames: (string | null)[] = [ null, "'interface'", 
+                                                            "'ip'", "'address'", 
+                                                            "'no'", "'shutdown'", 
+                                                            "'router'", 
+                                                            "'ospf'", "'network'", 
+                                                            "'area'" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             "ID", "IPADDR", 
+                                                             "INT", "WS" ];
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
 		"config", "statement", "interface_stmt", "ip_stmt", "no_stmt", "router_stmt", 
 		"network_stmt",
 	];
-
-	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'interface'", "'ip'", "'address'", "'no'", "'shutdown'", "'router'", 
-		"'ospf'", "'network'", "'area'",
-	];
-	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, "ID", "IPADDR", "INT", "WS",
-	];
-	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(CiscoIOSParser._LITERAL_NAMES, CiscoIOSParser._SYMBOLIC_NAMES, []);
-
-	// @Override
-	// @NotNull
-	public get vocabulary(): Vocabulary {
-		return CiscoIOSParser.VOCABULARY;
-	}
-	// tslint:enable:no-trailing-whitespace
-
-	// @Override
 	public get grammarFileName(): string { return "CiscoIOS.g4"; }
-
-	// @Override
+	public get literalNames(): (string | null)[] { return CiscoIOSParser.literalNames; }
+	public get symbolicNames(): (string | null)[] { return CiscoIOSParser.symbolicNames; }
 	public get ruleNames(): string[] { return CiscoIOSParser.ruleNames; }
-
-	// @Override
-	public get serializedATN(): string { return CiscoIOSParser._serializedATN; }
+	public get serializedATN(): number[] { return CiscoIOSParser._serializedATN; }
 
 	protected createFailedPredicateException(predicate?: string, message?: string): FailedPredicateException {
 		return new FailedPredicateException(this, predicate, message);
@@ -84,15 +70,15 @@ export class CiscoIOSParser extends Parser {
 
 	constructor(input: TokenStream) {
 		super(input);
-		this._interp = new ParserATNSimulator(CiscoIOSParser._ATN, this);
+		this._interp = new ParserATNSimulator(this, CiscoIOSParser._ATN, CiscoIOSParser.DecisionsToDFA, new PredictionContextCache());
 	}
 	// @RuleVersion(0)
 	public config(): ConfigContext {
-		let _localctx: ConfigContext = new ConfigContext(this._ctx, this.state);
-		this.enterRule(_localctx, 0, CiscoIOSParser.RULE_config);
+		let localctx: ConfigContext = new ConfigContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 0, CiscoIOSParser.RULE_config);
 		let _la: number;
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 15;
 			this._errHandler.sync(this);
@@ -107,12 +93,12 @@ export class CiscoIOSParser extends Parser {
 				this.state = 17;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << CiscoIOSParser.T__0) | (1 << CiscoIOSParser.T__1) | (1 << CiscoIOSParser.T__3) | (1 << CiscoIOSParser.T__5) | (1 << CiscoIOSParser.T__7))) !== 0));
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 342) !== 0));
 			}
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -122,46 +108,46 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public statement(): StatementContext {
-		let _localctx: StatementContext = new StatementContext(this._ctx, this.state);
-		this.enterRule(_localctx, 2, CiscoIOSParser.RULE_statement);
+		let localctx: StatementContext = new StatementContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 2, CiscoIOSParser.RULE_statement);
 		try {
 			this.state = 24;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case CiscoIOSParser.T__0:
-				this.enterOuterAlt(_localctx, 1);
+			case 1:
+				this.enterOuterAlt(localctx, 1);
 				{
 				this.state = 19;
 				this.interface_stmt();
 				}
 				break;
-			case CiscoIOSParser.T__1:
-				this.enterOuterAlt(_localctx, 2);
+			case 2:
+				this.enterOuterAlt(localctx, 2);
 				{
 				this.state = 20;
 				this.ip_stmt();
 				}
 				break;
-			case CiscoIOSParser.T__3:
-				this.enterOuterAlt(_localctx, 3);
+			case 4:
+				this.enterOuterAlt(localctx, 3);
 				{
 				this.state = 21;
 				this.no_stmt();
 				}
 				break;
-			case CiscoIOSParser.T__5:
-				this.enterOuterAlt(_localctx, 4);
+			case 6:
+				this.enterOuterAlt(localctx, 4);
 				{
 				this.state = 22;
 				this.router_stmt();
 				}
 				break;
-			case CiscoIOSParser.T__7:
-				this.enterOuterAlt(_localctx, 5);
+			case 8:
+				this.enterOuterAlt(localctx, 5);
 				{
 				this.state = 23;
 				this.network_stmt();
@@ -173,7 +159,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -183,14 +169,14 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public interface_stmt(): Interface_stmtContext {
-		let _localctx: Interface_stmtContext = new Interface_stmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 4, CiscoIOSParser.RULE_interface_stmt);
+		let localctx: Interface_stmtContext = new Interface_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 4, CiscoIOSParser.RULE_interface_stmt);
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 26;
 			this.match(CiscoIOSParser.T__0);
@@ -200,7 +186,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -210,14 +196,14 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public ip_stmt(): Ip_stmtContext {
-		let _localctx: Ip_stmtContext = new Ip_stmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 6, CiscoIOSParser.RULE_ip_stmt);
+		let localctx: Ip_stmtContext = new Ip_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 6, CiscoIOSParser.RULE_ip_stmt);
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 29;
 			this.match(CiscoIOSParser.T__1);
@@ -231,7 +217,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -241,14 +227,14 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public no_stmt(): No_stmtContext {
-		let _localctx: No_stmtContext = new No_stmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 8, CiscoIOSParser.RULE_no_stmt);
+		let localctx: No_stmtContext = new No_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 8, CiscoIOSParser.RULE_no_stmt);
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 34;
 			this.match(CiscoIOSParser.T__3);
@@ -258,7 +244,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -268,14 +254,14 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public router_stmt(): Router_stmtContext {
-		let _localctx: Router_stmtContext = new Router_stmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, CiscoIOSParser.RULE_router_stmt);
+		let localctx: Router_stmtContext = new Router_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 10, CiscoIOSParser.RULE_router_stmt);
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 37;
 			this.match(CiscoIOSParser.T__5);
@@ -287,7 +273,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -297,14 +283,14 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 	// @RuleVersion(0)
 	public network_stmt(): Network_stmtContext {
-		let _localctx: Network_stmtContext = new Network_stmtContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, CiscoIOSParser.RULE_network_stmt);
+		let localctx: Network_stmtContext = new Network_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 12, CiscoIOSParser.RULE_network_stmt);
 		try {
-			this.enterOuterAlt(_localctx, 1);
+			this.enterOuterAlt(localctx, 1);
 			{
 			this.state = 41;
 			this.match(CiscoIOSParser.T__7);
@@ -320,7 +306,7 @@ export class CiscoIOSParser extends Parser {
 		}
 		catch (re) {
 			if (re instanceof RecognitionException) {
-				_localctx.exception = re;
+				localctx.exception = re;
 				this._errHandler.reportError(this, re);
 				this._errHandler.recover(this, re);
 			} else {
@@ -330,231 +316,277 @@ export class CiscoIOSParser extends Parser {
 		finally {
 			this.exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
-	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x0F2\x04\x02" +
-		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
-		"\t\x07\x04\b\t\b\x03\x02\x06\x02\x12\n\x02\r\x02\x0E\x02\x13\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x05\x03\x1B\n\x03\x03\x04\x03\x04\x03\x04" +
-		"\x03\x05\x03\x05\x03\x05\x03\x05\x03\x05\x03\x06\x03\x06\x03\x06\x03\x07" +
-		"\x03\x07\x03\x07\x03\x07\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x02" +
-		"\x02\x02\t\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x02\x02\x02" +
-		"/\x02\x11\x03\x02\x02\x02\x04\x1A\x03\x02\x02\x02\x06\x1C\x03\x02\x02" +
-		"\x02\b\x1F\x03\x02\x02\x02\n$\x03\x02\x02\x02\f\'\x03\x02\x02\x02\x0E" +
-		"+\x03\x02\x02\x02\x10\x12\x05\x04\x03\x02\x11\x10\x03\x02\x02\x02\x12" +
-		"\x13\x03\x02\x02\x02\x13\x11\x03\x02\x02\x02\x13\x14\x03\x02\x02\x02\x14" +
-		"\x03\x03\x02\x02\x02\x15\x1B\x05\x06\x04\x02\x16\x1B\x05\b\x05\x02\x17" +
-		"\x1B\x05\n\x06\x02\x18\x1B\x05\f\x07\x02\x19\x1B\x05\x0E\b\x02\x1A\x15" +
-		"\x03\x02\x02\x02\x1A\x16\x03\x02\x02\x02\x1A\x17\x03\x02\x02\x02\x1A\x18" +
-		"\x03\x02\x02\x02\x1A\x19\x03\x02\x02\x02\x1B\x05\x03\x02\x02\x02\x1C\x1D" +
-		"\x07\x03\x02\x02\x1D\x1E\x07\f\x02\x02\x1E\x07\x03\x02\x02\x02\x1F \x07" +
-		"\x04\x02\x02 !\x07\x05\x02\x02!\"\x07\r\x02\x02\"#\x07\r\x02\x02#\t\x03" +
-		"\x02\x02\x02$%\x07\x06\x02\x02%&\x07\x07\x02\x02&\v\x03\x02\x02\x02\'" +
-		"(\x07\b\x02\x02()\x07\t\x02\x02)*\x07\x0E\x02\x02*\r\x03\x02\x02\x02+" +
-		",\x07\n\x02\x02,-\x07\r\x02\x02-.\x07\r\x02\x02./\x07\v\x02\x02/0\x07" +
-		"\x0E\x02\x020\x0F\x03\x02\x02\x02\x04\x13\x1A";
-	public static __ATN: ATN;
+	public static readonly _serializedATN: number[] = [4,1,13,48,2,0,7,0,2,
+	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,4,0,16,8,0,11,0,12,0,
+	17,1,1,1,1,1,1,1,1,1,1,3,1,25,8,1,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,4,1,
+	4,1,4,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,0,0,7,0,2,4,6,8,10,12,
+	0,0,45,0,15,1,0,0,0,2,24,1,0,0,0,4,26,1,0,0,0,6,29,1,0,0,0,8,34,1,0,0,0,
+	10,37,1,0,0,0,12,41,1,0,0,0,14,16,3,2,1,0,15,14,1,0,0,0,16,17,1,0,0,0,17,
+	15,1,0,0,0,17,18,1,0,0,0,18,1,1,0,0,0,19,25,3,4,2,0,20,25,3,6,3,0,21,25,
+	3,8,4,0,22,25,3,10,5,0,23,25,3,12,6,0,24,19,1,0,0,0,24,20,1,0,0,0,24,21,
+	1,0,0,0,24,22,1,0,0,0,24,23,1,0,0,0,25,3,1,0,0,0,26,27,5,1,0,0,27,28,5,
+	10,0,0,28,5,1,0,0,0,29,30,5,2,0,0,30,31,5,3,0,0,31,32,5,11,0,0,32,33,5,
+	11,0,0,33,7,1,0,0,0,34,35,5,4,0,0,35,36,5,5,0,0,36,9,1,0,0,0,37,38,5,6,
+	0,0,38,39,5,7,0,0,39,40,5,12,0,0,40,11,1,0,0,0,41,42,5,8,0,0,42,43,5,11,
+	0,0,43,44,5,11,0,0,44,45,5,9,0,0,45,46,5,12,0,0,46,13,1,0,0,0,2,17,24];
+
+	private static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!CiscoIOSParser.__ATN) {
-			CiscoIOSParser.__ATN = new ATNDeserializer().deserialize(Utils.toCharArray(CiscoIOSParser._serializedATN));
+			CiscoIOSParser.__ATN = new ATNDeserializer().deserialize(CiscoIOSParser._serializedATN);
 		}
 
 		return CiscoIOSParser.__ATN;
 	}
 
+
+	static DecisionsToDFA = CiscoIOSParser._ATN.decisionToState.map( (ds: DecisionState, index: number) => new DFA(ds, index) );
+
 }
 
 export class ConfigContext extends ParserRuleContext {
-	public statement(): StatementContext[];
-	public statement(i: number): StatementContext;
-	public statement(i?: number): StatementContext | StatementContext[] {
-		if (i === undefined) {
-			return this.getRuleContexts(StatementContext);
-		} else {
-			return this.getRuleContext(i, StatementContext);
-		}
-	}
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_config; }
-	// @Override
+	public statement_list(): StatementContext[] {
+		return this.getTypedRuleContexts(StatementContext) as StatementContext[];
+	}
+	public statement(i: number): StatementContext {
+		return this.getTypedRuleContext(StatementContext, i) as StatementContext;
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_config;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterConfig) {
-			listener.enterConfig(this);
+	    if(listener.enterConfig) {
+	 		listener.enterConfig(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitConfig) {
+	 		listener.exitConfig(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitConfig) {
-			listener.exitConfig(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitConfig) {
+			return visitor.visitConfig(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class StatementContext extends ParserRuleContext {
-	public interface_stmt(): Interface_stmtContext | undefined {
-		return this.tryGetRuleContext(0, Interface_stmtContext);
-	}
-	public ip_stmt(): Ip_stmtContext | undefined {
-		return this.tryGetRuleContext(0, Ip_stmtContext);
-	}
-	public no_stmt(): No_stmtContext | undefined {
-		return this.tryGetRuleContext(0, No_stmtContext);
-	}
-	public router_stmt(): Router_stmtContext | undefined {
-		return this.tryGetRuleContext(0, Router_stmtContext);
-	}
-	public network_stmt(): Network_stmtContext | undefined {
-		return this.tryGetRuleContext(0, Network_stmtContext);
-	}
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_statement; }
-	// @Override
+	public interface_stmt(): Interface_stmtContext {
+		return this.getTypedRuleContext(Interface_stmtContext, 0) as Interface_stmtContext;
+	}
+	public ip_stmt(): Ip_stmtContext {
+		return this.getTypedRuleContext(Ip_stmtContext, 0) as Ip_stmtContext;
+	}
+	public no_stmt(): No_stmtContext {
+		return this.getTypedRuleContext(No_stmtContext, 0) as No_stmtContext;
+	}
+	public router_stmt(): Router_stmtContext {
+		return this.getTypedRuleContext(Router_stmtContext, 0) as Router_stmtContext;
+	}
+	public network_stmt(): Network_stmtContext {
+		return this.getTypedRuleContext(Network_stmtContext, 0) as Network_stmtContext;
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_statement;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterStatement) {
-			listener.enterStatement(this);
+	    if(listener.enterStatement) {
+	 		listener.enterStatement(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitStatement) {
+	 		listener.exitStatement(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitStatement) {
-			listener.exitStatement(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitStatement) {
+			return visitor.visitStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class Interface_stmtContext extends ParserRuleContext {
-	public ID(): TerminalNode { return this.getToken(CiscoIOSParser.ID, 0); }
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_interface_stmt; }
-	// @Override
+	public ID(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ID, 0);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_interface_stmt;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterInterface_stmt) {
-			listener.enterInterface_stmt(this);
+	    if(listener.enterInterface_stmt) {
+	 		listener.enterInterface_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitInterface_stmt) {
+	 		listener.exitInterface_stmt(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitInterface_stmt) {
-			listener.exitInterface_stmt(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitInterface_stmt) {
+			return visitor.visitInterface_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class Ip_stmtContext extends ParserRuleContext {
-	public IPADDR(): TerminalNode[];
-	public IPADDR(i: number): TerminalNode;
-	public IPADDR(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(CiscoIOSParser.IPADDR);
-		} else {
-			return this.getToken(CiscoIOSParser.IPADDR, i);
-		}
-	}
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_ip_stmt; }
-	// @Override
+	public IPADDR_list(): TerminalNode[] {
+	    	return this.getTokens(CiscoIOSParser.IPADDR);
+	}
+	public IPADDR(i: number): TerminalNode {
+		return this.getToken(CiscoIOSParser.IPADDR, i);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_ip_stmt;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterIp_stmt) {
-			listener.enterIp_stmt(this);
+	    if(listener.enterIp_stmt) {
+	 		listener.enterIp_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitIp_stmt) {
+	 		listener.exitIp_stmt(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitIp_stmt) {
-			listener.exitIp_stmt(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitIp_stmt) {
+			return visitor.visitIp_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class No_stmtContext extends ParserRuleContext {
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_no_stmt; }
-	// @Override
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_no_stmt;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterNo_stmt) {
-			listener.enterNo_stmt(this);
+	    if(listener.enterNo_stmt) {
+	 		listener.enterNo_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitNo_stmt) {
+	 		listener.exitNo_stmt(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitNo_stmt) {
-			listener.exitNo_stmt(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitNo_stmt) {
+			return visitor.visitNo_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class Router_stmtContext extends ParserRuleContext {
-	public INT(): TerminalNode { return this.getToken(CiscoIOSParser.INT, 0); }
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_router_stmt; }
-	// @Override
+	public INT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.INT, 0);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_router_stmt;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterRouter_stmt) {
-			listener.enterRouter_stmt(this);
+	    if(listener.enterRouter_stmt) {
+	 		listener.enterRouter_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitRouter_stmt) {
+	 		listener.exitRouter_stmt(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitRouter_stmt) {
-			listener.exitRouter_stmt(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitRouter_stmt) {
+			return visitor.visitRouter_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
 
 
 export class Network_stmtContext extends ParserRuleContext {
-	public IPADDR(): TerminalNode[];
-	public IPADDR(i: number): TerminalNode;
-	public IPADDR(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(CiscoIOSParser.IPADDR);
-		} else {
-			return this.getToken(CiscoIOSParser.IPADDR, i);
-		}
-	}
-	public INT(): TerminalNode { return this.getToken(CiscoIOSParser.INT, 0); }
-	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
 		super(parent, invokingState);
+    	this.parser = parser;
 	}
-	// @Override
-	public get ruleIndex(): number { return CiscoIOSParser.RULE_network_stmt; }
-	// @Override
+	public IPADDR_list(): TerminalNode[] {
+	    	return this.getTokens(CiscoIOSParser.IPADDR);
+	}
+	public IPADDR(i: number): TerminalNode {
+		return this.getToken(CiscoIOSParser.IPADDR, i);
+	}
+	public INT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.INT, 0);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_network_stmt;
+	}
 	public enterRule(listener: CiscoIOSListener): void {
-		if (listener.enterNetwork_stmt) {
-			listener.enterNetwork_stmt(this);
+	    if(listener.enterNetwork_stmt) {
+	 		listener.enterNetwork_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitNetwork_stmt) {
+	 		listener.exitNetwork_stmt(this);
 		}
 	}
 	// @Override
-	public exitRule(listener: CiscoIOSListener): void {
-		if (listener.exitNetwork_stmt) {
-			listener.exitNetwork_stmt(this);
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitNetwork_stmt) {
+			return visitor.visitNetwork_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
-
-
