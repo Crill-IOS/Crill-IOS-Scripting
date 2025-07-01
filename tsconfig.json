@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"module": "Node16",
+		"target": "ES2022",
+		"lib": ["ES2022"],
+		"sourceMap": true,
+		"rootDir": "src",
+        "outDir": "out",
+		"strict": true
+	}
+}
+

@@ -3,7 +3,7 @@
   "publisher": "Crill",
   "displayName": "Crill-IOS-Scripting",
   "description": "Cisco IOS Scripting Language Server",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -13,7 +13,7 @@
   "activationEvents": [
     "onLanguage:cls"
   ],
-  "main": "./dist/extension.js",
+  "main": "out/main/extension.js",
   "contributes": {
     "configuration": {
       "type": "object",
@@ -54,33 +54,17 @@
           "Cls"
         ]
       }
-    ],
-    "grammars": [
-      {
-        "language": "cls",
-        "scopeName": "source.cls",
-        "path": "./syntaxes/shrimp.tmLanguage.json"
-      }
-    ],
-    "themes": [
-      {
-        "label": "CLS-Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/my_color_theme.json"
-      }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
-  },
+  "compile": "tsc -p ./out",
+  "watch": "tsc -w -p ./out",
+  "antlr": "antlr4 -Dlanguage=JavaScript -o ./parser ./src/antlr/CiscoIOS.g4",
+  "antlr-ts": "antlr4ts -o ./parser ./src/antlr/CiscoIOS.g4",
+  "prepublish": "npm run compile",
+  "clean": "rm -rf out parser/*.js parser/*.tokens parser/*.interp"
+}
+,
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
@@ -97,6 +81,7 @@
   },
   "dependencies": {
     "antlr4": "^4.13.2",
+    "antlr4ts": "^0.5.0-alpha.4",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
     "vscode-languageserver-textdocument": "^1.0.12"
