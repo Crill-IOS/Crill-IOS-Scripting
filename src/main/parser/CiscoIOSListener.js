@@ -1,5 +1,5 @@
 "use strict";
-// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.13.2
+// Generated from ./CiscoIOS.g4 by ANTLR 4.13.2
 Object.defineProperty(exports, "__esModule", { value: true });
 const antlr4_1 = require("antlr4");
 /**
@@ -18,6 +18,16 @@ class CiscoIOSListener extends antlr4_1.ParseTreeListener {
      */
     exitConfig;
     /**
+     * Enter a parse tree produced by `CiscoIOSParser.line`.
+     * @param ctx the parse tree
+     */
+    enterLine;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.line`.
+     * @param ctx the parse tree
+     */
+    exitLine;
+    /**
      * Enter a parse tree produced by `CiscoIOSParser.statement`.
      * @param ctx the parse tree
      */
@@ -28,55 +38,185 @@ class CiscoIOSListener extends antlr4_1.ParseTreeListener {
      */
     exitStatement;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.interface_stmt`.
+     * Enter a parse tree produced by `CiscoIOSParser.exec_stmt`.
      * @param ctx the parse tree
      */
-    enterInterface_stmt;
+    enterExec_stmt;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.interface_stmt`.
+     * Exit a parse tree produced by `CiscoIOSParser.exec_stmt`.
      * @param ctx the parse tree
      */
-    exitInterface_stmt;
+    exitExec_stmt;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.ip_stmt`.
+     * Enter a parse tree produced by `CiscoIOSParser.enable_stmt`.
      * @param ctx the parse tree
      */
-    enterIp_stmt;
+    enterEnable_stmt;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.ip_stmt`.
+     * Exit a parse tree produced by `CiscoIOSParser.enable_stmt`.
      * @param ctx the parse tree
      */
-    exitIp_stmt;
+    exitEnable_stmt;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.no_stmt`.
+     * Enter a parse tree produced by `CiscoIOSParser.priv_stmt`.
      * @param ctx the parse tree
      */
-    enterNo_stmt;
+    enterPriv_stmt;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.no_stmt`.
+     * Exit a parse tree produced by `CiscoIOSParser.priv_stmt`.
      * @param ctx the parse tree
      */
-    exitNo_stmt;
+    exitPriv_stmt;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.router_stmt`.
+     * Enter a parse tree produced by `CiscoIOSParser.conft_stmt`.
      * @param ctx the parse tree
      */
-    enterRouter_stmt;
+    enterConft_stmt;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.router_stmt`.
+     * Exit a parse tree produced by `CiscoIOSParser.conft_stmt`.
      * @param ctx the parse tree
      */
-    exitRouter_stmt;
+    exitConft_stmt;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.network_stmt`.
+     * Enter a parse tree produced by `CiscoIOSParser.global_stmt`.
      * @param ctx the parse tree
      */
-    enterNetwork_stmt;
+    enterGlobal_stmt;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.network_stmt`.
+     * Exit a parse tree produced by `CiscoIOSParser.global_stmt`.
      * @param ctx the parse tree
      */
-    exitNetwork_stmt;
+    exitGlobal_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.grundkonfig_stmt`.
+     * @param ctx the parse tree
+     */
+    enterGrundkonfig_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.grundkonfig_stmt`.
+     * @param ctx the parse tree
+     */
+    exitGrundkonfig_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.linecon_stmt`.
+     * @param ctx the parse tree
+     */
+    enterLinecon_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.linecon_stmt`.
+     * @param ctx the parse tree
+     */
+    exitLinecon_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.linecon_body`.
+     * @param ctx the parse tree
+     */
+    enterLinecon_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.linecon_body`.
+     * @param ctx the parse tree
+     */
+    exitLinecon_body;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.linevty_stmt`.
+     * @param ctx the parse tree
+     */
+    enterLinevty_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.linevty_stmt`.
+     * @param ctx the parse tree
+     */
+    exitLinevty_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.linevty_body`.
+     * @param ctx the parse tree
+     */
+    enterLinevty_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.linevty_body`.
+     * @param ctx the parse tree
+     */
+    exitLinevty_body;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.ospf_stmt`.
+     * @param ctx the parse tree
+     */
+    enterOspf_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.ospf_stmt`.
+     * @param ctx the parse tree
+     */
+    exitOspf_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.ospf_body`.
+     * @param ctx the parse tree
+     */
+    enterOspf_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.ospf_body`.
+     * @param ctx the parse tree
+     */
+    exitOspf_body;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.int_stmt`.
+     * @param ctx the parse tree
+     */
+    enterInt_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.int_stmt`.
+     * @param ctx the parse tree
+     */
+    exitInt_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.int_body`.
+     * @param ctx the parse tree
+     */
+    enterInt_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.int_body`.
+     * @param ctx the parse tree
+     */
+    exitInt_body;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.rip_stmt`.
+     * @param ctx the parse tree
+     */
+    enterRip_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.rip_stmt`.
+     * @param ctx the parse tree
+     */
+    exitRip_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.rip_body`.
+     * @param ctx the parse tree
+     */
+    enterRip_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.rip_body`.
+     * @param ctx the parse tree
+     */
+    exitRip_body;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.dhcp_stmt`.
+     * @param ctx the parse tree
+     */
+    enterDhcp_stmt;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.dhcp_stmt`.
+     * @param ctx the parse tree
+     */
+    exitDhcp_stmt;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.dhcp_body`.
+     * @param ctx the parse tree
+     */
+    enterDhcp_body;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.dhcp_body`.
+     * @param ctx the parse tree
+     */
+    exitDhcp_body;
 }
 exports.default = CiscoIOSListener;
 //# sourceMappingURL=CiscoIOSListener.js.map

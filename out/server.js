@@ -26,6 +26,74 @@ class CustomVisitor extends CiscoIOSVisitor_js_1.default {
 }
 const connection = (0, node_1.createConnection)(node_1.ProposedFeatures.all);
 const documents = new node_1.TextDocuments(vscode_languageserver_textdocument_1.TextDocument);
+// Chat: Map für Semantic Tokens
+const tokenTypeMap = {
+    "ENABLE": "keyword",
+    "CONFT": "keyword",
+    "ROUTER": "keyword",
+    "OSPF": "function",
+    "EXIT": "keyword",
+    "NO": "keyword",
+    "INTERFACE": "keyword",
+    "HOSTNAME": "namespace",
+    "BANNER": "class",
+    "MOTD": "enum",
+    "DOMAIN": "keyword",
+    "NAME": "keyword",
+    "SSH": "keyword",
+    "USERNAME": "regexp",
+    "LINE": "keyword",
+    "VTY": "keyword",
+    "CON": "keyword",
+    "LOGIN": "keyword",
+    "LOCAL": "keyword",
+    "LOGGING": "keyword",
+    "SYNCHRONUS": "keyword",
+    "EXEC_TIMEOUT": "keyword",
+    "TRANSPORT": "keyword",
+    "INPUT": "keyword",
+    "TELNET": "keyword",
+    "PASSIVE_INTERFACE": "keyword",
+    "ROUTER_ID": "keyword",
+    "SHUT": "keyword",
+    "ADDR": "keyword",
+    "RIP": "keyword",
+    "VERSION": "keyword",
+    "AUTO_SUMMARY": "keyword",
+    "DHCP": "keyword",
+    "POOL": "keyword",
+    "NETWORK": "keyword",
+    "IP": "keyword",
+    // ====== Operanden, numerische Werte, Bezeichner ======
+    "INT": "number",
+    "INT_NUM": "number",
+    "IP_ADDR": "number",
+    "SUB_ADDR": "number",
+    // ====== Namen, Strings ======
+    "DOMAIN_NAME": "string",
+    "STR": "string",
+    "BANNER_TEXT": "method",
+    // ====== Interface-Bezeichner (z.B. GigabitEthernet0/1) ======
+    "INT_NAME": "",
+    // ====== Standardtypen ======
+    "ID": "variable", // falls du ID-Tokens noch nutzt
+};
+// - bis hier
+/*
+  keyword = blau
+  number = grün
+  string = orange
+  operator = nix
+  variable
+
+"keyword",
+                  "operator",
+                  "number",
+                  "string",
+                  "variable",
+                  "function",
+                  "type"
+*/
 // Initialize code
 //tell the "client" what features we are offering
 //eg, completion, hover or diagnostics
@@ -38,7 +106,7 @@ connection.onInitialize((params) => {
             completionProvider: {
                 resolveProvider: true,
                 triggerCharacters: [..."abcdefghijklmnopqrstuvwxyz"]
-            }
+            },
             //hoverProvider: true,
             // diagnosticProvider: {
             //     interFileDependencies: false,
@@ -52,6 +120,24 @@ connection.onInitialize((params) => {
             //         tokenModifiers: ["example3", "example4"]
             //     }
             // }
+            // Chat: für Semantic Tokens
+            semanticTokensProvider: {
+                legend: {
+                    tokenTypes: [
+                        "keyword",
+                        "operator",
+                        "number",
+                        "string",
+                        "variable",
+                        "function",
+                        "type"
+                    ],
+                    tokenModifiers: []
+                },
+                full: true,
+                range: false
+            }
+            // - bis hier
         }
     };
     if (capabilities.workspace) {
@@ -116,12 +202,11 @@ connection.onCompletion(
     const tree = parser.config();
     const visitor = new CustomVisitor();
     const visitResult = tree.accept(visitor);
-    console.log("Visitor result:", visitResult);
-    console.log(tree.getChildCount());
-    console.log();
+    // console.log("Visitor result:", visitResult);
+    // console.log(tree.getChildCount());
     tokens.fill();
     tokens.tokens.forEach((token) => {
-        console.log(`Token: type=${token.type}, text='${token.text}', line=${token.line}, column=${token.column}`);
+        console.log(`Token: type=${token.type}, text='${token.text}', line=${token.line}, column=${token.column}, symbolic=${CiscoIOSParser_1.default.symbolicNames[token.type]}`);
     });
     // Hier kannst du visitResult auswerten und z.B. CompletionItems erzeugen.
     return [
@@ -133,6 +218,57 @@ connection.onCompletion(
         }
     ];
 });
+// Chat: Semantic Tokens Zuweisung zu Tokens von ANTLR
+const legend = {
+    tokenTypes: [
+        "keyword", // 0
+        "operator", // 1 (nicht verwendet hier)
+        "number", // 2
+        "string", // 3 (nicht verwendet hier)
+        "variable", // 4
+        "function", // 5 (nicht verwendet hier)
+        "type" // 6 (nicht verwendet hier)
+    ],
+    tokenModifiers: []
+};
+connection.languages.semanticTokens.on((params) => {
+    const document = documents.get(params.textDocument.uri);
+    if (!document)
+        return { data: [] };
+    const text = document.getText();
+    const chars = new antlr4_1.CharStream(text);
+    const lexer = new CiscoIOSLexer_1.default(chars);
+    const tokens = new antlr4_1.CommonTokenStream(lexer);
+    tokens.fill();
+    const semanticTokens = [];
+    let lastLine = 0;
+    let lastChar = 0;
+    for (const token of tokens.tokens) {
+        if (token.type <= 0)
+            continue;
+        const symbolic = CiscoIOSParser_1.default.symbolicNames[token.type];
+        let tokenTypeStr = null;
+        if (symbolic)
+            tokenTypeStr = tokenTypeMap[symbolic];
+        if (!tokenTypeStr)
+            continue;
+        const tokenTypeIndex = legend.tokenTypes.indexOf(tokenTypeStr);
+        if (tokenTypeIndex === -1)
+            continue;
+        const line = token.line - 1;
+        const char = token.column;
+        const length = token.text.length;
+        const deltaLine = line - lastLine;
+        const deltaStart = deltaLine === 0 ? char - lastChar : char;
+        semanticTokens.push(deltaLine, deltaStart, length, tokenTypeIndex, 0);
+        lastLine = line;
+        lastChar = char;
+    }
+    return {
+        data: semanticTokens
+    };
+});
+// - bis hier
 documents.listen(connection);
 connection.listen();
 //# sourceMappingURL=server.js.map
