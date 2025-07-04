@@ -127,6 +127,11 @@ const tokenTypeMap: { [key: string]: string } = {
                   "type"
 */
 
+
+
+
+
+
 // Initialize code
 //tell the "client" what features we are offering
 //eg, completion, hover or diagnostics
@@ -244,9 +249,7 @@ connection.onInitialize((params: InitializeParams) =>{
 
 connection.onCompletion(
   /**
-	 * Benjamin Zwettler 09.04.2025
-	 * @param _textDocumentPosition The pass parameter contains the position of the text document in
-	 *  which code complete got requested.
+	 * @param _textDocumentPosition 
 	 * @returns a list of completionItems for Client
 	 */
   (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
@@ -255,21 +258,24 @@ connection.onCompletion(
       console.error("Document not found:", _textDocumentPosition.textDocument.uri);
       return [];
     }
+    
+    const text = document.getText();
 
-    const text = document.getText();  // richtig den Text des Dokuments holen
     const chars = new CharStream(text);
     const lexer = new CiscoIOSLexer(chars);
     const tokens = new CommonTokenStream(lexer);
     const parser = new CiscoIOSParser(tokens);
     const tree = parser.config();
-
     const visitor = new CustomVisitor();
     const visitResult = tree.accept(visitor);
     // console.log("Visitor result:", visitResult);
     
     // console.log(tree.getChildCount());
     
-    
+    console.log("works")
+    // console.log("next Tokens:")
+    // console.log(nextTokens)
+    // console.log("\n")
     tokens.fill()
     tokens.tokens.forEach((token) => {
       console.log(`Token: type=${token.type}, text='${token.text}', line=${token.line}, column=${token.column}, symbolic=${CiscoIOSParser.symbolicNames[token.type]}`)
@@ -285,6 +291,13 @@ connection.onCompletion(
       }
     ];
   }
+);
+
+
+connection.onCompletionResolve(
+	(item: CompletionItem): CompletionItem => {
+		return item;
+	}
 );
 
 // Chat: Semantic Tokens Zuweisung zu Tokens von ANTLR
