@@ -1,4 +1,4 @@
-// Generated from ./CiscoIOS.g4 by ANTLR 4.13.2
+// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.13.2
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 
 import {
@@ -33,40 +33,67 @@ export default class CiscoIOSParser extends Parser {
 	public static readonly MOTD = 12;
 	public static readonly DOMAIN = 13;
 	public static readonly NAME = 14;
-	public static readonly SSH = 15;
-	public static readonly USERNAME = 16;
-	public static readonly LINE = 17;
-	public static readonly VTY = 18;
-	public static readonly CON = 19;
-	public static readonly LOGIN = 20;
-	public static readonly LOCAL = 21;
-	public static readonly LOGGING = 22;
-	public static readonly SYNCHRONUS = 23;
-	public static readonly EXEC_TIMEOUT = 24;
-	public static readonly TRANSPORT = 25;
-	public static readonly INPUT = 26;
-	public static readonly TELNET = 27;
-	public static readonly PASSIVE_INTERFACE = 28;
-	public static readonly ROUTER_ID = 29;
-	public static readonly DESCRIPTION = 30;
-	public static readonly SHUT = 31;
-	public static readonly ADDR = 32;
-	public static readonly RIP = 33;
-	public static readonly VERSION = 34;
-	public static readonly AUTO_SUMMARY = 35;
-	public static readonly DHCP = 36;
-	public static readonly POOL = 37;
-	public static readonly INT = 38;
-	public static readonly IP_ADDR = 39;
-	public static readonly SUB_ADDR = 40;
-	public static readonly DOMAIN_NAME = 41;
-	public static readonly NETWORK = 42;
-	public static readonly IP = 43;
-	public static readonly STR = 44;
-	public static readonly BANNER_TEXT = 45;
-	public static readonly NEWLINE = 46;
-	public static readonly WS = 47;
-	public static readonly ANY = 48;
+	public static readonly DOMAINNAME = 15;
+	public static readonly SSH = 16;
+	public static readonly USERNAME = 17;
+	public static readonly LINE = 18;
+	public static readonly VTY = 19;
+	public static readonly CON = 20;
+	public static readonly LOGIN = 21;
+	public static readonly LOCAL = 22;
+	public static readonly LOGGING = 23;
+	public static readonly SYNCHRONUS = 24;
+	public static readonly EXEC_TIMEOUT = 25;
+	public static readonly TRANSPORT = 26;
+	public static readonly INPUT = 27;
+	public static readonly TELNET = 28;
+	public static readonly PASSIVE_INTERFACE = 29;
+	public static readonly ROUTER_ID = 30;
+	public static readonly DESCRIPTION = 31;
+	public static readonly SHUT = 32;
+	public static readonly ADDR = 33;
+	public static readonly RIP = 34;
+	public static readonly VERSION = 35;
+	public static readonly AUTO_SUMMARY = 36;
+	public static readonly DHCP = 37;
+	public static readonly POOL = 38;
+	public static readonly EXCLUDED_ADDRESS = 39;
+	public static readonly DEFAULT_ROUTER = 40;
+	public static readonly DNS_SERVER = 41;
+	public static readonly CLIENT_IDENTIFIER = 42;
+	public static readonly HOST = 43;
+	public static readonly CRYPTO = 44;
+	public static readonly ISAKMP = 45;
+	public static readonly IPSEC = 46;
+	public static readonly TRANSFORM_SET = 47;
+	public static readonly ESP_DES = 48;
+	public static readonly ESP_SHA_HMAC = 49;
+	public static readonly AUTHENTICATION = 50;
+	public static readonly PRE_SHARE = 51;
+	public static readonly ENCRYPTION = 52;
+	public static readonly DES = 53;
+	public static readonly HASH = 54;
+	public static readonly MD5 = 55;
+	public static readonly GROUP = 56;
+	public static readonly LIFETIME = 57;
+	public static readonly IDENTITY = 58;
+	public static readonly MAP = 59;
+	public static readonly MATCH = 60;
+	public static readonly SET = 61;
+	public static readonly PEER = 62;
+	public static readonly POLICY = 63;
+	public static readonly KEY = 64;
+	public static readonly INT = 65;
+	public static readonly IP_ADDR = 66;
+	public static readonly SUB_ADDR = 67;
+	public static readonly DOMAIN_NAME = 68;
+	public static readonly NETWORK = 69;
+	public static readonly IP = 70;
+	public static readonly STR = 71;
+	public static readonly BANNER_TEXT = 72;
+	public static readonly NEWLINE = 73;
+	public static readonly WS = 74;
+	public static readonly ANY = 75;
 	public static override readonly EOF = Token.EOF;
 	public static readonly RULE_config = 0;
 	public static readonly RULE_line = 1;
@@ -89,6 +116,9 @@ export default class CiscoIOSParser extends Parser {
 	public static readonly RULE_rip_body = 18;
 	public static readonly RULE_dhcp_stmt = 19;
 	public static readonly RULE_dhcp_body = 20;
+	public static readonly RULE_vpn_stmt = 21;
+	public static readonly RULE_vpn_isakmp_body = 22;
+	public static readonly RULE_vpn_crypto_map_body = 23;
 	public static readonly literalNames: (string | null)[] = [ null, "'enable'", 
                                                             "'configure terminal'", 
                                                             "'router'", 
@@ -98,8 +128,8 @@ export default class CiscoIOSParser extends Parser {
                                                             "'hostname'", 
                                                             "'banner'", 
                                                             "'motd'", "'domain'", 
-                                                            "'name'", "'ssh'", 
-                                                            "'username'", 
+                                                            "'name'", "'domain-name'", 
+                                                            "'ssh'", "'username'", 
                                                             "'line'", "'vty'", 
                                                             "'con'", "'login'", 
                                                             "'local'", "'logging'", 
@@ -115,9 +145,28 @@ export default class CiscoIOSParser extends Parser {
                                                             "'rip'", "'version'", 
                                                             "'auto-summary'", 
                                                             "'dhcp'", "'pool'", 
+                                                            "'excluded-address'", 
+                                                            "'default-router'", 
+                                                            "'dns-server'", 
+                                                            "'client-identifier'", 
+                                                            "'host'", "'crypto'", 
+                                                            "'isakmp'", 
+                                                            "'ipsec'", "'transform-set'", 
+                                                            "'esp-des'", 
+                                                            "'esp-sha-hmac'", 
+                                                            "'authentication'", 
+                                                            "'pre-share'", 
+                                                            "'encryption'", 
+                                                            "'des'", "'hash'", 
+                                                            "'md5'", "'group'", 
+                                                            "'lifetime'", 
+                                                            "'identity'", 
+                                                            "'map'", "'match'", 
+                                                            "'set'", "'peer'", 
+                                                            "'policy'", 
+                                                            "'key'", null, 
                                                             null, null, 
-                                                            null, null, 
-                                                            "'network'", 
+                                                            null, "'network'", 
                                                             "'ip'" ];
 	public static readonly symbolicNames: (string | null)[] = [ null, "ENABLE", 
                                                              "CONFT", "ROUTER", 
@@ -128,6 +177,7 @@ export default class CiscoIOSParser extends Parser {
                                                              "HOSTNAME", 
                                                              "BANNER", "MOTD", 
                                                              "DOMAIN", "NAME", 
+                                                             "DOMAINNAME", 
                                                              "SSH", "USERNAME", 
                                                              "LINE", "VTY", 
                                                              "CON", "LOGIN", 
@@ -143,6 +193,25 @@ export default class CiscoIOSParser extends Parser {
                                                              "RIP", "VERSION", 
                                                              "AUTO_SUMMARY", 
                                                              "DHCP", "POOL", 
+                                                             "EXCLUDED_ADDRESS", 
+                                                             "DEFAULT_ROUTER", 
+                                                             "DNS_SERVER", 
+                                                             "CLIENT_IDENTIFIER", 
+                                                             "HOST", "CRYPTO", 
+                                                             "ISAKMP", "IPSEC", 
+                                                             "TRANSFORM_SET", 
+                                                             "ESP_DES", 
+                                                             "ESP_SHA_HMAC", 
+                                                             "AUTHENTICATION", 
+                                                             "PRE_SHARE", 
+                                                             "ENCRYPTION", 
+                                                             "DES", "HASH", 
+                                                             "MD5", "GROUP", 
+                                                             "LIFETIME", 
+                                                             "IDENTITY", 
+                                                             "MAP", "MATCH", 
+                                                             "SET", "PEER", 
+                                                             "POLICY", "KEY", 
                                                              "INT", "IP_ADDR", 
                                                              "SUB_ADDR", 
                                                              "DOMAIN_NAME", 
@@ -156,7 +225,8 @@ export default class CiscoIOSParser extends Parser {
 		"config", "line", "statement", "exec_stmt", "enable_stmt", "priv_stmt", 
 		"conft_stmt", "global_stmt", "grundkonfig_stmt", "linecon_stmt", "linecon_body", 
 		"linevty_stmt", "linevty_body", "ospf_stmt", "ospf_body", "int_stmt", 
-		"int_body", "rip_stmt", "rip_body", "dhcp_stmt", "dhcp_body",
+		"int_body", "rip_stmt", "rip_body", "dhcp_stmt", "dhcp_body", "vpn_stmt", 
+		"vpn_isakmp_body", "vpn_crypto_map_body",
 	];
 	public get grammarFileName(): string { return "CiscoIOS.g4"; }
 	public get literalNames(): (string | null)[] { return CiscoIOSParser.literalNames; }
@@ -180,21 +250,21 @@ export default class CiscoIOSParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 43;
+			this.state = 49;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 42;
+				this.state = 48;
 				this.line();
 				}
 				}
-				this.state = 45;
+				this.state = 51;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 199918) !== 0) || _la===43 || _la===46);
-			this.state = 47;
+			} while ((((_la) & ~0x1F) === 0 && ((1 << _la) & 396526) !== 0) || ((((_la - 44)) & ~0x1F) === 0 && ((1 << (_la - 44)) & 603979777) !== 0));
+			this.state = 53;
 			this.match(CiscoIOSParser.EOF);
 			}
 		}
@@ -217,13 +287,13 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: LineContext = new LineContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 2, CiscoIOSParser.RULE_line);
 		try {
-			this.state = 51;
+			this.state = 57;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 49;
+				this.state = 55;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
@@ -235,12 +305,13 @@ export default class CiscoIOSParser extends Parser {
 			case 7:
 			case 10:
 			case 11:
-			case 16:
 			case 17:
-			case 43:
+			case 18:
+			case 44:
+			case 70:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 50;
+				this.state = 56;
 				this.statement();
 				}
 				break;
@@ -267,20 +338,20 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: StatementContext = new StatementContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 4, CiscoIOSParser.RULE_statement);
 		try {
-			this.state = 57;
+			this.state = 63;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case 1:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 53;
+				this.state = 59;
 				this.exec_stmt();
 				}
 				break;
 			case 2:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 54;
+				this.state = 60;
 				this.priv_stmt();
 				}
 				break;
@@ -289,19 +360,20 @@ export default class CiscoIOSParser extends Parser {
 			case 7:
 			case 10:
 			case 11:
-			case 16:
 			case 17:
-			case 43:
+			case 18:
+			case 44:
+			case 70:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 55;
+				this.state = 61;
 				this.global_stmt();
 				}
 				break;
 			case 5:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 56;
+				this.state = 62;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -330,7 +402,7 @@ export default class CiscoIOSParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 59;
+			this.state = 65;
 			this.enable_stmt();
 			}
 		}
@@ -355,7 +427,7 @@ export default class CiscoIOSParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 61;
+			this.state = 67;
 			this.match(CiscoIOSParser.ENABLE);
 			}
 		}
@@ -380,7 +452,7 @@ export default class CiscoIOSParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 63;
+			this.state = 69;
 			this.conft_stmt();
 			}
 		}
@@ -405,7 +477,7 @@ export default class CiscoIOSParser extends Parser {
 		try {
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 65;
+			this.state = 71;
 			this.match(CiscoIOSParser.CONFT);
 			}
 		}
@@ -428,56 +500,63 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Global_stmtContext = new Global_stmtContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 14, CiscoIOSParser.RULE_global_stmt);
 		try {
-			this.state = 74;
+			this.state = 81;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 3, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 67;
+				this.state = 73;
 				this.ospf_stmt();
 				}
 				break;
 			case 2:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 68;
+				this.state = 74;
 				this.int_stmt();
 				}
 				break;
 			case 3:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 69;
+				this.state = 75;
 				this.rip_stmt();
 				}
 				break;
 			case 4:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 70;
+				this.state = 76;
 				this.grundkonfig_stmt();
 				}
 				break;
 			case 5:
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 71;
+				this.state = 77;
 				this.linecon_stmt();
 				}
 				break;
 			case 6:
 				this.enterOuterAlt(localctx, 6);
 				{
-				this.state = 72;
+				this.state = 78;
 				this.linevty_stmt();
 				}
 				break;
 			case 7:
 				this.enterOuterAlt(localctx, 7);
 				{
-				this.state = 73;
+				this.state = 79;
 				this.dhcp_stmt();
+				}
+				break;
+			case 8:
+				this.enterOuterAlt(localctx, 8);
+				{
+				this.state = 80;
+				this.vpn_stmt();
 				}
 				break;
 			}
@@ -501,74 +580,96 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Grundkonfig_stmtContext = new Grundkonfig_stmtContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 16, CiscoIOSParser.RULE_grundkonfig_stmt);
 		try {
-			this.state = 95;
+			this.state = 108;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 4, this._ctx) ) {
 			case 1:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 76;
+				this.state = 83;
 				this.match(CiscoIOSParser.HOSTNAME);
-				this.state = 77;
+				this.state = 84;
 				this.match(CiscoIOSParser.STR);
 				}
 				break;
 			case 2:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 78;
+				this.state = 85;
 				this.match(CiscoIOSParser.BANNER);
-				this.state = 79;
+				this.state = 86;
 				this.match(CiscoIOSParser.MOTD);
-				this.state = 80;
+				this.state = 87;
 				this.match(CiscoIOSParser.BANNER_TEXT);
 				}
 				break;
 			case 3:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 81;
+				this.state = 88;
 				this.match(CiscoIOSParser.USERNAME);
-				this.state = 82;
+				this.state = 89;
 				this.match(CiscoIOSParser.STR);
 				}
 				break;
 			case 4:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 83;
+				this.state = 90;
 				this.match(CiscoIOSParser.IP);
-				this.state = 84;
+				this.state = 91;
 				this.match(CiscoIOSParser.DOMAIN);
-				this.state = 85;
+				this.state = 92;
 				this.match(CiscoIOSParser.NAME);
-				this.state = 86;
+				this.state = 93;
 				this.match(CiscoIOSParser.DOMAIN_NAME);
 				}
 				break;
 			case 5:
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 87;
+				this.state = 94;
 				this.match(CiscoIOSParser.NO);
-				this.state = 88;
+				this.state = 95;
 				this.match(CiscoIOSParser.IP);
-				this.state = 89;
+				this.state = 96;
 				this.match(CiscoIOSParser.DOMAIN);
-				this.state = 90;
+				this.state = 97;
 				this.match(CiscoIOSParser.NAME);
 				}
 				break;
 			case 6:
 				this.enterOuterAlt(localctx, 6);
 				{
-				this.state = 91;
+				this.state = 98;
 				this.match(CiscoIOSParser.IP);
-				this.state = 92;
+				this.state = 99;
+				this.match(CiscoIOSParser.DOMAINNAME);
+				this.state = 100;
+				this.match(CiscoIOSParser.DOMAIN_NAME);
+				}
+				break;
+			case 7:
+				this.enterOuterAlt(localctx, 7);
+				{
+				this.state = 101;
+				this.match(CiscoIOSParser.NO);
+				this.state = 102;
+				this.match(CiscoIOSParser.IP);
+				this.state = 103;
+				this.match(CiscoIOSParser.DOMAINNAME);
+				}
+				break;
+			case 8:
+				this.enterOuterAlt(localctx, 8);
+				{
+				this.state = 104;
+				this.match(CiscoIOSParser.IP);
+				this.state = 105;
 				this.match(CiscoIOSParser.SSH);
-				this.state = 93;
+				this.state = 106;
 				this.match(CiscoIOSParser.VERSION);
-				this.state = 94;
+				this.state = 107;
 				this.match(CiscoIOSParser.INT);
 				}
 				break;
@@ -596,34 +697,34 @@ export default class CiscoIOSParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 97;
+			this.state = 110;
 			this.match(CiscoIOSParser.LINE);
-			this.state = 98;
+			this.state = 111;
 			this.match(CiscoIOSParser.CON);
-			this.state = 99;
+			this.state = 112;
 			this.match(CiscoIOSParser.INT);
-			this.state = 103;
+			this.state = 116;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 100;
+					this.state = 113;
 					this.linecon_body();
 					}
 					}
 				}
-				this.state = 105;
+				this.state = 118;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
 			}
-			this.state = 107;
+			this.state = 120;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 6, this._ctx) ) {
 			case 1:
 				{
-				this.state = 106;
+				this.state = 119;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -649,42 +750,42 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Linecon_bodyContext = new Linecon_bodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 20, CiscoIOSParser.RULE_linecon_body);
 		try {
-			this.state = 117;
+			this.state = 130;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 109;
+				this.state = 122;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
-			case 20:
+			case 21:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 110;
+				this.state = 123;
 				this.match(CiscoIOSParser.LOGIN);
-				this.state = 111;
+				this.state = 124;
 				this.match(CiscoIOSParser.LOCAL);
 				}
 				break;
-			case 22:
+			case 23:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 112;
+				this.state = 125;
 				this.match(CiscoIOSParser.LOGGING);
-				this.state = 113;
+				this.state = 126;
 				this.match(CiscoIOSParser.SYNCHRONUS);
 				}
 				break;
-			case 24:
+			case 25:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 114;
+				this.state = 127;
 				this.match(CiscoIOSParser.EXEC_TIMEOUT);
-				this.state = 115;
+				this.state = 128;
 				this.match(CiscoIOSParser.INT);
-				this.state = 116;
+				this.state = 129;
 				this.match(CiscoIOSParser.INT);
 				}
 				break;
@@ -714,36 +815,36 @@ export default class CiscoIOSParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 119;
+			this.state = 132;
 			this.match(CiscoIOSParser.LINE);
-			this.state = 120;
+			this.state = 133;
 			this.match(CiscoIOSParser.VTY);
-			this.state = 121;
+			this.state = 134;
 			this.match(CiscoIOSParser.INT);
-			this.state = 122;
+			this.state = 135;
 			this.match(CiscoIOSParser.INT);
-			this.state = 126;
+			this.state = 139;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 8, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 123;
+					this.state = 136;
 					this.linevty_body();
 					}
 					}
 				}
-				this.state = 128;
+				this.state = 141;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 8, this._ctx);
 			}
-			this.state = 130;
+			this.state = 143;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 9, this._ctx) ) {
 			case 1:
 				{
-				this.state = 129;
+				this.state = 142;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -769,55 +870,55 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Linevty_bodyContext = new Linevty_bodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 24, CiscoIOSParser.RULE_linevty_body);
 		try {
-			this.state = 144;
+			this.state = 157;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 132;
+				this.state = 145;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
-			case 20:
+			case 21:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 133;
+				this.state = 146;
 				this.match(CiscoIOSParser.LOGIN);
-				this.state = 134;
+				this.state = 147;
 				this.match(CiscoIOSParser.LOCAL);
 				}
 				break;
-			case 22:
+			case 23:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 135;
+				this.state = 148;
 				this.match(CiscoIOSParser.LOGGING);
-				this.state = 136;
+				this.state = 149;
 				this.match(CiscoIOSParser.SYNCHRONUS);
 				}
 				break;
-			case 24:
+			case 25:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 137;
+				this.state = 150;
 				this.match(CiscoIOSParser.EXEC_TIMEOUT);
-				this.state = 138;
+				this.state = 151;
 				this.match(CiscoIOSParser.INT);
-				this.state = 139;
+				this.state = 152;
 				this.match(CiscoIOSParser.INT);
 				}
 				break;
-			case 25:
+			case 26:
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 140;
+				this.state = 153;
 				this.match(CiscoIOSParser.TRANSPORT);
-				this.state = 141;
+				this.state = 154;
 				this.match(CiscoIOSParser.INPUT);
-				this.state = 142;
+				this.state = 155;
 				this.match(CiscoIOSParser.SSH);
-				this.state = 143;
+				this.state = 156;
 				this.match(CiscoIOSParser.TELNET);
 				}
 				break;
@@ -847,34 +948,34 @@ export default class CiscoIOSParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 146;
+			this.state = 159;
 			this.match(CiscoIOSParser.ROUTER);
-			this.state = 147;
+			this.state = 160;
 			this.match(CiscoIOSParser.OSPF);
-			this.state = 148;
+			this.state = 161;
 			this.match(CiscoIOSParser.INT);
-			this.state = 152;
+			this.state = 165;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 11, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 149;
+					this.state = 162;
 					this.ospf_body();
 					}
 					}
 				}
-				this.state = 154;
+				this.state = 167;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 11, this._ctx);
 			}
-			this.state = 156;
+			this.state = 169;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 12, this._ctx) ) {
 			case 1:
 				{
-				this.state = 155;
+				this.state = 168;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -900,44 +1001,44 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Ospf_bodyContext = new Ospf_bodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 28, CiscoIOSParser.RULE_ospf_body);
 		try {
-			this.state = 167;
+			this.state = 180;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 158;
+				this.state = 171;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
-			case 42:
+			case 69:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 159;
+				this.state = 172;
 				this.match(CiscoIOSParser.NETWORK);
-				this.state = 160;
+				this.state = 173;
 				this.match(CiscoIOSParser.IP_ADDR);
-				this.state = 161;
+				this.state = 174;
 				this.match(CiscoIOSParser.IP_ADDR);
-				}
-				break;
-			case 28:
-				this.enterOuterAlt(localctx, 3);
-				{
-				this.state = 162;
-				this.match(CiscoIOSParser.PASSIVE_INTERFACE);
-				this.state = 163;
-				this.match(CiscoIOSParser.INT_NAME);
-				this.state = 164;
-				this.match(CiscoIOSParser.INT_NUM);
 				}
 				break;
 			case 29:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 175;
+				this.match(CiscoIOSParser.PASSIVE_INTERFACE);
+				this.state = 176;
+				this.match(CiscoIOSParser.INT_NAME);
+				this.state = 177;
+				this.match(CiscoIOSParser.INT_NUM);
+				}
+				break;
+			case 30:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 165;
+				this.state = 178;
 				this.match(CiscoIOSParser.ROUTER_ID);
-				this.state = 166;
+				this.state = 179;
 				this.match(CiscoIOSParser.IP_ADDR);
 				}
 				break;
@@ -967,34 +1068,34 @@ export default class CiscoIOSParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 169;
+			this.state = 182;
 			this.match(CiscoIOSParser.INTERFACE);
-			this.state = 170;
+			this.state = 183;
 			this.match(CiscoIOSParser.INT_NAME);
-			this.state = 171;
+			this.state = 184;
 			this.match(CiscoIOSParser.INT_NUM);
-			this.state = 175;
+			this.state = 188;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 14, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 172;
+					this.state = 185;
 					this.int_body();
 					}
 					}
 				}
-				this.state = 177;
+				this.state = 190;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 14, this._ctx);
 			}
-			this.state = 179;
+			this.state = 192;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 15, this._ctx) ) {
 			case 1:
 				{
-				this.state = 178;
+				this.state = 191;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -1021,64 +1122,75 @@ export default class CiscoIOSParser extends Parser {
 		this.enterRule(localctx, 32, CiscoIOSParser.RULE_int_body);
 		let _la: number;
 		try {
-			this.state = 195;
+			this.state = 211;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 181;
+				this.state = 194;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
 			case 6:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 182;
+				this.state = 195;
 				this.match(CiscoIOSParser.NO);
-				this.state = 183;
+				this.state = 196;
 				this.match(CiscoIOSParser.SHUT);
+				}
+				break;
+			case 32:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 197;
+				this.match(CiscoIOSParser.SHUT);
+				}
+				break;
+			case 70:
+				this.enterOuterAlt(localctx, 4);
+				{
+				this.state = 198;
+				this.match(CiscoIOSParser.IP);
+				this.state = 199;
+				this.match(CiscoIOSParser.ADDR);
+				this.state = 200;
+				this.match(CiscoIOSParser.IP_ADDR);
+				this.state = 201;
+				this.match(CiscoIOSParser.IP_ADDR);
 				}
 				break;
 			case 31:
-				this.enterOuterAlt(localctx, 3);
-				{
-				this.state = 184;
-				this.match(CiscoIOSParser.SHUT);
-				}
-				break;
-			case 43:
-				this.enterOuterAlt(localctx, 4);
-				{
-				this.state = 185;
-				this.match(CiscoIOSParser.IP);
-				this.state = 186;
-				this.match(CiscoIOSParser.ADDR);
-				this.state = 187;
-				this.match(CiscoIOSParser.IP_ADDR);
-				this.state = 188;
-				this.match(CiscoIOSParser.IP_ADDR);
-				}
-				break;
-			case 30:
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 189;
+				this.state = 202;
 				this.match(CiscoIOSParser.DESCRIPTION);
-				this.state = 191;
+				this.state = 204;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 				do {
 					{
 					{
-					this.state = 190;
+					this.state = 203;
 					this.match(CiscoIOSParser.STR);
 					}
 					}
-					this.state = 193;
+					this.state = 206;
 					this._errHandler.sync(this);
 					_la = this._input.LA(1);
-				} while (_la===44);
+				} while (_la===71);
+				}
+				break;
+			case 44:
+				this.enterOuterAlt(localctx, 6);
+				{
+				this.state = 208;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 209;
+				this.match(CiscoIOSParser.MAP);
+				this.state = 210;
+				this.match(CiscoIOSParser.STR);
 				}
 				break;
 			default:
@@ -1107,32 +1219,32 @@ export default class CiscoIOSParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(localctx, 1);
 			{
-			this.state = 197;
+			this.state = 213;
 			this.match(CiscoIOSParser.ROUTER);
-			this.state = 198;
+			this.state = 214;
 			this.match(CiscoIOSParser.RIP);
-			this.state = 202;
+			this.state = 218;
 			this._errHandler.sync(this);
 			_alt = this._interp.adaptivePredict(this._input, 18, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					{
 					{
-					this.state = 199;
+					this.state = 215;
 					this.rip_body();
 					}
 					}
 				}
-				this.state = 204;
+				this.state = 220;
 				this._errHandler.sync(this);
 				_alt = this._interp.adaptivePredict(this._input, 18, this._ctx);
 			}
-			this.state = 206;
+			this.state = 222;
 			this._errHandler.sync(this);
 			switch ( this._interp.adaptivePredict(this._input, 19, this._ctx) ) {
 			case 1:
 				{
-				this.state = 205;
+				this.state = 221;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
@@ -1158,49 +1270,49 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Rip_bodyContext = new Rip_bodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 36, CiscoIOSParser.RULE_rip_body);
 		try {
-			this.state = 217;
+			this.state = 233;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 208;
+				this.state = 224;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
 			case 3:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 209;
+				this.state = 225;
 				this.match(CiscoIOSParser.ROUTER);
-				this.state = 210;
+				this.state = 226;
 				this.match(CiscoIOSParser.RIP);
 				}
 				break;
-			case 34:
+			case 35:
 				this.enterOuterAlt(localctx, 3);
 				{
-				this.state = 211;
+				this.state = 227;
 				this.match(CiscoIOSParser.VERSION);
-				this.state = 212;
+				this.state = 228;
 				this.match(CiscoIOSParser.INT);
 				}
 				break;
 			case 6:
 				this.enterOuterAlt(localctx, 4);
 				{
-				this.state = 213;
+				this.state = 229;
 				this.match(CiscoIOSParser.NO);
-				this.state = 214;
+				this.state = 230;
 				this.match(CiscoIOSParser.AUTO_SUMMARY);
 				}
 				break;
-			case 42:
+			case 69:
 				this.enterOuterAlt(localctx, 5);
 				{
-				this.state = 215;
+				this.state = 231;
 				this.match(CiscoIOSParser.NETWORK);
-				this.state = 216;
+				this.state = 232;
 				this.match(CiscoIOSParser.IP_ADDR);
 				}
 				break;
@@ -1226,44 +1338,63 @@ export default class CiscoIOSParser extends Parser {
 	public dhcp_stmt(): Dhcp_stmtContext {
 		let localctx: Dhcp_stmtContext = new Dhcp_stmtContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 38, CiscoIOSParser.RULE_dhcp_stmt);
+		let _la: number;
 		try {
-			let _alt: number;
-			this.enterOuterAlt(localctx, 1);
-			{
-			this.state = 219;
-			this.match(CiscoIOSParser.IP);
-			this.state = 220;
-			this.match(CiscoIOSParser.DHCP);
-			this.state = 221;
-			this.match(CiscoIOSParser.POOL);
-			this.state = 222;
-			this.match(CiscoIOSParser.STR);
-			this.state = 226;
+			this.state = 253;
 			this._errHandler.sync(this);
-			_alt = this._interp.adaptivePredict(this._input, 21, this._ctx);
-			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
-				if (_alt === 1) {
+			switch ( this._interp.adaptivePredict(this._input, 23, this._ctx) ) {
+			case 1:
+				this.enterOuterAlt(localctx, 1);
+				{
+				this.state = 235;
+				this.match(CiscoIOSParser.IP);
+				this.state = 236;
+				this.match(CiscoIOSParser.DHCP);
+				this.state = 237;
+				this.match(CiscoIOSParser.EXCLUDED_ADDRESS);
+				this.state = 238;
+				this.match(CiscoIOSParser.IP_ADDR);
+				this.state = 240;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				if (_la===66) {
+					{
+					this.state = 239;
+					this.match(CiscoIOSParser.IP_ADDR);
+					}
+				}
+
+				}
+				break;
+			case 2:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 242;
+				this.match(CiscoIOSParser.IP);
+				this.state = 243;
+				this.match(CiscoIOSParser.DHCP);
+				this.state = 244;
+				this.match(CiscoIOSParser.POOL);
+				this.state = 245;
+				this.match(CiscoIOSParser.STR);
+				this.state = 249;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (((((_la - 15)) & ~0x1F) === 0 && ((1 << (_la - 15)) & 503316481) !== 0) || _la===69 || _la===73) {
 					{
 					{
-					this.state = 223;
+					this.state = 246;
 					this.dhcp_body();
 					}
 					}
+					this.state = 251;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
 				}
-				this.state = 228;
-				this._errHandler.sync(this);
-				_alt = this._interp.adaptivePredict(this._input, 21, this._ctx);
-			}
-			this.state = 230;
-			this._errHandler.sync(this);
-			switch ( this._interp.adaptivePredict(this._input, 22, this._ctx) ) {
-			case 1:
-				{
-				this.state = 229;
+				this.state = 252;
 				this.match(CiscoIOSParser.EXIT);
 				}
 				break;
-			}
 			}
 		}
 		catch (re) {
@@ -1285,25 +1416,72 @@ export default class CiscoIOSParser extends Parser {
 		let localctx: Dhcp_bodyContext = new Dhcp_bodyContext(this, this._ctx, this.state);
 		this.enterRule(localctx, 40, CiscoIOSParser.RULE_dhcp_body);
 		try {
-			this.state = 236;
+			this.state = 270;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
-			case 46:
+			case 73:
 				this.enterOuterAlt(localctx, 1);
 				{
-				this.state = 232;
+				this.state = 255;
 				this.match(CiscoIOSParser.NEWLINE);
 				}
 				break;
-			case 42:
+			case 69:
 				this.enterOuterAlt(localctx, 2);
 				{
-				this.state = 233;
+				this.state = 256;
 				this.match(CiscoIOSParser.NETWORK);
-				this.state = 234;
+				this.state = 257;
 				this.match(CiscoIOSParser.IP_ADDR);
-				this.state = 235;
+				this.state = 258;
 				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			case 40:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 259;
+				this.match(CiscoIOSParser.DEFAULT_ROUTER);
+				this.state = 260;
+				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			case 41:
+				this.enterOuterAlt(localctx, 4);
+				{
+				this.state = 261;
+				this.match(CiscoIOSParser.DNS_SERVER);
+				this.state = 262;
+				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			case 15:
+				this.enterOuterAlt(localctx, 5);
+				{
+				this.state = 263;
+				this.match(CiscoIOSParser.DOMAINNAME);
+				this.state = 264;
+				this.match(CiscoIOSParser.DOMAIN_NAME);
+				}
+				break;
+			case 43:
+				this.enterOuterAlt(localctx, 6);
+				{
+				this.state = 265;
+				this.match(CiscoIOSParser.HOST);
+				this.state = 266;
+				this.match(CiscoIOSParser.IP_ADDR);
+				this.state = 267;
+				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			case 42:
+				this.enterOuterAlt(localctx, 7);
+				{
+				this.state = 268;
+				this.match(CiscoIOSParser.CLIENT_IDENTIFIER);
+				this.state = 269;
+				this.match(CiscoIOSParser.STR);
 				}
 				break;
 			default:
@@ -1324,86 +1502,410 @@ export default class CiscoIOSParser extends Parser {
 		}
 		return localctx;
 	}
+	// @RuleVersion(0)
+	public vpn_stmt(): Vpn_stmtContext {
+		let localctx: Vpn_stmtContext = new Vpn_stmtContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 42, CiscoIOSParser.RULE_vpn_stmt);
+		let _la: number;
+		try {
+			this.state = 315;
+			this._errHandler.sync(this);
+			switch ( this._interp.adaptivePredict(this._input, 27, this._ctx) ) {
+			case 1:
+				this.enterOuterAlt(localctx, 1);
+				{
+				this.state = 272;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 273;
+				this.match(CiscoIOSParser.ISAKMP);
+				this.state = 274;
+				this.match(CiscoIOSParser.ENABLE);
+				}
+				break;
+			case 2:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 275;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 276;
+				this.match(CiscoIOSParser.ISAKMP);
+				this.state = 277;
+				this.match(CiscoIOSParser.POLICY);
+				this.state = 278;
+				this.match(CiscoIOSParser.INT);
+				this.state = 282;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (((((_la - 50)) & ~0x1F) === 0 && ((1 << (_la - 50)) & 8388821) !== 0)) {
+					{
+					{
+					this.state = 279;
+					this.vpn_isakmp_body();
+					}
+					}
+					this.state = 284;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				}
+				this.state = 285;
+				this.match(CiscoIOSParser.EXIT);
+				}
+				break;
+			case 3:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 286;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 287;
+				this.match(CiscoIOSParser.ISAKMP);
+				this.state = 288;
+				this.match(CiscoIOSParser.KEY);
+				this.state = 289;
+				this.match(CiscoIOSParser.STR);
+				this.state = 290;
+				this.match(CiscoIOSParser.ADDR);
+				this.state = 291;
+				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			case 4:
+				this.enterOuterAlt(localctx, 4);
+				{
+				this.state = 292;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 293;
+				this.match(CiscoIOSParser.ISAKMP);
+				this.state = 294;
+				this.match(CiscoIOSParser.IDENTITY);
+				this.state = 295;
+				this.match(CiscoIOSParser.ADDR);
+				}
+				break;
+			case 5:
+				this.enterOuterAlt(localctx, 5);
+				{
+				this.state = 296;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 297;
+				this.match(CiscoIOSParser.IPSEC);
+				this.state = 298;
+				this.match(CiscoIOSParser.TRANSFORM_SET);
+				this.state = 299;
+				this.match(CiscoIOSParser.STR);
+				this.state = 300;
+				this.match(CiscoIOSParser.ESP_DES);
+				this.state = 301;
+				this.match(CiscoIOSParser.ESP_SHA_HMAC);
+				}
+				break;
+			case 6:
+				this.enterOuterAlt(localctx, 6);
+				{
+				this.state = 302;
+				this.match(CiscoIOSParser.CRYPTO);
+				this.state = 303;
+				this.match(CiscoIOSParser.MAP);
+				this.state = 304;
+				this.match(CiscoIOSParser.STR);
+				this.state = 305;
+				this.match(CiscoIOSParser.INT);
+				this.state = 306;
+				this.match(CiscoIOSParser.IPSEC);
+				this.state = 307;
+				this.match(CiscoIOSParser.ISAKMP);
+				this.state = 311;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				while (((((_la - 60)) & ~0x1F) === 0 && ((1 << (_la - 60)) & 8195) !== 0)) {
+					{
+					{
+					this.state = 308;
+					this.vpn_crypto_map_body();
+					}
+					}
+					this.state = 313;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				}
+				this.state = 314;
+				this.match(CiscoIOSParser.EXIT);
+				}
+				break;
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return localctx;
+	}
+	// @RuleVersion(0)
+	public vpn_isakmp_body(): Vpn_isakmp_bodyContext {
+		let localctx: Vpn_isakmp_bodyContext = new Vpn_isakmp_bodyContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 44, CiscoIOSParser.RULE_vpn_isakmp_body);
+		try {
+			this.state = 328;
+			this._errHandler.sync(this);
+			switch (this._input.LA(1)) {
+			case 73:
+				this.enterOuterAlt(localctx, 1);
+				{
+				this.state = 317;
+				this.match(CiscoIOSParser.NEWLINE);
+				}
+				break;
+			case 50:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 318;
+				this.match(CiscoIOSParser.AUTHENTICATION);
+				this.state = 319;
+				this.match(CiscoIOSParser.PRE_SHARE);
+				}
+				break;
+			case 52:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 320;
+				this.match(CiscoIOSParser.ENCRYPTION);
+				this.state = 321;
+				this.match(CiscoIOSParser.DES);
+				}
+				break;
+			case 54:
+				this.enterOuterAlt(localctx, 4);
+				{
+				this.state = 322;
+				this.match(CiscoIOSParser.HASH);
+				this.state = 323;
+				this.match(CiscoIOSParser.MD5);
+				}
+				break;
+			case 56:
+				this.enterOuterAlt(localctx, 5);
+				{
+				this.state = 324;
+				this.match(CiscoIOSParser.GROUP);
+				this.state = 325;
+				this.match(CiscoIOSParser.INT);
+				}
+				break;
+			case 57:
+				this.enterOuterAlt(localctx, 6);
+				{
+				this.state = 326;
+				this.match(CiscoIOSParser.LIFETIME);
+				this.state = 327;
+				this.match(CiscoIOSParser.INT);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return localctx;
+	}
+	// @RuleVersion(0)
+	public vpn_crypto_map_body(): Vpn_crypto_map_bodyContext {
+		let localctx: Vpn_crypto_map_bodyContext = new Vpn_crypto_map_bodyContext(this, this._ctx, this.state);
+		this.enterRule(localctx, 46, CiscoIOSParser.RULE_vpn_crypto_map_body);
+		try {
+			this.state = 340;
+			this._errHandler.sync(this);
+			switch ( this._interp.adaptivePredict(this._input, 29, this._ctx) ) {
+			case 1:
+				this.enterOuterAlt(localctx, 1);
+				{
+				this.state = 330;
+				this.match(CiscoIOSParser.NEWLINE);
+				}
+				break;
+			case 2:
+				this.enterOuterAlt(localctx, 2);
+				{
+				this.state = 331;
+				this.match(CiscoIOSParser.MATCH);
+				this.state = 332;
+				this.match(CiscoIOSParser.ADDR);
+				this.state = 333;
+				this.match(CiscoIOSParser.STR);
+				}
+				break;
+			case 3:
+				this.enterOuterAlt(localctx, 3);
+				{
+				this.state = 334;
+				this.match(CiscoIOSParser.SET);
+				this.state = 335;
+				this.match(CiscoIOSParser.TRANSFORM_SET);
+				this.state = 336;
+				this.match(CiscoIOSParser.STR);
+				}
+				break;
+			case 4:
+				this.enterOuterAlt(localctx, 4);
+				{
+				this.state = 337;
+				this.match(CiscoIOSParser.SET);
+				this.state = 338;
+				this.match(CiscoIOSParser.PEER);
+				this.state = 339;
+				this.match(CiscoIOSParser.IP_ADDR);
+				}
+				break;
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return localctx;
+	}
 
-	public static readonly _serializedATN: number[] = [4,1,48,239,2,0,7,0,2,
+	public static readonly _serializedATN: number[] = [4,1,75,343,2,0,7,0,2,
 	1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,
 	10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,
-	7,17,2,18,7,18,2,19,7,19,2,20,7,20,1,0,4,0,44,8,0,11,0,12,0,45,1,0,1,0,
-	1,1,1,1,3,1,52,8,1,1,2,1,2,1,2,1,2,3,2,58,8,2,1,3,1,3,1,4,1,4,1,5,1,5,1,
-	6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,75,8,7,1,8,1,8,1,8,1,8,1,8,1,8,1,
-	8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,96,8,8,1,9,1,9,1,
-	9,1,9,5,9,102,8,9,10,9,12,9,105,9,9,1,9,3,9,108,8,9,1,10,1,10,1,10,1,10,
-	1,10,1,10,1,10,1,10,3,10,118,8,10,1,11,1,11,1,11,1,11,1,11,5,11,125,8,11,
-	10,11,12,11,128,9,11,1,11,3,11,131,8,11,1,12,1,12,1,12,1,12,1,12,1,12,1,
-	12,1,12,1,12,1,12,1,12,1,12,3,12,145,8,12,1,13,1,13,1,13,1,13,5,13,151,
-	8,13,10,13,12,13,154,9,13,1,13,3,13,157,8,13,1,14,1,14,1,14,1,14,1,14,1,
-	14,1,14,1,14,1,14,3,14,168,8,14,1,15,1,15,1,15,1,15,5,15,174,8,15,10,15,
-	12,15,177,9,15,1,15,3,15,180,8,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,
-	16,1,16,1,16,4,16,192,8,16,11,16,12,16,193,3,16,196,8,16,1,17,1,17,1,17,
-	5,17,201,8,17,10,17,12,17,204,9,17,1,17,3,17,207,8,17,1,18,1,18,1,18,1,
-	18,1,18,1,18,1,18,1,18,1,18,3,18,218,8,18,1,19,1,19,1,19,1,19,1,19,5,19,
-	225,8,19,10,19,12,19,228,9,19,1,19,3,19,231,8,19,1,20,1,20,1,20,1,20,3,
-	20,237,8,20,1,20,0,0,21,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,
-	36,38,40,0,0,265,0,43,1,0,0,0,2,51,1,0,0,0,4,57,1,0,0,0,6,59,1,0,0,0,8,
-	61,1,0,0,0,10,63,1,0,0,0,12,65,1,0,0,0,14,74,1,0,0,0,16,95,1,0,0,0,18,97,
-	1,0,0,0,20,117,1,0,0,0,22,119,1,0,0,0,24,144,1,0,0,0,26,146,1,0,0,0,28,
-	167,1,0,0,0,30,169,1,0,0,0,32,195,1,0,0,0,34,197,1,0,0,0,36,217,1,0,0,0,
-	38,219,1,0,0,0,40,236,1,0,0,0,42,44,3,2,1,0,43,42,1,0,0,0,44,45,1,0,0,0,
-	45,43,1,0,0,0,45,46,1,0,0,0,46,47,1,0,0,0,47,48,5,0,0,1,48,1,1,0,0,0,49,
-	52,5,46,0,0,50,52,3,4,2,0,51,49,1,0,0,0,51,50,1,0,0,0,52,3,1,0,0,0,53,58,
-	3,6,3,0,54,58,3,10,5,0,55,58,3,14,7,0,56,58,5,5,0,0,57,53,1,0,0,0,57,54,
-	1,0,0,0,57,55,1,0,0,0,57,56,1,0,0,0,58,5,1,0,0,0,59,60,3,8,4,0,60,7,1,0,
-	0,0,61,62,5,1,0,0,62,9,1,0,0,0,63,64,3,12,6,0,64,11,1,0,0,0,65,66,5,2,0,
-	0,66,13,1,0,0,0,67,75,3,26,13,0,68,75,3,30,15,0,69,75,3,34,17,0,70,75,3,
-	16,8,0,71,75,3,18,9,0,72,75,3,22,11,0,73,75,3,38,19,0,74,67,1,0,0,0,74,
-	68,1,0,0,0,74,69,1,0,0,0,74,70,1,0,0,0,74,71,1,0,0,0,74,72,1,0,0,0,74,73,
-	1,0,0,0,75,15,1,0,0,0,76,77,5,10,0,0,77,96,5,44,0,0,78,79,5,11,0,0,79,80,
-	5,12,0,0,80,96,5,45,0,0,81,82,5,16,0,0,82,96,5,44,0,0,83,84,5,43,0,0,84,
-	85,5,13,0,0,85,86,5,14,0,0,86,96,5,41,0,0,87,88,5,6,0,0,88,89,5,43,0,0,
-	89,90,5,13,0,0,90,96,5,14,0,0,91,92,5,43,0,0,92,93,5,15,0,0,93,94,5,34,
-	0,0,94,96,5,38,0,0,95,76,1,0,0,0,95,78,1,0,0,0,95,81,1,0,0,0,95,83,1,0,
-	0,0,95,87,1,0,0,0,95,91,1,0,0,0,96,17,1,0,0,0,97,98,5,17,0,0,98,99,5,19,
-	0,0,99,103,5,38,0,0,100,102,3,20,10,0,101,100,1,0,0,0,102,105,1,0,0,0,103,
-	101,1,0,0,0,103,104,1,0,0,0,104,107,1,0,0,0,105,103,1,0,0,0,106,108,5,5,
-	0,0,107,106,1,0,0,0,107,108,1,0,0,0,108,19,1,0,0,0,109,118,5,46,0,0,110,
-	111,5,20,0,0,111,118,5,21,0,0,112,113,5,22,0,0,113,118,5,23,0,0,114,115,
-	5,24,0,0,115,116,5,38,0,0,116,118,5,38,0,0,117,109,1,0,0,0,117,110,1,0,
-	0,0,117,112,1,0,0,0,117,114,1,0,0,0,118,21,1,0,0,0,119,120,5,17,0,0,120,
-	121,5,18,0,0,121,122,5,38,0,0,122,126,5,38,0,0,123,125,3,24,12,0,124,123,
-	1,0,0,0,125,128,1,0,0,0,126,124,1,0,0,0,126,127,1,0,0,0,127,130,1,0,0,0,
-	128,126,1,0,0,0,129,131,5,5,0,0,130,129,1,0,0,0,130,131,1,0,0,0,131,23,
-	1,0,0,0,132,145,5,46,0,0,133,134,5,20,0,0,134,145,5,21,0,0,135,136,5,22,
-	0,0,136,145,5,23,0,0,137,138,5,24,0,0,138,139,5,38,0,0,139,145,5,38,0,0,
-	140,141,5,25,0,0,141,142,5,26,0,0,142,143,5,15,0,0,143,145,5,27,0,0,144,
-	132,1,0,0,0,144,133,1,0,0,0,144,135,1,0,0,0,144,137,1,0,0,0,144,140,1,0,
-	0,0,145,25,1,0,0,0,146,147,5,3,0,0,147,148,5,4,0,0,148,152,5,38,0,0,149,
-	151,3,28,14,0,150,149,1,0,0,0,151,154,1,0,0,0,152,150,1,0,0,0,152,153,1,
-	0,0,0,153,156,1,0,0,0,154,152,1,0,0,0,155,157,5,5,0,0,156,155,1,0,0,0,156,
-	157,1,0,0,0,157,27,1,0,0,0,158,168,5,46,0,0,159,160,5,42,0,0,160,161,5,
-	39,0,0,161,168,5,39,0,0,162,163,5,28,0,0,163,164,5,8,0,0,164,168,5,9,0,
-	0,165,166,5,29,0,0,166,168,5,39,0,0,167,158,1,0,0,0,167,159,1,0,0,0,167,
-	162,1,0,0,0,167,165,1,0,0,0,168,29,1,0,0,0,169,170,5,7,0,0,170,171,5,8,
-	0,0,171,175,5,9,0,0,172,174,3,32,16,0,173,172,1,0,0,0,174,177,1,0,0,0,175,
-	173,1,0,0,0,175,176,1,0,0,0,176,179,1,0,0,0,177,175,1,0,0,0,178,180,5,5,
-	0,0,179,178,1,0,0,0,179,180,1,0,0,0,180,31,1,0,0,0,181,196,5,46,0,0,182,
-	183,5,6,0,0,183,196,5,31,0,0,184,196,5,31,0,0,185,186,5,43,0,0,186,187,
-	5,32,0,0,187,188,5,39,0,0,188,196,5,39,0,0,189,191,5,30,0,0,190,192,5,44,
-	0,0,191,190,1,0,0,0,192,193,1,0,0,0,193,191,1,0,0,0,193,194,1,0,0,0,194,
-	196,1,0,0,0,195,181,1,0,0,0,195,182,1,0,0,0,195,184,1,0,0,0,195,185,1,0,
-	0,0,195,189,1,0,0,0,196,33,1,0,0,0,197,198,5,3,0,0,198,202,5,33,0,0,199,
-	201,3,36,18,0,200,199,1,0,0,0,201,204,1,0,0,0,202,200,1,0,0,0,202,203,1,
-	0,0,0,203,206,1,0,0,0,204,202,1,0,0,0,205,207,5,5,0,0,206,205,1,0,0,0,206,
-	207,1,0,0,0,207,35,1,0,0,0,208,218,5,46,0,0,209,210,5,3,0,0,210,218,5,33,
-	0,0,211,212,5,34,0,0,212,218,5,38,0,0,213,214,5,6,0,0,214,218,5,35,0,0,
-	215,216,5,42,0,0,216,218,5,39,0,0,217,208,1,0,0,0,217,209,1,0,0,0,217,211,
-	1,0,0,0,217,213,1,0,0,0,217,215,1,0,0,0,218,37,1,0,0,0,219,220,5,43,0,0,
-	220,221,5,36,0,0,221,222,5,37,0,0,222,226,5,44,0,0,223,225,3,40,20,0,224,
-	223,1,0,0,0,225,228,1,0,0,0,226,224,1,0,0,0,226,227,1,0,0,0,227,230,1,0,
-	0,0,228,226,1,0,0,0,229,231,5,5,0,0,230,229,1,0,0,0,230,231,1,0,0,0,231,
-	39,1,0,0,0,232,237,5,46,0,0,233,234,5,42,0,0,234,235,5,39,0,0,235,237,5,
-	39,0,0,236,232,1,0,0,0,236,233,1,0,0,0,237,41,1,0,0,0,24,45,51,57,74,95,
-	103,107,117,126,130,144,152,156,167,175,179,193,195,202,206,217,226,230,
-	236];
+	7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,2,22,7,22,2,23,7,23,1,0,4,
+	0,50,8,0,11,0,12,0,51,1,0,1,0,1,1,1,1,3,1,58,8,1,1,2,1,2,1,2,1,2,3,2,64,
+	8,2,1,3,1,3,1,4,1,4,1,5,1,5,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,
+	82,8,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
+	1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,109,8,8,1,9,1,9,1,9,1,9,5,9,115,
+	8,9,10,9,12,9,118,9,9,1,9,3,9,121,8,9,1,10,1,10,1,10,1,10,1,10,1,10,1,10,
+	1,10,3,10,131,8,10,1,11,1,11,1,11,1,11,1,11,5,11,138,8,11,10,11,12,11,141,
+	9,11,1,11,3,11,144,8,11,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,12,1,
+	12,1,12,1,12,3,12,158,8,12,1,13,1,13,1,13,1,13,5,13,164,8,13,10,13,12,13,
+	167,9,13,1,13,3,13,170,8,13,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
+	3,14,181,8,14,1,15,1,15,1,15,1,15,5,15,187,8,15,10,15,12,15,190,9,15,1,
+	15,3,15,193,8,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,4,16,
+	205,8,16,11,16,12,16,206,1,16,1,16,1,16,3,16,212,8,16,1,17,1,17,1,17,5,
+	17,217,8,17,10,17,12,17,220,9,17,1,17,3,17,223,8,17,1,18,1,18,1,18,1,18,
+	1,18,1,18,1,18,1,18,1,18,3,18,234,8,18,1,19,1,19,1,19,1,19,1,19,3,19,241,
+	8,19,1,19,1,19,1,19,1,19,1,19,5,19,248,8,19,10,19,12,19,251,9,19,1,19,3,
+	19,254,8,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,
+	1,20,1,20,1,20,3,20,271,8,20,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,5,
+	21,281,8,21,10,21,12,21,284,9,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,
+	1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,
+	21,1,21,5,21,310,8,21,10,21,12,21,313,9,21,1,21,3,21,316,8,21,1,22,1,22,
+	1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,3,22,329,8,22,1,23,1,23,1,
+	23,1,23,1,23,1,23,1,23,1,23,1,23,1,23,3,23,341,8,23,1,23,0,0,24,0,2,4,6,
+	8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,0,0,391,0,49,
+	1,0,0,0,2,57,1,0,0,0,4,63,1,0,0,0,6,65,1,0,0,0,8,67,1,0,0,0,10,69,1,0,0,
+	0,12,71,1,0,0,0,14,81,1,0,0,0,16,108,1,0,0,0,18,110,1,0,0,0,20,130,1,0,
+	0,0,22,132,1,0,0,0,24,157,1,0,0,0,26,159,1,0,0,0,28,180,1,0,0,0,30,182,
+	1,0,0,0,32,211,1,0,0,0,34,213,1,0,0,0,36,233,1,0,0,0,38,253,1,0,0,0,40,
+	270,1,0,0,0,42,315,1,0,0,0,44,328,1,0,0,0,46,340,1,0,0,0,48,50,3,2,1,0,
+	49,48,1,0,0,0,50,51,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,53,1,0,0,0,53,
+	54,5,0,0,1,54,1,1,0,0,0,55,58,5,73,0,0,56,58,3,4,2,0,57,55,1,0,0,0,57,56,
+	1,0,0,0,58,3,1,0,0,0,59,64,3,6,3,0,60,64,3,10,5,0,61,64,3,14,7,0,62,64,
+	5,5,0,0,63,59,1,0,0,0,63,60,1,0,0,0,63,61,1,0,0,0,63,62,1,0,0,0,64,5,1,
+	0,0,0,65,66,3,8,4,0,66,7,1,0,0,0,67,68,5,1,0,0,68,9,1,0,0,0,69,70,3,12,
+	6,0,70,11,1,0,0,0,71,72,5,2,0,0,72,13,1,0,0,0,73,82,3,26,13,0,74,82,3,30,
+	15,0,75,82,3,34,17,0,76,82,3,16,8,0,77,82,3,18,9,0,78,82,3,22,11,0,79,82,
+	3,38,19,0,80,82,3,42,21,0,81,73,1,0,0,0,81,74,1,0,0,0,81,75,1,0,0,0,81,
+	76,1,0,0,0,81,77,1,0,0,0,81,78,1,0,0,0,81,79,1,0,0,0,81,80,1,0,0,0,82,15,
+	1,0,0,0,83,84,5,10,0,0,84,109,5,71,0,0,85,86,5,11,0,0,86,87,5,12,0,0,87,
+	109,5,72,0,0,88,89,5,17,0,0,89,109,5,71,0,0,90,91,5,70,0,0,91,92,5,13,0,
+	0,92,93,5,14,0,0,93,109,5,68,0,0,94,95,5,6,0,0,95,96,5,70,0,0,96,97,5,13,
+	0,0,97,109,5,14,0,0,98,99,5,70,0,0,99,100,5,15,0,0,100,109,5,68,0,0,101,
+	102,5,6,0,0,102,103,5,70,0,0,103,109,5,15,0,0,104,105,5,70,0,0,105,106,
+	5,16,0,0,106,107,5,35,0,0,107,109,5,65,0,0,108,83,1,0,0,0,108,85,1,0,0,
+	0,108,88,1,0,0,0,108,90,1,0,0,0,108,94,1,0,0,0,108,98,1,0,0,0,108,101,1,
+	0,0,0,108,104,1,0,0,0,109,17,1,0,0,0,110,111,5,18,0,0,111,112,5,20,0,0,
+	112,116,5,65,0,0,113,115,3,20,10,0,114,113,1,0,0,0,115,118,1,0,0,0,116,
+	114,1,0,0,0,116,117,1,0,0,0,117,120,1,0,0,0,118,116,1,0,0,0,119,121,5,5,
+	0,0,120,119,1,0,0,0,120,121,1,0,0,0,121,19,1,0,0,0,122,131,5,73,0,0,123,
+	124,5,21,0,0,124,131,5,22,0,0,125,126,5,23,0,0,126,131,5,24,0,0,127,128,
+	5,25,0,0,128,129,5,65,0,0,129,131,5,65,0,0,130,122,1,0,0,0,130,123,1,0,
+	0,0,130,125,1,0,0,0,130,127,1,0,0,0,131,21,1,0,0,0,132,133,5,18,0,0,133,
+	134,5,19,0,0,134,135,5,65,0,0,135,139,5,65,0,0,136,138,3,24,12,0,137,136,
+	1,0,0,0,138,141,1,0,0,0,139,137,1,0,0,0,139,140,1,0,0,0,140,143,1,0,0,0,
+	141,139,1,0,0,0,142,144,5,5,0,0,143,142,1,0,0,0,143,144,1,0,0,0,144,23,
+	1,0,0,0,145,158,5,73,0,0,146,147,5,21,0,0,147,158,5,22,0,0,148,149,5,23,
+	0,0,149,158,5,24,0,0,150,151,5,25,0,0,151,152,5,65,0,0,152,158,5,65,0,0,
+	153,154,5,26,0,0,154,155,5,27,0,0,155,156,5,16,0,0,156,158,5,28,0,0,157,
+	145,1,0,0,0,157,146,1,0,0,0,157,148,1,0,0,0,157,150,1,0,0,0,157,153,1,0,
+	0,0,158,25,1,0,0,0,159,160,5,3,0,0,160,161,5,4,0,0,161,165,5,65,0,0,162,
+	164,3,28,14,0,163,162,1,0,0,0,164,167,1,0,0,0,165,163,1,0,0,0,165,166,1,
+	0,0,0,166,169,1,0,0,0,167,165,1,0,0,0,168,170,5,5,0,0,169,168,1,0,0,0,169,
+	170,1,0,0,0,170,27,1,0,0,0,171,181,5,73,0,0,172,173,5,69,0,0,173,174,5,
+	66,0,0,174,181,5,66,0,0,175,176,5,29,0,0,176,177,5,8,0,0,177,181,5,9,0,
+	0,178,179,5,30,0,0,179,181,5,66,0,0,180,171,1,0,0,0,180,172,1,0,0,0,180,
+	175,1,0,0,0,180,178,1,0,0,0,181,29,1,0,0,0,182,183,5,7,0,0,183,184,5,8,
+	0,0,184,188,5,9,0,0,185,187,3,32,16,0,186,185,1,0,0,0,187,190,1,0,0,0,188,
+	186,1,0,0,0,188,189,1,0,0,0,189,192,1,0,0,0,190,188,1,0,0,0,191,193,5,5,
+	0,0,192,191,1,0,0,0,192,193,1,0,0,0,193,31,1,0,0,0,194,212,5,73,0,0,195,
+	196,5,6,0,0,196,212,5,32,0,0,197,212,5,32,0,0,198,199,5,70,0,0,199,200,
+	5,33,0,0,200,201,5,66,0,0,201,212,5,66,0,0,202,204,5,31,0,0,203,205,5,71,
+	0,0,204,203,1,0,0,0,205,206,1,0,0,0,206,204,1,0,0,0,206,207,1,0,0,0,207,
+	212,1,0,0,0,208,209,5,44,0,0,209,210,5,59,0,0,210,212,5,71,0,0,211,194,
+	1,0,0,0,211,195,1,0,0,0,211,197,1,0,0,0,211,198,1,0,0,0,211,202,1,0,0,0,
+	211,208,1,0,0,0,212,33,1,0,0,0,213,214,5,3,0,0,214,218,5,34,0,0,215,217,
+	3,36,18,0,216,215,1,0,0,0,217,220,1,0,0,0,218,216,1,0,0,0,218,219,1,0,0,
+	0,219,222,1,0,0,0,220,218,1,0,0,0,221,223,5,5,0,0,222,221,1,0,0,0,222,223,
+	1,0,0,0,223,35,1,0,0,0,224,234,5,73,0,0,225,226,5,3,0,0,226,234,5,34,0,
+	0,227,228,5,35,0,0,228,234,5,65,0,0,229,230,5,6,0,0,230,234,5,36,0,0,231,
+	232,5,69,0,0,232,234,5,66,0,0,233,224,1,0,0,0,233,225,1,0,0,0,233,227,1,
+	0,0,0,233,229,1,0,0,0,233,231,1,0,0,0,234,37,1,0,0,0,235,236,5,70,0,0,236,
+	237,5,37,0,0,237,238,5,39,0,0,238,240,5,66,0,0,239,241,5,66,0,0,240,239,
+	1,0,0,0,240,241,1,0,0,0,241,254,1,0,0,0,242,243,5,70,0,0,243,244,5,37,0,
+	0,244,245,5,38,0,0,245,249,5,71,0,0,246,248,3,40,20,0,247,246,1,0,0,0,248,
+	251,1,0,0,0,249,247,1,0,0,0,249,250,1,0,0,0,250,252,1,0,0,0,251,249,1,0,
+	0,0,252,254,5,5,0,0,253,235,1,0,0,0,253,242,1,0,0,0,254,39,1,0,0,0,255,
+	271,5,73,0,0,256,257,5,69,0,0,257,258,5,66,0,0,258,271,5,66,0,0,259,260,
+	5,40,0,0,260,271,5,66,0,0,261,262,5,41,0,0,262,271,5,66,0,0,263,264,5,15,
+	0,0,264,271,5,68,0,0,265,266,5,43,0,0,266,267,5,66,0,0,267,271,5,66,0,0,
+	268,269,5,42,0,0,269,271,5,71,0,0,270,255,1,0,0,0,270,256,1,0,0,0,270,259,
+	1,0,0,0,270,261,1,0,0,0,270,263,1,0,0,0,270,265,1,0,0,0,270,268,1,0,0,0,
+	271,41,1,0,0,0,272,273,5,44,0,0,273,274,5,45,0,0,274,316,5,1,0,0,275,276,
+	5,44,0,0,276,277,5,45,0,0,277,278,5,63,0,0,278,282,5,65,0,0,279,281,3,44,
+	22,0,280,279,1,0,0,0,281,284,1,0,0,0,282,280,1,0,0,0,282,283,1,0,0,0,283,
+	285,1,0,0,0,284,282,1,0,0,0,285,316,5,5,0,0,286,287,5,44,0,0,287,288,5,
+	45,0,0,288,289,5,64,0,0,289,290,5,71,0,0,290,291,5,33,0,0,291,316,5,66,
+	0,0,292,293,5,44,0,0,293,294,5,45,0,0,294,295,5,58,0,0,295,316,5,33,0,0,
+	296,297,5,44,0,0,297,298,5,46,0,0,298,299,5,47,0,0,299,300,5,71,0,0,300,
+	301,5,48,0,0,301,316,5,49,0,0,302,303,5,44,0,0,303,304,5,59,0,0,304,305,
+	5,71,0,0,305,306,5,65,0,0,306,307,5,46,0,0,307,311,5,45,0,0,308,310,3,46,
+	23,0,309,308,1,0,0,0,310,313,1,0,0,0,311,309,1,0,0,0,311,312,1,0,0,0,312,
+	314,1,0,0,0,313,311,1,0,0,0,314,316,5,5,0,0,315,272,1,0,0,0,315,275,1,0,
+	0,0,315,286,1,0,0,0,315,292,1,0,0,0,315,296,1,0,0,0,315,302,1,0,0,0,316,
+	43,1,0,0,0,317,329,5,73,0,0,318,319,5,50,0,0,319,329,5,51,0,0,320,321,5,
+	52,0,0,321,329,5,53,0,0,322,323,5,54,0,0,323,329,5,55,0,0,324,325,5,56,
+	0,0,325,329,5,65,0,0,326,327,5,57,0,0,327,329,5,65,0,0,328,317,1,0,0,0,
+	328,318,1,0,0,0,328,320,1,0,0,0,328,322,1,0,0,0,328,324,1,0,0,0,328,326,
+	1,0,0,0,329,45,1,0,0,0,330,341,5,73,0,0,331,332,5,60,0,0,332,333,5,33,0,
+	0,333,341,5,71,0,0,334,335,5,61,0,0,335,336,5,47,0,0,336,341,5,71,0,0,337,
+	338,5,61,0,0,338,339,5,62,0,0,339,341,5,66,0,0,340,330,1,0,0,0,340,331,
+	1,0,0,0,340,334,1,0,0,0,340,337,1,0,0,0,341,47,1,0,0,0,30,51,57,63,81,108,
+	116,120,130,139,143,157,165,169,180,188,192,206,211,218,222,233,240,249,
+	253,270,282,311,315,328,340];
 
 	private static __ATN: ATN;
 	public static get _ATN(): ATN {
@@ -1687,6 +2189,9 @@ export class Global_stmtContext extends ParserRuleContext {
 	public dhcp_stmt(): Dhcp_stmtContext {
 		return this.getTypedRuleContext(Dhcp_stmtContext, 0) as Dhcp_stmtContext;
 	}
+	public vpn_stmt(): Vpn_stmtContext {
+		return this.getTypedRuleContext(Vpn_stmtContext, 0) as Vpn_stmtContext;
+	}
     public get ruleIndex(): number {
     	return CiscoIOSParser.RULE_global_stmt;
 	}
@@ -1748,6 +2253,9 @@ export class Grundkonfig_stmtContext extends ParserRuleContext {
 	}
 	public NO(): TerminalNode {
 		return this.getToken(CiscoIOSParser.NO, 0);
+	}
+	public DOMAINNAME(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DOMAINNAME, 0);
 	}
 	public SSH(): TerminalNode {
 		return this.getToken(CiscoIOSParser.SSH, 0);
@@ -2179,6 +2687,12 @@ export class Int_bodyContext extends ParserRuleContext {
 	public STR(i: number): TerminalNode {
 		return this.getToken(CiscoIOSParser.STR, i);
 	}
+	public CRYPTO(): TerminalNode {
+		return this.getToken(CiscoIOSParser.CRYPTO, 0);
+	}
+	public MAP(): TerminalNode {
+		return this.getToken(CiscoIOSParser.MAP, 0);
+	}
     public get ruleIndex(): number {
     	return CiscoIOSParser.RULE_int_body;
 	}
@@ -2314,20 +2828,29 @@ export class Dhcp_stmtContext extends ParserRuleContext {
 	public DHCP(): TerminalNode {
 		return this.getToken(CiscoIOSParser.DHCP, 0);
 	}
+	public EXCLUDED_ADDRESS(): TerminalNode {
+		return this.getToken(CiscoIOSParser.EXCLUDED_ADDRESS, 0);
+	}
+	public IP_ADDR_list(): TerminalNode[] {
+	    	return this.getTokens(CiscoIOSParser.IP_ADDR);
+	}
+	public IP_ADDR(i: number): TerminalNode {
+		return this.getToken(CiscoIOSParser.IP_ADDR, i);
+	}
 	public POOL(): TerminalNode {
 		return this.getToken(CiscoIOSParser.POOL, 0);
 	}
 	public STR(): TerminalNode {
 		return this.getToken(CiscoIOSParser.STR, 0);
 	}
+	public EXIT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.EXIT, 0);
+	}
 	public dhcp_body_list(): Dhcp_bodyContext[] {
 		return this.getTypedRuleContexts(Dhcp_bodyContext) as Dhcp_bodyContext[];
 	}
 	public dhcp_body(i: number): Dhcp_bodyContext {
 		return this.getTypedRuleContext(Dhcp_bodyContext, i) as Dhcp_bodyContext;
-	}
-	public EXIT(): TerminalNode {
-		return this.getToken(CiscoIOSParser.EXIT, 0);
 	}
     public get ruleIndex(): number {
     	return CiscoIOSParser.RULE_dhcp_stmt;
@@ -2370,6 +2893,27 @@ export class Dhcp_bodyContext extends ParserRuleContext {
 	public IP_ADDR(i: number): TerminalNode {
 		return this.getToken(CiscoIOSParser.IP_ADDR, i);
 	}
+	public DEFAULT_ROUTER(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DEFAULT_ROUTER, 0);
+	}
+	public DNS_SERVER(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DNS_SERVER, 0);
+	}
+	public DOMAINNAME(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DOMAINNAME, 0);
+	}
+	public DOMAIN_NAME(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DOMAIN_NAME, 0);
+	}
+	public HOST(): TerminalNode {
+		return this.getToken(CiscoIOSParser.HOST, 0);
+	}
+	public CLIENT_IDENTIFIER(): TerminalNode {
+		return this.getToken(CiscoIOSParser.CLIENT_IDENTIFIER, 0);
+	}
+	public STR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.STR, 0);
+	}
     public get ruleIndex(): number {
     	return CiscoIOSParser.RULE_dhcp_body;
 	}
@@ -2387,6 +2931,207 @@ export class Dhcp_bodyContext extends ParserRuleContext {
 	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
 		if (visitor.visitDhcp_body) {
 			return visitor.visitDhcp_body(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class Vpn_stmtContext extends ParserRuleContext {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
+		super(parent, invokingState);
+    	this.parser = parser;
+	}
+	public CRYPTO(): TerminalNode {
+		return this.getToken(CiscoIOSParser.CRYPTO, 0);
+	}
+	public ISAKMP(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ISAKMP, 0);
+	}
+	public ENABLE(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ENABLE, 0);
+	}
+	public POLICY(): TerminalNode {
+		return this.getToken(CiscoIOSParser.POLICY, 0);
+	}
+	public INT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.INT, 0);
+	}
+	public EXIT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.EXIT, 0);
+	}
+	public vpn_isakmp_body_list(): Vpn_isakmp_bodyContext[] {
+		return this.getTypedRuleContexts(Vpn_isakmp_bodyContext) as Vpn_isakmp_bodyContext[];
+	}
+	public vpn_isakmp_body(i: number): Vpn_isakmp_bodyContext {
+		return this.getTypedRuleContext(Vpn_isakmp_bodyContext, i) as Vpn_isakmp_bodyContext;
+	}
+	public KEY(): TerminalNode {
+		return this.getToken(CiscoIOSParser.KEY, 0);
+	}
+	public STR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.STR, 0);
+	}
+	public ADDR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ADDR, 0);
+	}
+	public IP_ADDR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.IP_ADDR, 0);
+	}
+	public IDENTITY(): TerminalNode {
+		return this.getToken(CiscoIOSParser.IDENTITY, 0);
+	}
+	public IPSEC(): TerminalNode {
+		return this.getToken(CiscoIOSParser.IPSEC, 0);
+	}
+	public TRANSFORM_SET(): TerminalNode {
+		return this.getToken(CiscoIOSParser.TRANSFORM_SET, 0);
+	}
+	public ESP_DES(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ESP_DES, 0);
+	}
+	public ESP_SHA_HMAC(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ESP_SHA_HMAC, 0);
+	}
+	public MAP(): TerminalNode {
+		return this.getToken(CiscoIOSParser.MAP, 0);
+	}
+	public vpn_crypto_map_body_list(): Vpn_crypto_map_bodyContext[] {
+		return this.getTypedRuleContexts(Vpn_crypto_map_bodyContext) as Vpn_crypto_map_bodyContext[];
+	}
+	public vpn_crypto_map_body(i: number): Vpn_crypto_map_bodyContext {
+		return this.getTypedRuleContext(Vpn_crypto_map_bodyContext, i) as Vpn_crypto_map_bodyContext;
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_vpn_stmt;
+	}
+	public enterRule(listener: CiscoIOSListener): void {
+	    if(listener.enterVpn_stmt) {
+	 		listener.enterVpn_stmt(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitVpn_stmt) {
+	 		listener.exitVpn_stmt(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitVpn_stmt) {
+			return visitor.visitVpn_stmt(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class Vpn_isakmp_bodyContext extends ParserRuleContext {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
+		super(parent, invokingState);
+    	this.parser = parser;
+	}
+	public NEWLINE(): TerminalNode {
+		return this.getToken(CiscoIOSParser.NEWLINE, 0);
+	}
+	public AUTHENTICATION(): TerminalNode {
+		return this.getToken(CiscoIOSParser.AUTHENTICATION, 0);
+	}
+	public PRE_SHARE(): TerminalNode {
+		return this.getToken(CiscoIOSParser.PRE_SHARE, 0);
+	}
+	public ENCRYPTION(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ENCRYPTION, 0);
+	}
+	public DES(): TerminalNode {
+		return this.getToken(CiscoIOSParser.DES, 0);
+	}
+	public HASH(): TerminalNode {
+		return this.getToken(CiscoIOSParser.HASH, 0);
+	}
+	public MD5(): TerminalNode {
+		return this.getToken(CiscoIOSParser.MD5, 0);
+	}
+	public GROUP(): TerminalNode {
+		return this.getToken(CiscoIOSParser.GROUP, 0);
+	}
+	public INT(): TerminalNode {
+		return this.getToken(CiscoIOSParser.INT, 0);
+	}
+	public LIFETIME(): TerminalNode {
+		return this.getToken(CiscoIOSParser.LIFETIME, 0);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_vpn_isakmp_body;
+	}
+	public enterRule(listener: CiscoIOSListener): void {
+	    if(listener.enterVpn_isakmp_body) {
+	 		listener.enterVpn_isakmp_body(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitVpn_isakmp_body) {
+	 		listener.exitVpn_isakmp_body(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitVpn_isakmp_body) {
+			return visitor.visitVpn_isakmp_body(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class Vpn_crypto_map_bodyContext extends ParserRuleContext {
+	constructor(parser?: CiscoIOSParser, parent?: ParserRuleContext, invokingState?: number) {
+		super(parent, invokingState);
+    	this.parser = parser;
+	}
+	public NEWLINE(): TerminalNode {
+		return this.getToken(CiscoIOSParser.NEWLINE, 0);
+	}
+	public MATCH(): TerminalNode {
+		return this.getToken(CiscoIOSParser.MATCH, 0);
+	}
+	public ADDR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.ADDR, 0);
+	}
+	public STR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.STR, 0);
+	}
+	public SET(): TerminalNode {
+		return this.getToken(CiscoIOSParser.SET, 0);
+	}
+	public TRANSFORM_SET(): TerminalNode {
+		return this.getToken(CiscoIOSParser.TRANSFORM_SET, 0);
+	}
+	public PEER(): TerminalNode {
+		return this.getToken(CiscoIOSParser.PEER, 0);
+	}
+	public IP_ADDR(): TerminalNode {
+		return this.getToken(CiscoIOSParser.IP_ADDR, 0);
+	}
+    public get ruleIndex(): number {
+    	return CiscoIOSParser.RULE_vpn_crypto_map_body;
+	}
+	public enterRule(listener: CiscoIOSListener): void {
+	    if(listener.enterVpn_crypto_map_body) {
+	 		listener.enterVpn_crypto_map_body(this);
+		}
+	}
+	public exitRule(listener: CiscoIOSListener): void {
+	    if(listener.exitVpn_crypto_map_body) {
+	 		listener.exitVpn_crypto_map_body(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: CiscoIOSVisitor<Result>): Result {
+		if (visitor.visitVpn_crypto_map_body) {
+			return visitor.visitVpn_crypto_map_body(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

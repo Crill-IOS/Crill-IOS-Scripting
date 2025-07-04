@@ -1,4 +1,4 @@
-// Generated from ./CiscoIOS.g4 by ANTLR 4.13.2
+// Generated from ./src/antlr/CiscoIOS.g4 by ANTLR 4.13.2
 
 import {ParseTreeVisitor} from 'antlr4';
 
@@ -24,6 +24,9 @@ import { Rip_stmtContext } from "./CiscoIOSParser.js";
 import { Rip_bodyContext } from "./CiscoIOSParser.js";
 import { Dhcp_stmtContext } from "./CiscoIOSParser.js";
 import { Dhcp_bodyContext } from "./CiscoIOSParser.js";
+import { Vpn_stmtContext } from "./CiscoIOSParser.js";
+import { Vpn_isakmp_bodyContext } from "./CiscoIOSParser.js";
+import { Vpn_crypto_map_bodyContext } from "./CiscoIOSParser.js";
 
 
 /**
@@ -160,5 +163,23 @@ export default class CiscoIOSVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitDhcp_body?: (ctx: Dhcp_bodyContext) => Result;
+	/**
+	 * Visit a parse tree produced by `CiscoIOSParser.vpn_stmt`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVpn_stmt?: (ctx: Vpn_stmtContext) => Result;
+	/**
+	 * Visit a parse tree produced by `CiscoIOSParser.vpn_isakmp_body`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVpn_isakmp_body?: (ctx: Vpn_isakmp_bodyContext) => Result;
+	/**
+	 * Visit a parse tree produced by `CiscoIOSParser.vpn_crypto_map_body`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVpn_crypto_map_body?: (ctx: Vpn_crypto_map_bodyContext) => Result;
 }
 
