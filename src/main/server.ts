@@ -247,7 +247,8 @@ connection.onCompletion(
 
 
 //Benjamin -> 05/07/25
-//funct nicht immer noch am rumprobieren
+//funct nicht. 
+//immer noch am rumprobieren
 function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
   const input = new CharStream(text)
   const lexer = new CiscoIOSLexer(input)
