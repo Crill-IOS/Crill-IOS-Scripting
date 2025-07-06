@@ -80,6 +80,7 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "antlr-ng": "^1.0.10",
     "antlr4-c3": "^3.4.4",
     "antlr4ng": "^3.0.16",
     "vscode-languageclient": "^9.0.1",
