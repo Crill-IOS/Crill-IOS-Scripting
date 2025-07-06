@@ -81,6 +81,8 @@
   },
   "dependencies": {
     "antlr4": "^4.13.2",
+    "antlr4-c3": "^3.4.4",
+    "antlr4ng": "^3.0.16",
     "antlr4ts": "^0.5.0-alpha.4",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
