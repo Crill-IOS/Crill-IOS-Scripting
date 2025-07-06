@@ -21,12 +21,6 @@ import {
 
 
 
-import CiscoIOSLexer from "./parser/CiscoIOSLexer"
-import CiscoIOSParser from "./parser/CiscoIOSParser";
-
-
-
-
 const connection = createConnection(ProposedFeatures.all);
 
 const documents = new TextDocuments(TextDocument);
