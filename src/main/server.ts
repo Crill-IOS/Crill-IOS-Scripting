@@ -22,9 +22,9 @@ import {
 
 import { CiscoIOSLexer } from "./parser/CiscoIOSLexer";
 import { CiscoIOSParser } from "./parser/CiscoIOSParser";
-import { CharStream, CommonTokenStream } from "antlr4ng";
+import { CharStream, CommonTokenStream, Parser } from "antlr4ng";
 import { commands } from "vscode";
-import { CodeCompletionCore } from "antlr4-c3";
+import { CandidatesCollection, CodeCompletionCore } from "antlr4-c3";
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -91,21 +91,14 @@ connection.onCompletion(
     console.log("offset: "+ cursorOffset);
     const text = document.getText();
 
-    getExpectedTokensAt(text, cursorOffset);
+    const expectedTokens = getExpectedTokensAt(text, cursorOffset);
     
-    return [
-      {
-        label: "test1",
-        kind: CompletionItemKind.Keyword,
-        insertTextFormat: 2,
-        insertText: "test123"
-      }
-    ];
+    return expectedTokens;
   }
 );
 
 
-function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
+function getExpectedTokensAt(text: string, cursorOffset: number): CompletionItem[]{
   const inputStream = CharStream.fromString(text);
   const lexer = new CiscoIOSLexer(inputStream);
   const tokenStream = new CommonTokenStream(lexer);
@@ -119,13 +112,33 @@ function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
 
   for (const [tokenType, _] of candidates.tokens) {
     console.log("  Token:", parser.vocabulary.getDisplayName(tokenType));
+    console.log(parser.literalNames[tokenType]);
   }
-  
+
   for (const [ruleIndex, _] of candidates.rules) {
     console.log("  Rule:", parser.ruleNames[ruleIndex]);
+    
   }
   
-  return [];
+  return getCompletionItemsFromCandidatesCollection(candidates, parser);
+}
+
+
+function getCompletionItemsFromCandidatesCollection(candidates: CandidatesCollection, parser : CiscoIOSParser): CompletionItem[]{
+  let out: CompletionItem[] = [];
+  for (const [tokenType, _] of candidates.tokens) {
+    const token = parser.vocabulary.getDisplayName(tokenType);
+    if (token){
+      const tokenName = token.toString().replaceAll("'","")
+      out.push({
+        label: tokenName,
+				kind: CompletionItemKind.Keyword,
+				insertTextFormat: 2,
+				insertText: tokenName
+      })
+    }
+  }
+  return out;
 }
 
 
