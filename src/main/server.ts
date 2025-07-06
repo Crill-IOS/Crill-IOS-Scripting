@@ -20,6 +20,11 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 
+import { CiscoIOSLexer } from "./parser/CiscoIOSLexer";
+import { CiscoIOSParser } from "./parser/CiscoIOSParser";
+import { CharStream, CommonTokenStream } from "antlr4ng";
+import { commands } from "vscode";
+import { CodeCompletionCore } from "antlr4-c3";
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -101,6 +106,16 @@ connection.onCompletion(
 
 
 function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
+  const inputStream = CharStream.fromString(text);
+  const lexer = new CiscoIOSLexer(inputStream);
+  const tokenStream = new CommonTokenStream(lexer);
+
+  const parser = new CiscoIOSParser(tokenStream);
+  const tree = parser.config()
+  
+
+  const core = new CodeCompletionCore(parser);
+  
   return [];
 }
 
