@@ -20,116 +20,18 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 
-import { InputStream, CommonTokenStream, CharStream , Lexer, BailErrorStrategy} from 'antlr4';
 
 import CiscoIOSLexer from "./parser/CiscoIOSLexer"
 import CiscoIOSParser from "./parser/CiscoIOSParser";
-import { ParserRuleContext } from "antlr4";
-import CiscoIOSVisitor from "./parser/CiscoIOSVisitor.js";
 import { SemanticTokensParams } from "vscode-languageserver";
 
 
-class CustomVisitor extends CiscoIOSVisitor<any> {
 
-  visitChildren(ctx: ParserRuleContext) {
-    if (!ctx) {
-      return;
-    }
-    if (ctx.children) {
-      return ctx.children.map(child => {
-        if (child instanceof ParserRuleContext && child.children && child.children.length != 0) {
-          return (child as any).accept(this);
-        } else {
-          return child.getText();
-        }
-      });
-    }
-  }
-}
 
 
 const connection = createConnection(ProposedFeatures.all);
 
 const documents = new TextDocuments(TextDocument);
-
-// Chat: Map für Semantic Tokens
-const tokenTypeMap: { [key: string]: string } = {
-  "ENABLE": "keyword",
-  "CONFT": "keyword",
-  "ROUTER": "keyword",
-  "OSPF": "function",
-  "EXIT": "keyword",
-  "NO": "keyword",
-  "INTERFACE": "keyword",
-  "HOSTNAME": "namespace",
-  "BANNER": "class",
-  "MOTD": "enum",
-  "DOMAIN": "keyword",
-  "NAME": "keyword",
-  "SSH": "keyword",
-  "USERNAME": "regexp",
-  "LINE": "keyword",
-  "VTY": "keyword",
-  "CON": "keyword",
-  "LOGIN": "keyword",
-  "LOCAL": "keyword",
-  "LOGGING": "keyword",
-  "SYNCHRONUS": "keyword",
-  "EXEC_TIMEOUT": "keyword",
-  "TRANSPORT": "keyword",
-  "INPUT": "keyword",
-  "TELNET": "keyword",
-  "PASSIVE_INTERFACE": "keyword",
-  "ROUTER_ID": "keyword",
-  "SHUT": "keyword",
-  "ADDR": "keyword",
-  "RIP": "keyword",
-  "VERSION": "keyword",
-  "AUTO_SUMMARY": "keyword",
-  "DHCP": "keyword",
-  "POOL": "keyword",
-  "NETWORK": "keyword",
-  "IP": "keyword",
-
-  // ====== Operanden, numerische Werte, Bezeichner ======
-  "INT": "number",
-  "INT_NUM": "number",
-  "IP_ADDR": "number",
-  "SUB_ADDR": "number",
-
-  // ====== Namen, Strings ======
-  "DOMAIN_NAME": "string",
-  "STR": "string",
-  "BANNER_TEXT": "method",
-
-  // ====== Interface-Bezeichner (z.B. GigabitEthernet0/1) ======
-  "INT_NAME": "",
-
-  // ====== Standardtypen ======
-  "ID": "variable", // falls du ID-Tokens noch nutzt
-
-};
-// - bis hier
-
-/*
-  keyword = blau
-  number = grün
-  string = orange
-  operator = nix
-  variable
-
-"keyword",
-                  "operator",
-                  "number",
-                  "string",
-                  "variable",
-                  "function",
-                  "type"
-*/
-
-
-
-
 
 
 // Initialize code
@@ -148,44 +50,7 @@ connection.onInitialize((params: InitializeParams) =>{
                 resolveProvider: true,
                 triggerCharacters: [..."abcdefghijklmnopqrstuvwxyz"]
             },
-            
-            //hoverProvider: true,
-
-            // diagnosticProvider: {
-            //     interFileDependencies: false,
-            //     workspaceDiagnostics: false
-            // },
-
-            // semanticTokensProvider: {
-            //     legend: {
-            //         tokenTypes: [
-            //             "example1", "example2"
-            //         ],
-            //         tokenModifiers: ["example3", "example4"]
-            //     }
-            // }
-
-            // Chat: für Semantic Tokens
-            semanticTokensProvider: {
-              legend: {
-                tokenTypes: [
-                  "keyword",
-                  "operator",
-                  "number",
-                  "string",
-                  "variable",
-                  "function",
-                  "type"
-                ],
-                tokenModifiers: []
-              },
-              full: true,
-              range: false
-            }
-            // - bis hier
-
         }
-		
 	};
     
     
@@ -218,11 +83,6 @@ connection.onInitialize((params: InitializeParams) =>{
 
 
 connection.onCompletion(
-  /**
-	 * @param _textDocumentPosition 
-	 * @returns a list of completionItems for Client
-	 */
-
   (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
     const document = documents.get(_textDocumentPosition.textDocument.uri);
     if (!document) {
@@ -230,9 +90,11 @@ connection.onCompletion(
       return [];
     }
 
-    const cursorOffset = document.offsetAt(_textDocumentPosition.position)
+    const cursorOffset = document.offsetAt(_textDocumentPosition.position);
     
     const text = document.getText();
+
+    getExpectedTokensAt(text, cursorOffset);
     
     return [
       {
@@ -246,30 +108,8 @@ connection.onCompletion(
 );
 
 
-//Benjamin -> 05/07/25
-//funct nicht. 
-//immer noch am rumprobieren
 function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
-  const input = new CharStream(text)
-  const lexer = new CiscoIOSLexer(input)
-  const tokens = new CommonTokenStream(lexer)
-
-  tokens.fill()
-
-  const parser = new CiscoIOSParser(tokens)
-  parser._errHandler = new BailErrorStrategy()
-
-  try {
-    parser.config()
-  }catch (e)
-  {
-    console.log("Parsing error")
-    console.log(e)
-  }
-
-  const expectedTokens = parser.getExpectedTokens();
-  return []
-  //return expectedTokens.toArray()
+  return [];
 }
 
 
@@ -281,70 +121,7 @@ connection.onCompletionResolve(
 
 
 
-
-
-// Chat: Semantic Tokens Zuweisung zu Tokens von ANTLR
-const legend = {
-  tokenTypes: [
-    "keyword",    // 0
-    "operator",   // 1 (nicht verwendet hier)
-    "number",     // 2
-    "string",     // 3 (nicht verwendet hier)
-    "variable",   // 4
-    "function",   // 5 (nicht verwendet hier)
-    "type"        // 6 (nicht verwendet hier)
-  ],
-  tokenModifiers: []
-};
-
-connection.languages.semanticTokens.on((params: SemanticTokensParams) => {
-  const document = documents.get(params.textDocument.uri);
-  if (!document) return { data: [] };
-
-  const text = document.getText();
-  const chars = new CharStream(text);
-  const lexer = new CiscoIOSLexer(chars);
-  const tokens = new CommonTokenStream(lexer);
-  tokens.fill();
-
-  const semanticTokens: number[] = [];
-  let lastLine = 0;
-  let lastChar = 0;
-
-  for (const token of tokens.tokens) {
-    if (token.type <= 0) continue;
-
-    const symbolic = CiscoIOSParser.symbolicNames[token.type];
-
-    let tokenTypeStr = null;
-    if (symbolic) tokenTypeStr = tokenTypeMap[symbolic]
-
-    if (!tokenTypeStr) continue;
-
-    const tokenTypeIndex = legend.tokenTypes.indexOf(tokenTypeStr);
-    if (tokenTypeIndex === -1) continue;
-
-    const line = token.line - 1;
-    const char = token.column;
-    const length = token.text.length;
-
-    const deltaLine = line - lastLine;
-    const deltaStart = deltaLine === 0 ? char - lastChar : char;
-
-    semanticTokens.push(deltaLine, deltaStart, length, tokenTypeIndex, 0);
-    lastLine = line;
-    lastChar = char;
-  }
-
-  return {
-    data: semanticTokens
-  };
-});
-// - bis hier
-
-
 documents.listen(connection);
-
 connection.listen();
 
 
