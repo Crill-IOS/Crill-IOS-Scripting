@@ -23,8 +23,6 @@ import {
 
 import CiscoIOSLexer from "./parser/CiscoIOSLexer"
 import CiscoIOSParser from "./parser/CiscoIOSParser";
-import { SemanticTokensParams } from "vscode-languageserver";
-
 
 
 
