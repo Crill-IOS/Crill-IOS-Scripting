@@ -72,6 +72,7 @@
     "@typescript-eslint/parser": "^8.25.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "antlr-ng": "^1.0.10",
     "antlr4ts-cli": "^0.5.0-alpha.4",
     "eslint": "^9.21.0",
     "ts-loader": "^9.5.2",
@@ -80,7 +81,6 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "antlr-ng": "^1.0.10",
     "antlr4-c3": "^3.4.4",
     "antlr4ng": "^3.0.16",
     "vscode-languageclient": "^9.0.1",
