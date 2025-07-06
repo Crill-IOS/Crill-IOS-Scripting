@@ -88,7 +88,7 @@ connection.onCompletion(
     }
 
     const cursorOffset = document.offsetAt(_textDocumentPosition.position);
-    
+    console.log("offset: "+ cursorOffset);
     const text = document.getText();
 
     getExpectedTokensAt(text, cursorOffset);
@@ -115,6 +115,15 @@ function getExpectedTokensAt(text: string, cursorOffset: number): number[]{
   
 
   const core = new CodeCompletionCore(parser);
+  const candidates = core.collectCandidates(cursorOffset);
+
+  for (const [tokenType, _] of candidates.tokens) {
+    console.log("  Token:", parser.vocabulary.getDisplayName(tokenType));
+  }
+  
+  for (const [ruleIndex, _] of candidates.rules) {
+    console.log("  Rule:", parser.ruleNames[ruleIndex]);
+  }
   
   return [];
 }
