@@ -104,7 +104,7 @@ function getExpectedTokensAt(text: string, cursorOffset: number): CompletionItem
   const tokenStream = new CommonTokenStream(lexer);
 
   const parser = new CiscoIOSParser(tokenStream);
-  const tree = parser.config()
+  const tree = parser.stat()
   
 
   const core = new CodeCompletionCore(parser);
