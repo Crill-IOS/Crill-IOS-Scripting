@@ -5,6 +5,8 @@ import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "a
 import { StatContext } from "./CiscoIOSParser.js";
 import { Enable_cmdsContext } from "./CiscoIOSParser.js";
 import { Enable_cmdContext } from "./CiscoIOSParser.js";
+import { Show_cmdContext } from "./CiscoIOSParser.js";
+import { Show_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_cmdContext } from "./CiscoIOSParser.js";
 import { Configure_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_terminal_cmdsContext } from "./CiscoIOSParser.js";
@@ -47,6 +49,26 @@ export class CiscoIOSListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitEnable_cmd?: (ctx: Enable_cmdContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.show_cmd`.
+     * @param ctx the parse tree
+     */
+    enterShow_cmd?: (ctx: Show_cmdContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.show_cmd`.
+     * @param ctx the parse tree
+     */
+    exitShow_cmd?: (ctx: Show_cmdContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.show_cmd_options`.
+     * @param ctx the parse tree
+     */
+    enterShow_cmd_options?: (ctx: Show_cmd_optionsContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.show_cmd_options`.
+     * @param ctx the parse tree
+     */
+    exitShow_cmd_options?: (ctx: Show_cmd_optionsContext) => void;
     /**
      * Enter a parse tree produced by `CiscoIOSParser.configure_cmd`.
      * @param ctx the parse tree

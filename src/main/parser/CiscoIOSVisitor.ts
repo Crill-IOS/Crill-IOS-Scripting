@@ -5,6 +5,8 @@ import { AbstractParseTreeVisitor } from "antlr4ng";
 import { StatContext } from "./CiscoIOSParser.js";
 import { Enable_cmdsContext } from "./CiscoIOSParser.js";
 import { Enable_cmdContext } from "./CiscoIOSParser.js";
+import { Show_cmdContext } from "./CiscoIOSParser.js";
+import { Show_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_cmdContext } from "./CiscoIOSParser.js";
 import { Configure_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_terminal_cmdsContext } from "./CiscoIOSParser.js";
@@ -38,6 +40,18 @@ export class CiscoIOSVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitEnable_cmd?: (ctx: Enable_cmdContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.show_cmd`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitShow_cmd?: (ctx: Show_cmdContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.show_cmd_options`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitShow_cmd_options?: (ctx: Show_cmd_optionsContext) => Result;
     /**
      * Visit a parse tree produced by `CiscoIOSParser.configure_cmd`.
      * @param ctx the parse tree
