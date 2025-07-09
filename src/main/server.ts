@@ -20,11 +20,8 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 
-import { CiscoIOSLexer } from "./parser/CiscoIOSLexer";
-import { CiscoIOSParser } from "./parser/CiscoIOSParser";
-import { CharStream, CommonTokenStream, Parser, ParserRuleContext } from "antlr4ng";
 import { commands } from "vscode";
-import { CandidatesCollection, CodeCompletionCore } from "antlr4-c3";
+
 
 
 const connection = createConnection(ProposedFeatures.all);
@@ -89,61 +86,17 @@ connection.onCompletion(
     }
 
     const cursorOffset = document.offsetAt(_textDocumentPosition.position);
-    console.log("offset: "+ cursorOffset);
-    const text = document.getText();
-
-    const expectedTokens = getExpectedTokensAt(text, cursorOffset);
     
-    return expectedTokens;
+    
+    return [{
+      label: "test",
+      insertText: "test_test"
+    }];
   }
 );
 
 
-function getExpectedTokensAt(text: string, cursorOffset: number): CompletionItem[]{
-  const inputStream = CharStream.fromString(text);
-  const lexer = new CiscoIOSLexer(inputStream);
-  const tokenStream = new CommonTokenStream(lexer);
 
-  tokenStream.seek(cursorOffset);
-  const parser = new CiscoIOSParser(tokenStream);
-  
-  const current_mode:string = parser.current_mode;
-  
-  tokenStream.seek(cursorOffset)
-  const completionParser = new CiscoIOSParser(tokenStream);
-  completionParser.current_mode = current_mode;
-  const core = new CodeCompletionCore(completionParser);
-  const candidates = core.collectCandidates(cursorOffset);
-
-  for (const [tokenType, _] of candidates.tokens) {
-    console.log("  Token:", parser.vocabulary.getDisplayName(tokenType));
-  }
-
-  for (const [ruleIndex, _] of candidates.rules) {
-    console.log("  Rule:", parser.ruleNames[ruleIndex]);
-    
-  }
-  
-  return getCompletionItemsFromCandidatesCollection(candidates, parser);
-}
-
-
-function getCompletionItemsFromCandidatesCollection(candidates: CandidatesCollection, parser : CiscoIOSParser): CompletionItem[]{
-  let out: CompletionItem[] = [];
-  for (const [tokenType, _] of candidates.tokens) {
-    const token = parser.vocabulary.getDisplayName(tokenType);
-    if (token){
-      const tokenName = token.toString().replaceAll("'","")
-      out.push({
-        label: tokenName,
-				kind: CompletionItemKind.Keyword,
-				insertTextFormat: 2,
-				insertText: tokenName
-      })
-    }
-  }
-  return out;
-}
 
 
 connection.onCompletionResolve(
