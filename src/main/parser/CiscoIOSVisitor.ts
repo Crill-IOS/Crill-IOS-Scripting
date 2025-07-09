@@ -3,15 +3,17 @@ import { AbstractParseTreeVisitor } from "antlr4ng";
 
 
 import { StatContext } from "./CiscoIOSParser.js";
+import { CommandsContext } from "./CiscoIOSParser.js";
 import { Enable_cmdsContext } from "./CiscoIOSParser.js";
-import { Enable_cmdContext } from "./CiscoIOSParser.js";
-import { Show_cmdContext } from "./CiscoIOSParser.js";
-import { Show_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_cmdContext } from "./CiscoIOSParser.js";
 import { Configure_cmd_optionsContext } from "./CiscoIOSParser.js";
-import { Configure_terminal_cmdsContext } from "./CiscoIOSParser.js";
+import { Configure_cmdsContext } from "./CiscoIOSParser.js";
 import { Hostname_cmdContext } from "./CiscoIOSParser.js";
-import { Hostname_cmd_optionsContext } from "./CiscoIOSParser.js";
+import { Interface_cmdContext } from "./CiscoIOSParser.js";
+import { Interface_cmd_optionsContext } from "./CiscoIOSParser.js";
+import { Interface_typesContext } from "./CiscoIOSParser.js";
+import { Interface_idContext } from "./CiscoIOSParser.js";
+import { Interface_cmdsContext } from "./CiscoIOSParser.js";
 
 
 /**
@@ -29,29 +31,17 @@ export class CiscoIOSVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitStat?: (ctx: StatContext) => Result;
     /**
+     * Visit a parse tree produced by `CiscoIOSParser.commands`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitCommands?: (ctx: CommandsContext) => Result;
+    /**
      * Visit a parse tree produced by `CiscoIOSParser.enable_cmds`.
      * @param ctx the parse tree
      * @return the visitor result
      */
     visitEnable_cmds?: (ctx: Enable_cmdsContext) => Result;
-    /**
-     * Visit a parse tree produced by `CiscoIOSParser.enable_cmd`.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    visitEnable_cmd?: (ctx: Enable_cmdContext) => Result;
-    /**
-     * Visit a parse tree produced by `CiscoIOSParser.show_cmd`.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    visitShow_cmd?: (ctx: Show_cmdContext) => Result;
-    /**
-     * Visit a parse tree produced by `CiscoIOSParser.show_cmd_options`.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    visitShow_cmd_options?: (ctx: Show_cmd_optionsContext) => Result;
     /**
      * Visit a parse tree produced by `CiscoIOSParser.configure_cmd`.
      * @param ctx the parse tree
@@ -65,11 +55,11 @@ export class CiscoIOSVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitConfigure_cmd_options?: (ctx: Configure_cmd_optionsContext) => Result;
     /**
-     * Visit a parse tree produced by `CiscoIOSParser.configure_terminal_cmds`.
+     * Visit a parse tree produced by `CiscoIOSParser.configure_cmds`.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    visitConfigure_terminal_cmds?: (ctx: Configure_terminal_cmdsContext) => Result;
+    visitConfigure_cmds?: (ctx: Configure_cmdsContext) => Result;
     /**
      * Visit a parse tree produced by `CiscoIOSParser.hostname_cmd`.
      * @param ctx the parse tree
@@ -77,10 +67,34 @@ export class CiscoIOSVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitHostname_cmd?: (ctx: Hostname_cmdContext) => Result;
     /**
-     * Visit a parse tree produced by `CiscoIOSParser.hostname_cmd_options`.
+     * Visit a parse tree produced by `CiscoIOSParser.interface_cmd`.
      * @param ctx the parse tree
      * @return the visitor result
      */
-    visitHostname_cmd_options?: (ctx: Hostname_cmd_optionsContext) => Result;
+    visitInterface_cmd?: (ctx: Interface_cmdContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.interface_cmd_options`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitInterface_cmd_options?: (ctx: Interface_cmd_optionsContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.interface_types`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitInterface_types?: (ctx: Interface_typesContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.interface_id`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitInterface_id?: (ctx: Interface_idContext) => Result;
+    /**
+     * Visit a parse tree produced by `CiscoIOSParser.interface_cmds`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitInterface_cmds?: (ctx: Interface_cmdsContext) => Result;
 }
 

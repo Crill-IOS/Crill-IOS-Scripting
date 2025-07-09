@@ -11,42 +11,52 @@ type int = number;
 
 
 export class CiscoIOSParser extends antlr.Parser {
-    public static readonly ENABLE = 1;
-    public static readonly SHOW = 2;
-    public static readonly RUN = 3;
-    public static readonly SHOW_IP_INT_BRIEF_TEST = 4;
-    public static readonly MEMORY = 5;
-    public static readonly CONFIGURE = 6;
-    public static readonly HOSTNAME = 7;
-    public static readonly TERMINAL = 8;
-    public static readonly EXIT = 9;
-    public static readonly WORD = 10;
-    public static readonly NL = 11;
-    public static readonly WS = 12;
+    public static readonly T__0 = 1;
+    public static readonly ENABLE = 2;
+    public static readonly SHOW = 3;
+    public static readonly RUN = 4;
+    public static readonly SHOW_IP_INT_BRIEF_TEST = 5;
+    public static readonly MEMORY = 6;
+    public static readonly CONFIGURE = 7;
+    public static readonly HOSTNAME = 8;
+    public static readonly TERMINAL = 9;
+    public static readonly INTERFACE = 10;
+    public static readonly GIGABITETHERNET = 11;
+    public static readonly VLAN = 12;
+    public static readonly EXIT = 13;
+    public static readonly IP_ADDRESS_TEST = 14;
+    public static readonly WORD = 15;
+    public static readonly NUMBER = 16;
+    public static readonly NL = 17;
+    public static readonly WS = 18;
     public static readonly RULE_stat = 0;
-    public static readonly RULE_enable_cmds = 1;
-    public static readonly RULE_enable_cmd = 2;
-    public static readonly RULE_show_cmd = 3;
-    public static readonly RULE_show_cmd_options = 4;
-    public static readonly RULE_configure_cmd = 5;
-    public static readonly RULE_configure_cmd_options = 6;
-    public static readonly RULE_configure_terminal_cmds = 7;
-    public static readonly RULE_hostname_cmd = 8;
-    public static readonly RULE_hostname_cmd_options = 9;
+    public static readonly RULE_commands = 1;
+    public static readonly RULE_enable_cmds = 2;
+    public static readonly RULE_configure_cmd = 3;
+    public static readonly RULE_configure_cmd_options = 4;
+    public static readonly RULE_configure_cmds = 5;
+    public static readonly RULE_hostname_cmd = 6;
+    public static readonly RULE_interface_cmd = 7;
+    public static readonly RULE_interface_cmd_options = 8;
+    public static readonly RULE_interface_types = 9;
+    public static readonly RULE_interface_id = 10;
+    public static readonly RULE_interface_cmds = 11;
 
     public static readonly literalNames = [
-        null, "'enable'", "'show'", "'run'", "'show ip int brief'", "'memory'", 
-        "'configure'", "'hostname'", "'terminal'", "'exit'"
+        null, "'/'", "'enable'", "'show'", "'run'", "'show ip int brief'", 
+        "'memory'", "'configure'", "'hostname'", "'terminal'", "'interface'", 
+        "'gigabitethernet'", "'vlan'", "'exit'", "'ip address'"
     ];
 
     public static readonly symbolicNames = [
-        null, "ENABLE", "SHOW", "RUN", "SHOW_IP_INT_BRIEF_TEST", "MEMORY", 
-        "CONFIGURE", "HOSTNAME", "TERMINAL", "EXIT", "WORD", "NL", "WS"
+        null, null, "ENABLE", "SHOW", "RUN", "SHOW_IP_INT_BRIEF_TEST", "MEMORY", 
+        "CONFIGURE", "HOSTNAME", "TERMINAL", "INTERFACE", "GIGABITETHERNET", 
+        "VLAN", "EXIT", "IP_ADDRESS_TEST", "WORD", "NUMBER", "NL", "WS"
     ];
     public static readonly ruleNames = [
-        "stat", "enable_cmds", "enable_cmd", "show_cmd", "show_cmd_options", 
-        "configure_cmd", "configure_cmd_options", "configure_terminal_cmds", 
-        "hostname_cmd", "hostname_cmd_options",
+        "stat", "commands", "enable_cmds", "configure_cmd", "configure_cmd_options", 
+        "configure_cmds", "hostname_cmd", "interface_cmd", "interface_cmd_options", 
+        "interface_types", "interface_id", "interface_cmds",
     ];
 
     public get grammarFileName(): string { return "CiscoIOS.g4"; }
@@ -59,6 +69,15 @@ export class CiscoIOSParser extends antlr.Parser {
         return new antlr.FailedPredicateException(this, predicate, message);
     }
 
+
+    	current_mode:string = "enable"
+
+    	currentMode(mode:string): boolean {
+    		return this.current_mode == mode
+    	}
+
+
+
     public constructor(input: antlr.TokenStream) {
         super(input);
         this.interpreter = new antlr.ParserATNSimulator(this, CiscoIOSParser._ATN, CiscoIOSParser.decisionsToDFA, new antlr.PredictionContextCache());
@@ -66,41 +85,119 @@ export class CiscoIOSParser extends antlr.Parser {
     public stat(): StatContext {
         let localContext = new StatContext(this.context, this.state);
         this.enterRule(localContext, 0, CiscoIOSParser.RULE_stat);
-        let _la: number;
         try {
             let alternative: number;
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 25;
+            this.state = 38;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 0, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 2, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     {
                     {
-                    this.state = 20;
-                    this.enable_cmds();
-                    this.state = 21;
-                    this.match(CiscoIOSParser.NL);
+                    this.state = 27;
+                    this.errorHandler.sync(this);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 0, this.context);
+                    while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
+                        if (alternative === 1) {
+                            {
+                            {
+                            this.state = 24;
+                            this.match(CiscoIOSParser.NL);
+                            }
+                            }
+                        }
+                        this.state = 29;
+                        this.errorHandler.sync(this);
+                        alternative = this.interpreter.adaptivePredict(this.tokenStream, 0, this.context);
+                    }
+                    this.state = 30;
+                    this.commands();
+                    this.state = 32;
+                    this.errorHandler.sync(this);
+                    alternative = 1;
+                    do {
+                        switch (alternative) {
+                        case 1:
+                            {
+                            {
+                            this.state = 31;
+                            this.match(CiscoIOSParser.NL);
+                            }
+                            }
+                            break;
+                        default:
+                            throw new antlr.NoViableAltException(this);
+                        }
+                        this.state = 34;
+                        this.errorHandler.sync(this);
+                        alternative = this.interpreter.adaptivePredict(this.tokenStream, 1, this.context);
+                    } while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER);
                     }
                     }
                 }
-                this.state = 27;
+                this.state = 40;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 0, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 2, this.context);
             }
-            this.state = 31;
+            this.state = 41;
+            this.match(CiscoIOSParser.EOF);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public commands(): CommandsContext {
+        let localContext = new CommandsContext(this.context, this.state);
+        this.enterRule(localContext, 2, CiscoIOSParser.RULE_commands);
+        try {
+            this.state = 49;
             this.errorHandler.sync(this);
-            _la = this.tokenStream.LA(1);
-            if ((((_la) & ~0x1F) === 0 && ((1 << _la) & 70) !== 0)) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 3, this.context) ) {
+            case 1:
+                this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 28;
-                this.enable_cmds();
-                this.state = 29;
-                this.match(CiscoIOSParser.EOF);
+                this.state = 43;
+                if (!(this.currentMode("enable"))) {
+                    throw this.createFailedPredicateException("this.currentMode(\"enable\")");
                 }
-            }
-
+                this.state = 44;
+                this.enable_cmds();
+                }
+                break;
+            case 2:
+                this.enterOuterAlt(localContext, 2);
+                {
+                this.state = 45;
+                if (!(this.currentMode("configure"))) {
+                    throw this.createFailedPredicateException("this.currentMode(\"configure\")");
+                }
+                this.state = 46;
+                this.configure_cmds();
+                }
+                break;
+            case 3:
+                this.enterOuterAlt(localContext, 3);
+                {
+                this.state = 47;
+                if (!(this.currentMode("interface"))) {
+                    throw this.createFailedPredicateException("this.currentMode(\"interface\")");
+                }
+                this.state = 48;
+                this.interface_cmds();
+                }
+                break;
             }
         }
         catch (re) {
@@ -118,30 +215,23 @@ export class CiscoIOSParser extends antlr.Parser {
     }
     public enable_cmds(): Enable_cmdsContext {
         let localContext = new Enable_cmdsContext(this.context, this.state);
-        this.enterRule(localContext, 2, CiscoIOSParser.RULE_enable_cmds);
+        this.enterRule(localContext, 4, CiscoIOSParser.RULE_enable_cmds);
         try {
-            this.state = 36;
+            this.state = 53;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case CiscoIOSParser.ENABLE:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 33;
-                this.enable_cmd();
+                this.state = 51;
+                this.match(CiscoIOSParser.ENABLE);
                 }
                 break;
             case CiscoIOSParser.CONFIGURE:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 34;
+                this.state = 52;
                 this.configure_cmd();
-                }
-                break;
-            case CiscoIOSParser.SHOW:
-                this.enterOuterAlt(localContext, 3);
-                {
-                this.state = 35;
-                this.show_cmd();
                 }
                 break;
             default:
@@ -161,94 +251,15 @@ export class CiscoIOSParser extends antlr.Parser {
         }
         return localContext;
     }
-    public enable_cmd(): Enable_cmdContext {
-        let localContext = new Enable_cmdContext(this.context, this.state);
-        this.enterRule(localContext, 4, CiscoIOSParser.RULE_enable_cmd);
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 38;
-            this.match(CiscoIOSParser.ENABLE);
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
-    public show_cmd(): Show_cmdContext {
-        let localContext = new Show_cmdContext(this.context, this.state);
-        this.enterRule(localContext, 6, CiscoIOSParser.RULE_show_cmd);
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 40;
-            this.match(CiscoIOSParser.SHOW);
-            this.state = 41;
-            this.show_cmd_options();
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
-    public show_cmd_options(): Show_cmd_optionsContext {
-        let localContext = new Show_cmd_optionsContext(this.context, this.state);
-        this.enterRule(localContext, 8, CiscoIOSParser.RULE_show_cmd_options);
-        let _la: number;
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 43;
-            _la = this.tokenStream.LA(1);
-            if(!(_la === 3 || _la === 4)) {
-            this.errorHandler.recoverInline(this);
-            }
-            else {
-                this.errorHandler.reportMatch(this);
-                this.consume();
-            }
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
     public configure_cmd(): Configure_cmdContext {
         let localContext = new Configure_cmdContext(this.context, this.state);
-        this.enterRule(localContext, 10, CiscoIOSParser.RULE_configure_cmd);
+        this.enterRule(localContext, 6, CiscoIOSParser.RULE_configure_cmd);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 45;
+            this.state = 55;
             this.match(CiscoIOSParser.CONFIGURE);
-            this.state = 46;
+            this.state = 56;
             this.configure_cmd_options();
             }
         }
@@ -267,51 +278,23 @@ export class CiscoIOSParser extends antlr.Parser {
     }
     public configure_cmd_options(): Configure_cmd_optionsContext {
         let localContext = new Configure_cmd_optionsContext(this.context, this.state);
-        this.enterRule(localContext, 12, CiscoIOSParser.RULE_configure_cmd_options);
-        let _la: number;
+        this.enterRule(localContext, 8, CiscoIOSParser.RULE_configure_cmd_options);
         try {
-            this.state = 60;
+            this.state = 61;
             this.errorHandler.sync(this);
             switch (this.tokenStream.LA(1)) {
             case CiscoIOSParser.TERMINAL:
                 this.enterOuterAlt(localContext, 1);
                 {
-                this.state = 48;
+                this.state = 58;
                 this.match(CiscoIOSParser.TERMINAL);
-                this.state = 49;
-                this.match(CiscoIOSParser.NL);
-                this.state = 51;
-                this.errorHandler.sync(this);
-                _la = this.tokenStream.LA(1);
-                do {
-                    {
-                    {
-                    this.state = 50;
-                    this.configure_terminal_cmds();
-                    }
-                    }
-                    this.state = 53;
-                    this.errorHandler.sync(this);
-                    _la = this.tokenStream.LA(1);
-                } while (_la === 7);
-                this.state = 55;
-                this.match(CiscoIOSParser.NL);
-                this.state = 57;
-                this.errorHandler.sync(this);
-                _la = this.tokenStream.LA(1);
-                if (_la === 9) {
-                    {
-                    this.state = 56;
-                    this.match(CiscoIOSParser.EXIT);
-                    }
-                }
-
+                this.current_mode = "configure"
                 }
                 break;
             case CiscoIOSParser.MEMORY:
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 59;
+                this.state = 60;
                 this.match(CiscoIOSParser.MEMORY);
                 }
                 break;
@@ -332,14 +315,30 @@ export class CiscoIOSParser extends antlr.Parser {
         }
         return localContext;
     }
-    public configure_terminal_cmds(): Configure_terminal_cmdsContext {
-        let localContext = new Configure_terminal_cmdsContext(this.context, this.state);
-        this.enterRule(localContext, 14, CiscoIOSParser.RULE_configure_terminal_cmds);
+    public configure_cmds(): Configure_cmdsContext {
+        let localContext = new Configure_cmdsContext(this.context, this.state);
+        this.enterRule(localContext, 10, CiscoIOSParser.RULE_configure_cmds);
         try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 62;
-            this.hostname_cmd();
+            this.state = 67;
+            this.errorHandler.sync(this);
+            switch (this.tokenStream.LA(1)) {
+            case CiscoIOSParser.HOSTNAME:
+                this.enterOuterAlt(localContext, 1);
+                {
+                this.state = 63;
+                this.hostname_cmd();
+                }
+                break;
+            case CiscoIOSParser.INTERFACE:
+                this.enterOuterAlt(localContext, 2);
+                {
+                this.state = 64;
+                this.interface_cmd();
+                this.current_mode = "interface"
+                }
+                break;
+            default:
+                throw new antlr.NoViableAltException(this);
             }
         }
         catch (re) {
@@ -357,36 +356,13 @@ export class CiscoIOSParser extends antlr.Parser {
     }
     public hostname_cmd(): Hostname_cmdContext {
         let localContext = new Hostname_cmdContext(this.context, this.state);
-        this.enterRule(localContext, 16, CiscoIOSParser.RULE_hostname_cmd);
+        this.enterRule(localContext, 12, CiscoIOSParser.RULE_hostname_cmd);
         try {
             this.enterOuterAlt(localContext, 1);
             {
-            this.state = 64;
+            this.state = 69;
             this.match(CiscoIOSParser.HOSTNAME);
-            this.state = 65;
-            this.hostname_cmd_options();
-            }
-        }
-        catch (re) {
-            if (re instanceof antlr.RecognitionException) {
-                this.errorHandler.reportError(this, re);
-                this.errorHandler.recover(this, re);
-            } else {
-                throw re;
-            }
-        }
-        finally {
-            this.exitRule();
-        }
-        return localContext;
-    }
-    public hostname_cmd_options(): Hostname_cmd_optionsContext {
-        let localContext = new Hostname_cmd_optionsContext(this.context, this.state);
-        this.enterRule(localContext, 18, CiscoIOSParser.RULE_hostname_cmd_options);
-        try {
-            this.enterOuterAlt(localContext, 1);
-            {
-            this.state = 67;
+            this.state = 70;
             this.match(CiscoIOSParser.WORD);
             }
         }
@@ -403,29 +379,194 @@ export class CiscoIOSParser extends antlr.Parser {
         }
         return localContext;
     }
+    public interface_cmd(): Interface_cmdContext {
+        let localContext = new Interface_cmdContext(this.context, this.state);
+        this.enterRule(localContext, 14, CiscoIOSParser.RULE_interface_cmd);
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 72;
+            this.match(CiscoIOSParser.INTERFACE);
+            this.state = 73;
+            this.interface_cmd_options();
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public interface_cmd_options(): Interface_cmd_optionsContext {
+        let localContext = new Interface_cmd_optionsContext(this.context, this.state);
+        this.enterRule(localContext, 16, CiscoIOSParser.RULE_interface_cmd_options);
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 75;
+            this.interface_types();
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public interface_types(): Interface_typesContext {
+        let localContext = new Interface_typesContext(this.context, this.state);
+        this.enterRule(localContext, 18, CiscoIOSParser.RULE_interface_types);
+        try {
+            this.state = 81;
+            this.errorHandler.sync(this);
+            switch (this.tokenStream.LA(1)) {
+            case CiscoIOSParser.GIGABITETHERNET:
+                this.enterOuterAlt(localContext, 1);
+                {
+                this.state = 77;
+                this.match(CiscoIOSParser.GIGABITETHERNET);
+                this.state = 78;
+                this.interface_id();
+                }
+                break;
+            case CiscoIOSParser.VLAN:
+                this.enterOuterAlt(localContext, 2);
+                {
+                this.state = 79;
+                this.match(CiscoIOSParser.VLAN);
+                this.state = 80;
+                this.match(CiscoIOSParser.NUMBER);
+                }
+                break;
+            default:
+                throw new antlr.NoViableAltException(this);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public interface_id(): Interface_idContext {
+        let localContext = new Interface_idContext(this.context, this.state);
+        this.enterRule(localContext, 20, CiscoIOSParser.RULE_interface_id);
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 83;
+            this.match(CiscoIOSParser.NUMBER);
+            this.state = 84;
+            this.match(CiscoIOSParser.T__0);
+            this.state = 85;
+            this.match(CiscoIOSParser.NUMBER);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+    public interface_cmds(): Interface_cmdsContext {
+        let localContext = new Interface_cmdsContext(this.context, this.state);
+        this.enterRule(localContext, 22, CiscoIOSParser.RULE_interface_cmds);
+        try {
+            this.enterOuterAlt(localContext, 1);
+            {
+            this.state = 87;
+            this.match(CiscoIOSParser.IP_ADDRESS_TEST);
+            }
+        }
+        catch (re) {
+            if (re instanceof antlr.RecognitionException) {
+                this.errorHandler.reportError(this, re);
+                this.errorHandler.recover(this, re);
+            } else {
+                throw re;
+            }
+        }
+        finally {
+            this.exitRule();
+        }
+        return localContext;
+    }
+
+    public override sempred(localContext: antlr.ParserRuleContext | null, ruleIndex: number, predIndex: number): boolean {
+        switch (ruleIndex) {
+        case 1:
+            return this.commands_sempred(localContext as CommandsContext, predIndex);
+        }
+        return true;
+    }
+    private commands_sempred(localContext: CommandsContext | null, predIndex: number): boolean {
+        switch (predIndex) {
+        case 0:
+            return this.currentMode("enable");
+        case 1:
+            return this.currentMode("configure");
+        case 2:
+            return this.currentMode("interface");
+        }
+        return true;
+    }
 
     public static readonly _serializedATN: number[] = [
-        4,1,12,70,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
-        6,2,7,7,7,2,8,7,8,2,9,7,9,1,0,1,0,1,0,5,0,24,8,0,10,0,12,0,27,9,
-        0,1,0,1,0,1,0,3,0,32,8,0,1,1,1,1,1,1,3,1,37,8,1,1,2,1,2,1,3,1,3,
-        1,3,1,4,1,4,1,5,1,5,1,5,1,6,1,6,1,6,4,6,52,8,6,11,6,12,6,53,1,6,
-        1,6,3,6,58,8,6,1,6,3,6,61,8,6,1,7,1,7,1,8,1,8,1,8,1,9,1,9,1,9,0,
-        0,10,0,2,4,6,8,10,12,14,16,18,0,1,1,0,3,4,66,0,25,1,0,0,0,2,36,1,
-        0,0,0,4,38,1,0,0,0,6,40,1,0,0,0,8,43,1,0,0,0,10,45,1,0,0,0,12,60,
-        1,0,0,0,14,62,1,0,0,0,16,64,1,0,0,0,18,67,1,0,0,0,20,21,3,2,1,0,
-        21,22,5,11,0,0,22,24,1,0,0,0,23,20,1,0,0,0,24,27,1,0,0,0,25,23,1,
-        0,0,0,25,26,1,0,0,0,26,31,1,0,0,0,27,25,1,0,0,0,28,29,3,2,1,0,29,
-        30,5,0,0,1,30,32,1,0,0,0,31,28,1,0,0,0,31,32,1,0,0,0,32,1,1,0,0,
-        0,33,37,3,4,2,0,34,37,3,10,5,0,35,37,3,6,3,0,36,33,1,0,0,0,36,34,
-        1,0,0,0,36,35,1,0,0,0,37,3,1,0,0,0,38,39,5,1,0,0,39,5,1,0,0,0,40,
-        41,5,2,0,0,41,42,3,8,4,0,42,7,1,0,0,0,43,44,7,0,0,0,44,9,1,0,0,0,
-        45,46,5,6,0,0,46,47,3,12,6,0,47,11,1,0,0,0,48,49,5,8,0,0,49,51,5,
-        11,0,0,50,52,3,14,7,0,51,50,1,0,0,0,52,53,1,0,0,0,53,51,1,0,0,0,
-        53,54,1,0,0,0,54,55,1,0,0,0,55,57,5,11,0,0,56,58,5,9,0,0,57,56,1,
-        0,0,0,57,58,1,0,0,0,58,61,1,0,0,0,59,61,5,5,0,0,60,48,1,0,0,0,60,
-        59,1,0,0,0,61,13,1,0,0,0,62,63,3,16,8,0,63,15,1,0,0,0,64,65,5,7,
-        0,0,65,66,3,18,9,0,66,17,1,0,0,0,67,68,5,10,0,0,68,19,1,0,0,0,6,
-        25,31,36,53,57,60
+        4,1,18,90,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,1,0,5,0,26,8,0,10,
+        0,12,0,29,9,0,1,0,1,0,4,0,33,8,0,11,0,12,0,34,5,0,37,8,0,10,0,12,
+        0,40,9,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,3,1,50,8,1,1,2,1,2,3,2,
+        54,8,2,1,3,1,3,1,3,1,4,1,4,1,4,3,4,62,8,4,1,5,1,5,1,5,1,5,3,5,68,
+        8,5,1,6,1,6,1,6,1,7,1,7,1,7,1,8,1,8,1,9,1,9,1,9,1,9,3,9,82,8,9,1,
+        10,1,10,1,10,1,10,1,11,1,11,1,11,0,0,12,0,2,4,6,8,10,12,14,16,18,
+        20,22,0,0,86,0,38,1,0,0,0,2,49,1,0,0,0,4,53,1,0,0,0,6,55,1,0,0,0,
+        8,61,1,0,0,0,10,67,1,0,0,0,12,69,1,0,0,0,14,72,1,0,0,0,16,75,1,0,
+        0,0,18,81,1,0,0,0,20,83,1,0,0,0,22,87,1,0,0,0,24,26,5,17,0,0,25,
+        24,1,0,0,0,26,29,1,0,0,0,27,25,1,0,0,0,27,28,1,0,0,0,28,30,1,0,0,
+        0,29,27,1,0,0,0,30,32,3,2,1,0,31,33,5,17,0,0,32,31,1,0,0,0,33,34,
+        1,0,0,0,34,32,1,0,0,0,34,35,1,0,0,0,35,37,1,0,0,0,36,27,1,0,0,0,
+        37,40,1,0,0,0,38,36,1,0,0,0,38,39,1,0,0,0,39,41,1,0,0,0,40,38,1,
+        0,0,0,41,42,5,0,0,1,42,1,1,0,0,0,43,44,4,1,0,0,44,50,3,4,2,0,45,
+        46,4,1,1,0,46,50,3,10,5,0,47,48,4,1,2,0,48,50,3,22,11,0,49,43,1,
+        0,0,0,49,45,1,0,0,0,49,47,1,0,0,0,50,3,1,0,0,0,51,54,5,2,0,0,52,
+        54,3,6,3,0,53,51,1,0,0,0,53,52,1,0,0,0,54,5,1,0,0,0,55,56,5,7,0,
+        0,56,57,3,8,4,0,57,7,1,0,0,0,58,59,5,9,0,0,59,62,6,4,-1,0,60,62,
+        5,6,0,0,61,58,1,0,0,0,61,60,1,0,0,0,62,9,1,0,0,0,63,68,3,12,6,0,
+        64,65,3,14,7,0,65,66,6,5,-1,0,66,68,1,0,0,0,67,63,1,0,0,0,67,64,
+        1,0,0,0,68,11,1,0,0,0,69,70,5,8,0,0,70,71,5,15,0,0,71,13,1,0,0,0,
+        72,73,5,10,0,0,73,74,3,16,8,0,74,15,1,0,0,0,75,76,3,18,9,0,76,17,
+        1,0,0,0,77,78,5,11,0,0,78,82,3,20,10,0,79,80,5,12,0,0,80,82,5,16,
+        0,0,81,77,1,0,0,0,81,79,1,0,0,0,82,19,1,0,0,0,83,84,5,16,0,0,84,
+        85,5,1,0,0,85,86,5,16,0,0,86,21,1,0,0,0,87,88,5,14,0,0,88,23,1,0,
+        0,0,8,27,34,38,49,53,61,67,81
     ];
 
     private static __ATN: antlr.ATN;
@@ -451,14 +592,17 @@ export class StatContext extends antlr.ParserRuleContext {
     public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
         super(parent, invokingState);
     }
-    public enable_cmds(): Enable_cmdsContext[];
-    public enable_cmds(i: number): Enable_cmdsContext | null;
-    public enable_cmds(i?: number): Enable_cmdsContext[] | Enable_cmdsContext | null {
+    public EOF(): antlr.TerminalNode {
+        return this.getToken(CiscoIOSParser.EOF, 0)!;
+    }
+    public commands(): CommandsContext[];
+    public commands(i: number): CommandsContext | null;
+    public commands(i?: number): CommandsContext[] | CommandsContext | null {
         if (i === undefined) {
-            return this.getRuleContexts(Enable_cmdsContext);
+            return this.getRuleContexts(CommandsContext);
         }
 
-        return this.getRuleContext(i, Enable_cmdsContext);
+        return this.getRuleContext(i, CommandsContext);
     }
     public NL(): antlr.TerminalNode[];
     public NL(i: number): antlr.TerminalNode | null;
@@ -468,9 +612,6 @@ export class StatContext extends antlr.ParserRuleContext {
     	} else {
     		return this.getToken(CiscoIOSParser.NL, i);
     	}
-    }
-    public EOF(): antlr.TerminalNode | null {
-        return this.getToken(CiscoIOSParser.EOF, 0);
     }
     public override get ruleIndex(): number {
         return CiscoIOSParser.RULE_stat;
@@ -495,18 +636,51 @@ export class StatContext extends antlr.ParserRuleContext {
 }
 
 
+export class CommandsContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public enable_cmds(): Enable_cmdsContext | null {
+        return this.getRuleContext(0, Enable_cmdsContext);
+    }
+    public configure_cmds(): Configure_cmdsContext | null {
+        return this.getRuleContext(0, Configure_cmdsContext);
+    }
+    public interface_cmds(): Interface_cmdsContext | null {
+        return this.getRuleContext(0, Interface_cmdsContext);
+    }
+    public override get ruleIndex(): number {
+        return CiscoIOSParser.RULE_commands;
+    }
+    public override enterRule(listener: CiscoIOSListener): void {
+        if(listener.enterCommands) {
+             listener.enterCommands(this);
+        }
+    }
+    public override exitRule(listener: CiscoIOSListener): void {
+        if(listener.exitCommands) {
+             listener.exitCommands(this);
+        }
+    }
+    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
+        if (visitor.visitCommands) {
+            return visitor.visitCommands(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
 export class Enable_cmdsContext extends antlr.ParserRuleContext {
     public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
         super(parent, invokingState);
     }
-    public enable_cmd(): Enable_cmdContext | null {
-        return this.getRuleContext(0, Enable_cmdContext);
+    public ENABLE(): antlr.TerminalNode | null {
+        return this.getToken(CiscoIOSParser.ENABLE, 0);
     }
     public configure_cmd(): Configure_cmdContext | null {
         return this.getRuleContext(0, Configure_cmdContext);
-    }
-    public show_cmd(): Show_cmdContext | null {
-        return this.getRuleContext(0, Show_cmdContext);
     }
     public override get ruleIndex(): number {
         return CiscoIOSParser.RULE_enable_cmds;
@@ -524,102 +698,6 @@ export class Enable_cmdsContext extends antlr.ParserRuleContext {
     public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
         if (visitor.visitEnable_cmds) {
             return visitor.visitEnable_cmds(this);
-        } else {
-            return visitor.visitChildren(this);
-        }
-    }
-}
-
-
-export class Enable_cmdContext extends antlr.ParserRuleContext {
-    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
-        super(parent, invokingState);
-    }
-    public ENABLE(): antlr.TerminalNode {
-        return this.getToken(CiscoIOSParser.ENABLE, 0)!;
-    }
-    public override get ruleIndex(): number {
-        return CiscoIOSParser.RULE_enable_cmd;
-    }
-    public override enterRule(listener: CiscoIOSListener): void {
-        if(listener.enterEnable_cmd) {
-             listener.enterEnable_cmd(this);
-        }
-    }
-    public override exitRule(listener: CiscoIOSListener): void {
-        if(listener.exitEnable_cmd) {
-             listener.exitEnable_cmd(this);
-        }
-    }
-    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
-        if (visitor.visitEnable_cmd) {
-            return visitor.visitEnable_cmd(this);
-        } else {
-            return visitor.visitChildren(this);
-        }
-    }
-}
-
-
-export class Show_cmdContext extends antlr.ParserRuleContext {
-    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
-        super(parent, invokingState);
-    }
-    public SHOW(): antlr.TerminalNode {
-        return this.getToken(CiscoIOSParser.SHOW, 0)!;
-    }
-    public show_cmd_options(): Show_cmd_optionsContext {
-        return this.getRuleContext(0, Show_cmd_optionsContext)!;
-    }
-    public override get ruleIndex(): number {
-        return CiscoIOSParser.RULE_show_cmd;
-    }
-    public override enterRule(listener: CiscoIOSListener): void {
-        if(listener.enterShow_cmd) {
-             listener.enterShow_cmd(this);
-        }
-    }
-    public override exitRule(listener: CiscoIOSListener): void {
-        if(listener.exitShow_cmd) {
-             listener.exitShow_cmd(this);
-        }
-    }
-    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
-        if (visitor.visitShow_cmd) {
-            return visitor.visitShow_cmd(this);
-        } else {
-            return visitor.visitChildren(this);
-        }
-    }
-}
-
-
-export class Show_cmd_optionsContext extends antlr.ParserRuleContext {
-    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
-        super(parent, invokingState);
-    }
-    public RUN(): antlr.TerminalNode | null {
-        return this.getToken(CiscoIOSParser.RUN, 0);
-    }
-    public SHOW_IP_INT_BRIEF_TEST(): antlr.TerminalNode | null {
-        return this.getToken(CiscoIOSParser.SHOW_IP_INT_BRIEF_TEST, 0);
-    }
-    public override get ruleIndex(): number {
-        return CiscoIOSParser.RULE_show_cmd_options;
-    }
-    public override enterRule(listener: CiscoIOSListener): void {
-        if(listener.enterShow_cmd_options) {
-             listener.enterShow_cmd_options(this);
-        }
-    }
-    public override exitRule(listener: CiscoIOSListener): void {
-        if(listener.exitShow_cmd_options) {
-             listener.exitShow_cmd_options(this);
-        }
-    }
-    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
-        if (visitor.visitShow_cmd_options) {
-            return visitor.visitShow_cmd_options(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -667,27 +745,6 @@ export class Configure_cmd_optionsContext extends antlr.ParserRuleContext {
     public TERMINAL(): antlr.TerminalNode | null {
         return this.getToken(CiscoIOSParser.TERMINAL, 0);
     }
-    public NL(): antlr.TerminalNode[];
-    public NL(i: number): antlr.TerminalNode | null;
-    public NL(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
-    	if (i === undefined) {
-    		return this.getTokens(CiscoIOSParser.NL);
-    	} else {
-    		return this.getToken(CiscoIOSParser.NL, i);
-    	}
-    }
-    public configure_terminal_cmds(): Configure_terminal_cmdsContext[];
-    public configure_terminal_cmds(i: number): Configure_terminal_cmdsContext | null;
-    public configure_terminal_cmds(i?: number): Configure_terminal_cmdsContext[] | Configure_terminal_cmdsContext | null {
-        if (i === undefined) {
-            return this.getRuleContexts(Configure_terminal_cmdsContext);
-        }
-
-        return this.getRuleContext(i, Configure_terminal_cmdsContext);
-    }
-    public EXIT(): antlr.TerminalNode | null {
-        return this.getToken(CiscoIOSParser.EXIT, 0);
-    }
     public MEMORY(): antlr.TerminalNode | null {
         return this.getToken(CiscoIOSParser.MEMORY, 0);
     }
@@ -714,29 +771,32 @@ export class Configure_cmd_optionsContext extends antlr.ParserRuleContext {
 }
 
 
-export class Configure_terminal_cmdsContext extends antlr.ParserRuleContext {
+export class Configure_cmdsContext extends antlr.ParserRuleContext {
     public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
         super(parent, invokingState);
     }
-    public hostname_cmd(): Hostname_cmdContext {
-        return this.getRuleContext(0, Hostname_cmdContext)!;
+    public hostname_cmd(): Hostname_cmdContext | null {
+        return this.getRuleContext(0, Hostname_cmdContext);
+    }
+    public interface_cmd(): Interface_cmdContext | null {
+        return this.getRuleContext(0, Interface_cmdContext);
     }
     public override get ruleIndex(): number {
-        return CiscoIOSParser.RULE_configure_terminal_cmds;
+        return CiscoIOSParser.RULE_configure_cmds;
     }
     public override enterRule(listener: CiscoIOSListener): void {
-        if(listener.enterConfigure_terminal_cmds) {
-             listener.enterConfigure_terminal_cmds(this);
+        if(listener.enterConfigure_cmds) {
+             listener.enterConfigure_cmds(this);
         }
     }
     public override exitRule(listener: CiscoIOSListener): void {
-        if(listener.exitConfigure_terminal_cmds) {
-             listener.exitConfigure_terminal_cmds(this);
+        if(listener.exitConfigure_cmds) {
+             listener.exitConfigure_cmds(this);
         }
     }
     public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
-        if (visitor.visitConfigure_terminal_cmds) {
-            return visitor.visitConfigure_terminal_cmds(this);
+        if (visitor.visitConfigure_cmds) {
+            return visitor.visitConfigure_cmds(this);
         } else {
             return visitor.visitChildren(this);
         }
@@ -751,8 +811,8 @@ export class Hostname_cmdContext extends antlr.ParserRuleContext {
     public HOSTNAME(): antlr.TerminalNode {
         return this.getToken(CiscoIOSParser.HOSTNAME, 0)!;
     }
-    public hostname_cmd_options(): Hostname_cmd_optionsContext {
-        return this.getRuleContext(0, Hostname_cmd_optionsContext)!;
+    public WORD(): antlr.TerminalNode {
+        return this.getToken(CiscoIOSParser.WORD, 0)!;
     }
     public override get ruleIndex(): number {
         return CiscoIOSParser.RULE_hostname_cmd;
@@ -777,29 +837,167 @@ export class Hostname_cmdContext extends antlr.ParserRuleContext {
 }
 
 
-export class Hostname_cmd_optionsContext extends antlr.ParserRuleContext {
+export class Interface_cmdContext extends antlr.ParserRuleContext {
     public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
         super(parent, invokingState);
     }
-    public WORD(): antlr.TerminalNode {
-        return this.getToken(CiscoIOSParser.WORD, 0)!;
+    public INTERFACE(): antlr.TerminalNode {
+        return this.getToken(CiscoIOSParser.INTERFACE, 0)!;
+    }
+    public interface_cmd_options(): Interface_cmd_optionsContext {
+        return this.getRuleContext(0, Interface_cmd_optionsContext)!;
     }
     public override get ruleIndex(): number {
-        return CiscoIOSParser.RULE_hostname_cmd_options;
+        return CiscoIOSParser.RULE_interface_cmd;
     }
     public override enterRule(listener: CiscoIOSListener): void {
-        if(listener.enterHostname_cmd_options) {
-             listener.enterHostname_cmd_options(this);
+        if(listener.enterInterface_cmd) {
+             listener.enterInterface_cmd(this);
         }
     }
     public override exitRule(listener: CiscoIOSListener): void {
-        if(listener.exitHostname_cmd_options) {
-             listener.exitHostname_cmd_options(this);
+        if(listener.exitInterface_cmd) {
+             listener.exitInterface_cmd(this);
         }
     }
     public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
-        if (visitor.visitHostname_cmd_options) {
-            return visitor.visitHostname_cmd_options(this);
+        if (visitor.visitInterface_cmd) {
+            return visitor.visitInterface_cmd(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class Interface_cmd_optionsContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public interface_types(): Interface_typesContext {
+        return this.getRuleContext(0, Interface_typesContext)!;
+    }
+    public override get ruleIndex(): number {
+        return CiscoIOSParser.RULE_interface_cmd_options;
+    }
+    public override enterRule(listener: CiscoIOSListener): void {
+        if(listener.enterInterface_cmd_options) {
+             listener.enterInterface_cmd_options(this);
+        }
+    }
+    public override exitRule(listener: CiscoIOSListener): void {
+        if(listener.exitInterface_cmd_options) {
+             listener.exitInterface_cmd_options(this);
+        }
+    }
+    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
+        if (visitor.visitInterface_cmd_options) {
+            return visitor.visitInterface_cmd_options(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class Interface_typesContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public GIGABITETHERNET(): antlr.TerminalNode | null {
+        return this.getToken(CiscoIOSParser.GIGABITETHERNET, 0);
+    }
+    public interface_id(): Interface_idContext | null {
+        return this.getRuleContext(0, Interface_idContext);
+    }
+    public VLAN(): antlr.TerminalNode | null {
+        return this.getToken(CiscoIOSParser.VLAN, 0);
+    }
+    public NUMBER(): antlr.TerminalNode | null {
+        return this.getToken(CiscoIOSParser.NUMBER, 0);
+    }
+    public override get ruleIndex(): number {
+        return CiscoIOSParser.RULE_interface_types;
+    }
+    public override enterRule(listener: CiscoIOSListener): void {
+        if(listener.enterInterface_types) {
+             listener.enterInterface_types(this);
+        }
+    }
+    public override exitRule(listener: CiscoIOSListener): void {
+        if(listener.exitInterface_types) {
+             listener.exitInterface_types(this);
+        }
+    }
+    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
+        if (visitor.visitInterface_types) {
+            return visitor.visitInterface_types(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class Interface_idContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public NUMBER(): antlr.TerminalNode[];
+    public NUMBER(i: number): antlr.TerminalNode | null;
+    public NUMBER(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
+    	if (i === undefined) {
+    		return this.getTokens(CiscoIOSParser.NUMBER);
+    	} else {
+    		return this.getToken(CiscoIOSParser.NUMBER, i);
+    	}
+    }
+    public override get ruleIndex(): number {
+        return CiscoIOSParser.RULE_interface_id;
+    }
+    public override enterRule(listener: CiscoIOSListener): void {
+        if(listener.enterInterface_id) {
+             listener.enterInterface_id(this);
+        }
+    }
+    public override exitRule(listener: CiscoIOSListener): void {
+        if(listener.exitInterface_id) {
+             listener.exitInterface_id(this);
+        }
+    }
+    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
+        if (visitor.visitInterface_id) {
+            return visitor.visitInterface_id(this);
+        } else {
+            return visitor.visitChildren(this);
+        }
+    }
+}
+
+
+export class Interface_cmdsContext extends antlr.ParserRuleContext {
+    public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
+        super(parent, invokingState);
+    }
+    public IP_ADDRESS_TEST(): antlr.TerminalNode {
+        return this.getToken(CiscoIOSParser.IP_ADDRESS_TEST, 0)!;
+    }
+    public override get ruleIndex(): number {
+        return CiscoIOSParser.RULE_interface_cmds;
+    }
+    public override enterRule(listener: CiscoIOSListener): void {
+        if(listener.enterInterface_cmds) {
+             listener.enterInterface_cmds(this);
+        }
+    }
+    public override exitRule(listener: CiscoIOSListener): void {
+        if(listener.exitInterface_cmds) {
+             listener.exitInterface_cmds(this);
+        }
+    }
+    public override accept<Result>(visitor: CiscoIOSVisitor<Result>): Result | null {
+        if (visitor.visitInterface_cmds) {
+            return visitor.visitInterface_cmds(this);
         } else {
             return visitor.visitChildren(this);
         }

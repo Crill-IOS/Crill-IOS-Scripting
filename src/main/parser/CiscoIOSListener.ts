@@ -3,15 +3,17 @@ import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "a
 
 
 import { StatContext } from "./CiscoIOSParser.js";
+import { CommandsContext } from "./CiscoIOSParser.js";
 import { Enable_cmdsContext } from "./CiscoIOSParser.js";
-import { Enable_cmdContext } from "./CiscoIOSParser.js";
-import { Show_cmdContext } from "./CiscoIOSParser.js";
-import { Show_cmd_optionsContext } from "./CiscoIOSParser.js";
 import { Configure_cmdContext } from "./CiscoIOSParser.js";
 import { Configure_cmd_optionsContext } from "./CiscoIOSParser.js";
-import { Configure_terminal_cmdsContext } from "./CiscoIOSParser.js";
+import { Configure_cmdsContext } from "./CiscoIOSParser.js";
 import { Hostname_cmdContext } from "./CiscoIOSParser.js";
-import { Hostname_cmd_optionsContext } from "./CiscoIOSParser.js";
+import { Interface_cmdContext } from "./CiscoIOSParser.js";
+import { Interface_cmd_optionsContext } from "./CiscoIOSParser.js";
+import { Interface_typesContext } from "./CiscoIOSParser.js";
+import { Interface_idContext } from "./CiscoIOSParser.js";
+import { Interface_cmdsContext } from "./CiscoIOSParser.js";
 
 
 /**
@@ -30,6 +32,16 @@ export class CiscoIOSListener implements ParseTreeListener {
      */
     exitStat?: (ctx: StatContext) => void;
     /**
+     * Enter a parse tree produced by `CiscoIOSParser.commands`.
+     * @param ctx the parse tree
+     */
+    enterCommands?: (ctx: CommandsContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.commands`.
+     * @param ctx the parse tree
+     */
+    exitCommands?: (ctx: CommandsContext) => void;
+    /**
      * Enter a parse tree produced by `CiscoIOSParser.enable_cmds`.
      * @param ctx the parse tree
      */
@@ -39,36 +51,6 @@ export class CiscoIOSListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitEnable_cmds?: (ctx: Enable_cmdsContext) => void;
-    /**
-     * Enter a parse tree produced by `CiscoIOSParser.enable_cmd`.
-     * @param ctx the parse tree
-     */
-    enterEnable_cmd?: (ctx: Enable_cmdContext) => void;
-    /**
-     * Exit a parse tree produced by `CiscoIOSParser.enable_cmd`.
-     * @param ctx the parse tree
-     */
-    exitEnable_cmd?: (ctx: Enable_cmdContext) => void;
-    /**
-     * Enter a parse tree produced by `CiscoIOSParser.show_cmd`.
-     * @param ctx the parse tree
-     */
-    enterShow_cmd?: (ctx: Show_cmdContext) => void;
-    /**
-     * Exit a parse tree produced by `CiscoIOSParser.show_cmd`.
-     * @param ctx the parse tree
-     */
-    exitShow_cmd?: (ctx: Show_cmdContext) => void;
-    /**
-     * Enter a parse tree produced by `CiscoIOSParser.show_cmd_options`.
-     * @param ctx the parse tree
-     */
-    enterShow_cmd_options?: (ctx: Show_cmd_optionsContext) => void;
-    /**
-     * Exit a parse tree produced by `CiscoIOSParser.show_cmd_options`.
-     * @param ctx the parse tree
-     */
-    exitShow_cmd_options?: (ctx: Show_cmd_optionsContext) => void;
     /**
      * Enter a parse tree produced by `CiscoIOSParser.configure_cmd`.
      * @param ctx the parse tree
@@ -90,15 +72,15 @@ export class CiscoIOSListener implements ParseTreeListener {
      */
     exitConfigure_cmd_options?: (ctx: Configure_cmd_optionsContext) => void;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.configure_terminal_cmds`.
+     * Enter a parse tree produced by `CiscoIOSParser.configure_cmds`.
      * @param ctx the parse tree
      */
-    enterConfigure_terminal_cmds?: (ctx: Configure_terminal_cmdsContext) => void;
+    enterConfigure_cmds?: (ctx: Configure_cmdsContext) => void;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.configure_terminal_cmds`.
+     * Exit a parse tree produced by `CiscoIOSParser.configure_cmds`.
      * @param ctx the parse tree
      */
-    exitConfigure_terminal_cmds?: (ctx: Configure_terminal_cmdsContext) => void;
+    exitConfigure_cmds?: (ctx: Configure_cmdsContext) => void;
     /**
      * Enter a parse tree produced by `CiscoIOSParser.hostname_cmd`.
      * @param ctx the parse tree
@@ -110,15 +92,55 @@ export class CiscoIOSListener implements ParseTreeListener {
      */
     exitHostname_cmd?: (ctx: Hostname_cmdContext) => void;
     /**
-     * Enter a parse tree produced by `CiscoIOSParser.hostname_cmd_options`.
+     * Enter a parse tree produced by `CiscoIOSParser.interface_cmd`.
      * @param ctx the parse tree
      */
-    enterHostname_cmd_options?: (ctx: Hostname_cmd_optionsContext) => void;
+    enterInterface_cmd?: (ctx: Interface_cmdContext) => void;
     /**
-     * Exit a parse tree produced by `CiscoIOSParser.hostname_cmd_options`.
+     * Exit a parse tree produced by `CiscoIOSParser.interface_cmd`.
      * @param ctx the parse tree
      */
-    exitHostname_cmd_options?: (ctx: Hostname_cmd_optionsContext) => void;
+    exitInterface_cmd?: (ctx: Interface_cmdContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.interface_cmd_options`.
+     * @param ctx the parse tree
+     */
+    enterInterface_cmd_options?: (ctx: Interface_cmd_optionsContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.interface_cmd_options`.
+     * @param ctx the parse tree
+     */
+    exitInterface_cmd_options?: (ctx: Interface_cmd_optionsContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.interface_types`.
+     * @param ctx the parse tree
+     */
+    enterInterface_types?: (ctx: Interface_typesContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.interface_types`.
+     * @param ctx the parse tree
+     */
+    exitInterface_types?: (ctx: Interface_typesContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.interface_id`.
+     * @param ctx the parse tree
+     */
+    enterInterface_id?: (ctx: Interface_idContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.interface_id`.
+     * @param ctx the parse tree
+     */
+    exitInterface_id?: (ctx: Interface_idContext) => void;
+    /**
+     * Enter a parse tree produced by `CiscoIOSParser.interface_cmds`.
+     * @param ctx the parse tree
+     */
+    enterInterface_cmds?: (ctx: Interface_cmdsContext) => void;
+    /**
+     * Exit a parse tree produced by `CiscoIOSParser.interface_cmds`.
+     * @param ctx the parse tree
+     */
+    exitInterface_cmds?: (ctx: Interface_cmdsContext) => void;
 
     visitTerminal(node: TerminalNode): void {}
     visitErrorNode(node: ErrorNode): void {}
