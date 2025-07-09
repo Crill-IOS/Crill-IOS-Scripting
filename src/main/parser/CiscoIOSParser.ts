@@ -288,7 +288,10 @@ export class CiscoIOSParser extends antlr.Parser {
                 {
                 this.state = 58;
                 this.match(CiscoIOSParser.TERMINAL);
-                this.current_mode = "configure"
+
+                		this.current_mode = "configure";
+                		console.log("switch to configure mode!")
+                	
                 }
                 break;
             case CiscoIOSParser.MEMORY:

@@ -22,9 +22,10 @@ import {
 
 import { CiscoIOSLexer } from "./parser/CiscoIOSLexer";
 import { CiscoIOSParser } from "./parser/CiscoIOSParser";
-import { CharStream, CommonTokenStream, Parser } from "antlr4ng";
+import { CharStream, CommonTokenStream, Parser, ParserRuleContext } from "antlr4ng";
 import { commands } from "vscode";
 import { CandidatesCollection, CodeCompletionCore } from "antlr4-c3";
+
 
 const connection = createConnection(ProposedFeatures.all);
 
@@ -103,16 +104,19 @@ function getExpectedTokensAt(text: string, cursorOffset: number): CompletionItem
   const lexer = new CiscoIOSLexer(inputStream);
   const tokenStream = new CommonTokenStream(lexer);
 
+  tokenStream.seek(cursorOffset);
   const parser = new CiscoIOSParser(tokenStream);
-  const tree = parser.stat()
   
-
-  const core = new CodeCompletionCore(parser);
+  const current_mode:string = parser.current_mode;
+  
+  tokenStream.seek(cursorOffset)
+  const completionParser = new CiscoIOSParser(tokenStream);
+  completionParser.current_mode = current_mode;
+  const core = new CodeCompletionCore(completionParser);
   const candidates = core.collectCandidates(cursorOffset);
 
   for (const [tokenType, _] of candidates.tokens) {
     console.log("  Token:", parser.vocabulary.getDisplayName(tokenType));
-    console.log(parser.literalNames[tokenType]);
   }
 
   for (const [ruleIndex, _] of candidates.rules) {

@@ -29,7 +29,10 @@ configure_cmd:
 	;
 
 configure_cmd_options:
-	TERMINAL {this.current_mode = "configure"}
+	TERMINAL {
+		this.current_mode = "configure";
+		console.log("switch to configure mode!")
+	}
 	| MEMORY
 	;
 
