@@ -11,7 +11,7 @@ export function generateJavaScript(stat: Stat, filePath: string, destination: st
     const fileNode = expandToNode`
         "use strict";
 
-        ${joinToNode(stat.commands, commands => `console.log('Hello, ${commands}!');`, { appendNewLineIfNotEmpty: true })}
+        ${joinToNode(stat.lines, commands => `console.log('Hello, ${commands}!');`, { appendNewLineIfNotEmpty: true })}
     `.appendNewLineIfNotEmpty();
 
     if (!fs.existsSync(data.destination)) {

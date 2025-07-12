@@ -1,1 +1,6 @@
-show run
+interface gigabitethernet 1/1
+hostname adfs
+hostname asdf
+ip address 
+configure terminal
+hostname adsf

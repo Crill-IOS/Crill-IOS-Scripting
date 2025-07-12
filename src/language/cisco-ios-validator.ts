@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , Stat} from './generated/ast.js';
+import { CiscoIosAstType , Command, Configure_cmd, Script} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -9,7 +9,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const registry = services.validation.ValidationRegistry;
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
-        Stat: validator.checkTESTING
+        Script: validator.checkTESTING,
+        Command: validator.checkModes
     };
     registry.register(checks, validator);
 }
@@ -19,13 +20,21 @@ export function registerValidationChecks(services: CiscoIosServices) {
  */
 export class CiscoIosValidator {
 
-    checkTESTING(script: Stat, accept: ValidationAcceptor): void{
-        if(script.commands){
-            if(script.commands.length < 4){
-                accept('warning', 'Script should be longer than 3 lines', {node: script, property: 'commands'});
+    checkTESTING(script: Script, accept: ValidationAcceptor): void{
+        if(script.script.lines){
+            if(script.script.lines.length < 4){
+                accept('warning', 'Script should be longer than 3 lines', {node: script, property: 'script'});
             }
         }
     }
+
+    checkModes(commands: Command, accept: ValidationAcceptor): void{
+        if(commands.commands?.$type == Configure_cmd){
+             accept('error', 'Script has a configure Command', {node: commands, property: 'commands'});
+        }
+    }
+
+
 
 
     // checkPersonStartsWithCapital(person: Person, accept: ValidationAcceptor): void {

@@ -1,30 +1,39 @@
 grammar CiscoIOS
 
-entry Stat:
-   (commands+=Command)+
+entry Script:
+    script=Stat
+    ; 
+
+Stat:
+   lines+=(Command | Comment)+
    ;
 
 Command:
-    Enable_Block
-    | Comment
+    blocks = (
+        Enable_cmds
+        | Configure_cmds
+        | Interface_cmds
+    )
     ;
 
-Enable_Block:
-    Configure_cmd
-    | Show_cmd
+Enable_cmds infers Command:
+    commands=(
+        Configure_cmd
+        |Show_cmd
+    )
     ;
 
 Show_cmd:
     'show' options=Show_cmd_options 
     ;
 
-Configure_cmd:
+Configure_cmd: 
     'configure' options=Configure_cmd_options
     ;
 
 Configure_cmd_options:
     option=
-        'terminal' NL configure_terminal_cmds+=Configure_Terminal_Block+
+        'terminal' NL
         |'memory' NL
     ;
 
@@ -34,7 +43,7 @@ Show_cmd_options:
         | 'interface' NL
     ;
 
-Configure_Terminal_Block:
+Configure_cmds infers Command:
         Hostname_cmd
         | Interface_cmd
     ;
@@ -48,19 +57,18 @@ Interface_cmd:
     ;
 
 Interface_types:
-    'gigabitethernet' Interface_number NL interface_cmds+= Interface_Block+
-    |'vlan' INT
+    'gigabitethernet' Interface_number NL
+    |'vlan' INT NL
     ;
 Interface_number:
     number = INT '/' INT
     ;
 
-
-Interface_Block:
+Interface_cmds infers Command:
     IP_cmd
     |Shutdown_cmd
     |Interface_cmd
-    |'exit' NL configure_terminal_cmds+= Configure_Terminal_Block+
+    |'exit' NL 
     ;
 
 Shutdown_cmd:
@@ -77,7 +85,7 @@ Ip_cmd_options:
     | 'test' NL
     ;
 Comment: 
-    text=COMMENT;
+    text=COMMENT NL;
 
 terminal COMMENT: /[!#].+/;
 terminal INPUT: /[a-zA-Z_][a-zA-Z0-9\-_\/]*/;
