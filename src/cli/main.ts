@@ -1,7 +1,7 @@
-import type { Model } from '../language/generated/ast.js';
+import type { Stat } from '../language/generated/ast.js';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { CiscoIosLanguageMetaData } from '../language/generated/module.js';
+import { CiscoIOSLanguageMetaData } from '../language/generated/module.js';
 import { createCiscoIosServices } from '../language/cisco-ios-module.js';
 import { extractAstNode } from './cli-util.js';
 import { generateJavaScript } from './generator.js';
@@ -16,7 +16,7 @@ const packageContent = await fs.readFile(packagePath, 'utf-8');
 
 export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
     const services = createCiscoIosServices(NodeFileSystem).CiscoIos;
-    const model = await extractAstNode<Model>(fileName, services);
+    const model = await extractAstNode<Stat>(fileName, services);
     const generatedFilePath = generateJavaScript(model, fileName, opts.destination);
     console.log(chalk.green(`JavaScript code generated successfully: ${generatedFilePath}`));
 };
@@ -30,7 +30,7 @@ export default function(): void {
 
     program.version(JSON.parse(packageContent).version);
 
-    const fileExtensions = CiscoIosLanguageMetaData.fileExtensions.join(', ');
+    const fileExtensions = CiscoIOSLanguageMetaData.fileExtensions.join(', ');
     program
         .command('generate')
         .argument('<file>', `source file (possible file extensions: ${fileExtensions})`)

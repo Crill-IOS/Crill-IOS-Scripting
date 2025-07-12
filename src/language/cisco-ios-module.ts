@@ -1,6 +1,6 @@
 import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
-import { CiscoIosGeneratedModule, CiscoIosGeneratedSharedModule } from './generated/module.js';
+import { CiscoIOSGeneratedModule, CiscoIosGeneratedSharedModule } from './generated/module.js';
 import { CiscoIosValidator, registerValidationChecks } from './cisco-ios-validator.js';
 
 /**
@@ -54,7 +54,7 @@ export function createCiscoIosServices(context: DefaultSharedModuleContext): {
     );
     const CiscoIos = inject(
         createDefaultModule({ shared }),
-        CiscoIosGeneratedModule,
+        CiscoIOSGeneratedModule,
         CiscoIosModule
     );
     shared.ServiceRegistry.register(CiscoIos);
