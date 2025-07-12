@@ -1,8 +1,8 @@
-# Build output
-out/
-
-# Node dependencies
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 node_modules/
-
-# Output from bundlers
-*.map
+out/
+src/language/generated/
+syntaxes/

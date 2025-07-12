@@ -1,86 +1,94 @@
 {
-  "name": "crill-ios-scripting",
-  "publisher": "Crill",
-  "displayName": "Crill-IOS-Scripting",
-  "description": "Cisco IOS Scripting Language Server",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.98.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onLanguage:cls"
-  ],
-  "main": "out/extension.js",
-  "contributes": {
-    "configuration": {
-      "type": "object",
-      "title": "Crill-IOS-Scripting",
-      "properties": {
-        "languageServer.maxNumberOfProblems": {
-          "scope": "resource",
-          "type": "number",
-          "default": 100,
-          "description": "Controls the maximum number of problems produced by the server."
-        },
-        "languageServer.trace.server": {
-          "scope": "window",
-          "type": "string",
-          "enum": [
-            "off",
-            "messages",
-            "verbose"
-          ],
-          "default": "off",
-          "description": "Traces the communication between VS Code and the language server."
-        }
-      }
-    },
-    "commands": [
-      {
-        "command": "cls.helloWorld",
-        "title": "Hello World"
-      }
+    "name": "Crill-IOS-Scripting",
+    "description": "Please enter a brief description here",
+    "version": "0.0.1",
+    "files": [
+        "bin",
+        "out",
+        "src"
     ],
-    "languages": [
-      {
-        "id": "cls",
-        "extensions": [
-          ".txt"
+    "type": "module",
+    "scripts": {
+        "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
+        "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
+        "lint": "eslint src --ext ts",
+        "langium:generate": "langium generate",
+        "langium:generate:production": "langium generate --mode=production",
+        "langium:watch": "langium generate --watch",
+        "vscode:prepublish": "npm run build && npm run lint",
+        "build:web": "npm run build",
+        "bundle": "vite build",
+        "bundle:serve": "http-server ./dist --port 5175",
+        "dev": "vite",
+        "dev:debug": "vite --debug --force",
+        "serve": "npm run dev",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "langium": "~3.5.0",
+        "vscode-languageclient": "~9.0.1",
+        "vscode-languageserver": "~9.0.1",
+        "chalk": "~5.3.0",
+        "commander": "~11.0.0",
+        "@codingame/monaco-vscode-editor-service-override": "~3.2.3",
+        "@codingame/monaco-vscode-keybindings-service-override": "~3.2.3",
+        "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
+        "monaco-editor-wrapper": "~4.0.2",
+        "monaco-languageclient": "~8.1.1",
+        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
+    },
+    "devDependencies": {
+        "@types/node": "^18.0.0",
+        "@typescript-eslint/parser": "~7.3.1",
+        "@typescript-eslint/eslint-plugin": "~7.3.1",
+        "eslint": "~8.57.0",
+        "langium-cli": "~3.5.0",
+        "typescript": "~5.1.6",
+        "@types/vscode": "~1.67.0",
+        "concurrently": "~8.2.1",
+        "esbuild": "~0.20.2",
+        "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
+        "vite": "~5.2.7",
+        "http-server": "~14.1.1",
+        "vitest": "~1.4.0"
+    },
+    "volta": {
+        "node": "18.19.1",
+        "npm": "10.2.4"
+    },
+    "displayName": "Crill-IOS-Scripting",
+    "engines": {
+        "vscode": "^1.67.0",
+        "node": ">=18.0.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "cisco-ios",
+                "aliases": [
+                    "Cisco-IOS",
+                    "cisco-ios"
+                ],
+                "extensions": [".ios"],
+                "configuration": "./language-configuration.json"
+            }
         ],
-        "aliases": [
-          "Cls"
+        "grammars": [
+            {
+                "language": "cisco-ios",
+                "scopeName": "source.cisco-ios",
+                "path": "syntaxes/cisco-ios.tmLanguage.json"
+            }
         ]
-      }
-    ]
-  },
-  "scripts": {
-    "compile": "tsc -p ./out",
-    "watch": "tsc -w -p ./out",
-    "antlr": "antlr4 -Dlanguage=JavaScript -o ./parser ./src/antlr/CiscoIOS.g4",
-    "antlr-ts": "antlr4ts -o ./parser ./src/antlr/CiscoIOS.g4",
-    "prepublish": "npm run compile",
-    "clean": "rm -rf out parser/*.js parser/*.tokens parser/*.interp"
-  },
-  "devDependencies": {
-    "@types/mocha": "^10.0.10",
-    "@types/node": "20.x",
-    "@types/vscode": "^1.98.0",
-    "@typescript-eslint/eslint-plugin": "^8.25.0",
-    "@typescript-eslint/parser": "^8.25.0",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1",
-    "eslint": "^9.21.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.7.3",
-    "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1"
-  },
-  "dependencies": {
-    "vscode-languageclient": "^9.0.1",
-    "vscode-languageserver": "^9.0.1",
-    "vscode-languageserver-textdocument": "^1.0.12"
-  }
+    },
+    "activationEvents": [
+        "onLanguage:cisco-ios"
+    ],
+    "main": "./out/extension/main.cjs",
+    "bin": {
+        "cisco-ios-cli": "./bin/cli.js"
+    }
 }
