@@ -5,7 +5,7 @@ entry Script:
     ; 
 
 Stat:
-   lines+=(Command | Comment)+
+   lines+=(Command | Comment | NL)+ 
    ;
 
 Command:
