@@ -3,7 +3,7 @@ import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModul
 import { CiscoIOSGeneratedModule, CiscoIosGeneratedSharedModule } from './generated/module.js';
 import { CiscoIosValidator, registerValidationChecks } from './cisco-ios-validator.js';
 import { CiscoIosScopeProvider } from './cisco-ios-scopeProvider.js';
-
+import { CiscoIosCompletionProvider } from './cisco-ios-completionProvider.js';
 /**
  * Declaration of custom services - add your own service classes here.
  */
@@ -31,6 +31,9 @@ export const CiscoIosModule: Module<CiscoIosServices, PartialLangiumServices & C
 
     references: {
         ScopeProvider: (services) => new CiscoIosScopeProvider(services)
+    },
+    lsp: {
+        CompletionProvider: (services) => new CiscoIosCompletionProvider(services)
     }
 };
 

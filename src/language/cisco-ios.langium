@@ -20,7 +20,12 @@ Enable_cmds infers Command:
     commands=(
         Configure_cmd
         |Show_cmd
+        |Ping_cmd
     )
+    ;
+
+Ping_cmd:
+    command = 'ping' target=[Hostname_cmd:INPUT] NL
     ;
 
 Show_cmd:
@@ -49,7 +54,7 @@ Configure_cmds infers Command:
     ;
 
 Hostname_cmd:
-    command='hostname' INPUT NL
+    'hostname' name=INPUT NL
     ;
 
 Interface_cmd:
@@ -81,7 +86,7 @@ IP_cmd:
     ;
 
 Ip_cmd_options:
-    option= 'address' IP NL
+    option= 'address' ip = IP NL
     | 'test' NL
     ;
 Comment: 

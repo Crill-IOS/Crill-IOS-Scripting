@@ -1,3 +1,17 @@
+/**
+ * ALLES CHAT GENERATED!!!!!!!!!!!!!!!!!!!!!!!!
+ * Benjamin 15.07
+ * PS: meines Wissens wird dieser code von nichts benutzt und macht auch irgendwie nix
+ * 
+ * 
+ * angeblich werden scopes standardmaessing nuer für das resolven von crossrefrences verwendet und sonnt wird er nicht aufgerufen
+ * 
+ * ^ bestätigt (getestet)
+ * FIXEN
+ */
+
+
+
 import {
     AstNode,
     AstNodeDescription,
@@ -11,6 +25,7 @@ import {
 export class CiscoIosScopeProvider extends DefaultScopeProvider {
 
     override getScope(context: ReferenceInfo): Scope {
+        console.log("getting scope!")
         const node = context.container;
         const mode = this.detectMode(node);
 

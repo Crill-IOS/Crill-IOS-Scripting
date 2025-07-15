@@ -1,5 +1,2 @@
-configure memory 
 hostname hallo
-ip address 1.1.1.1
-configure memory 
-configure memory
+ping hallo
