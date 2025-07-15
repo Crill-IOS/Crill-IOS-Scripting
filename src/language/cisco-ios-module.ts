@@ -9,7 +9,8 @@ import { CiscoIosValidator, registerValidationChecks } from './cisco-ios-validat
 export type CiscoIosAddedServices = {
     validation: {
         CiscoIosValidator: CiscoIosValidator
-    }
+    },
+    
 }
 
 /**
@@ -55,7 +56,8 @@ export function createCiscoIosServices(context: DefaultSharedModuleContext): {
     const CiscoIos = inject(
         createDefaultModule({ shared }),
         CiscoIOSGeneratedModule,
-        CiscoIosModule
+        CiscoIosModule,
+        
     );
     shared.ServiceRegistry.register(CiscoIos);
     registerValidationChecks(CiscoIos);
@@ -66,3 +68,4 @@ export function createCiscoIosServices(context: DefaultSharedModuleContext): {
     }
     return { shared, CiscoIos };
 }
+

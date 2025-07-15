@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , Command, Configure_cmd, Script} from './generated/ast.js';
+import { CiscoIosAstType , Command, Configure_cmd, Script, IP} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -10,7 +10,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
         Script: validator.checkTESTING,
-        Command: validator.checkModes
+        Command: validator.checkModes,
+        IP: validator.checkIP
     };
     registry.register(checks, validator);
 }
@@ -34,6 +35,22 @@ export class CiscoIosValidator {
         }
     }
 
+    checkIP(ip: IP, accept:ValidationAcceptor): void {
+        console.log(ip)
+        console.log(ip.ip)
+        console.log(String(ip.ip).split('.'))
+        if(ip.ip){
+            const  splitIP= String(ip.ip).split('.')
+
+            for ( const num of splitIP){
+                const ip_number = parseInt(num,10);
+                console.log(ip_number);
+                if(ip_number > 255 || ip_number < 0 ){
+                    accept("error", "This is not a valid IP-Address", {node: ip, property: 'ip'});
+                }
+            }
+        }
+    }
 
 
 

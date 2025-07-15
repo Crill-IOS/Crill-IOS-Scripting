@@ -1,6 +1,1 @@
-interface gigabitethernet 1/1
-hostname adfs
-hostname asdf
-ip address 
-configure terminal
-hostname adsf
+ip address 355.55.55.44

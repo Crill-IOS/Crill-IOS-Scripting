@@ -81,12 +81,15 @@ IP_cmd:
     ;
 
 Ip_cmd_options:
-    option= 'address' NL
+    option= 'address' IP NL
     | 'test' NL
     ;
 Comment: 
     text=COMMENT NL;
 
+IP: ip = IP_ADDRESS;
+
+terminal IP_ADDRESS:(INT'.'INT'.'INT'.'INT);
 terminal COMMENT: /[!#].+/;
 terminal INPUT: /[a-zA-Z_][a-zA-Z0-9\-_\/]*/;
 terminal INT: /[0-9]+/;
