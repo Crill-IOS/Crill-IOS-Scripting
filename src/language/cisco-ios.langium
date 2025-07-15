@@ -2,7 +2,7 @@ grammar CiscoIOS
 
 entry Script:
     script=Stat
-    ; 
+    ;
 
 Stat:
    lines+=(Command | Comment | NL)+ 

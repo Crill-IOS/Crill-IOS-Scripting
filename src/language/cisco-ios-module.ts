@@ -2,6 +2,7 @@ import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
 import { CiscoIOSGeneratedModule, CiscoIosGeneratedSharedModule } from './generated/module.js';
 import { CiscoIosValidator, registerValidationChecks } from './cisco-ios-validator.js';
+import { CiscoIosScopeProvider } from './cisco-ios-scopeProvider.js';
 
 /**
  * Declaration of custom services - add your own service classes here.
@@ -10,7 +11,6 @@ export type CiscoIosAddedServices = {
     validation: {
         CiscoIosValidator: CiscoIosValidator
     },
-    
 }
 
 /**
@@ -27,6 +27,10 @@ export type CiscoIosServices = LangiumServices & CiscoIosAddedServices
 export const CiscoIosModule: Module<CiscoIosServices, PartialLangiumServices & CiscoIosAddedServices> = {
     validation: {
         CiscoIosValidator: () => new CiscoIosValidator()
+    },
+
+    references: {
+        ScopeProvider: (services) => new CiscoIosScopeProvider(services)
     }
 };
 
@@ -57,7 +61,6 @@ export function createCiscoIosServices(context: DefaultSharedModuleContext): {
         createDefaultModule({ shared }),
         CiscoIOSGeneratedModule,
         CiscoIosModule,
-        
     );
     shared.ServiceRegistry.register(CiscoIos);
     registerValidationChecks(CiscoIos);

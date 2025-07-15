@@ -1,1 +1,5 @@
-ip address 355.55.55.44
+configure memory 
+hostname hallo
+ip address 1.1.1.1
+configure memory 
+configure memory
