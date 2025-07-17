@@ -5,18 +5,15 @@ entry Script:
     ;
 
 Stat:
-   lines+=(Command | Comment | NL)+ 
+   lines+=(
+    Enable_cmds
+    | Configure_cmds
+    | Interface_cmds 
+    | Comment 
+    | NL)+ 
    ;
 
-Command:
-    blocks = (
-        Enable_cmds
-        | Configure_cmds
-        | Interface_cmds
-    )
-    ;
-
-Enable_cmds infers Command:
+Enable_cmds :
     commands=(
         Configure_cmd
         |Show_cmd
@@ -25,7 +22,7 @@ Enable_cmds infers Command:
     ;
 
 Ping_cmd:
-    command = 'ping' target=[Hostname_cmd:INPUT] NL
+    'ping' options=IP NL
     ;
 
 Show_cmd:
@@ -48,9 +45,11 @@ Show_cmd_options:
         | 'interface' NL
     ;
 
-Configure_cmds infers Command:
+Configure_cmds:
+    commands=(
         Hostname_cmd
         | Interface_cmd
+    )
     ;
 
 Hostname_cmd:
@@ -69,7 +68,7 @@ Interface_number:
     number = INT '/' INT
     ;
 
-Interface_cmds infers Command:
+Interface_cmds:
     IP_cmd
     |Shutdown_cmd
     |Interface_cmd

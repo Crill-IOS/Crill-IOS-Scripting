@@ -1,1 +1,4 @@
 configure terminal
+ping 1.1.1.1
+
+hostname hallo
