@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , Command, Configure_cmd, IP} from './generated/ast.js';
+import { CiscoIosAstType , IP} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -9,7 +9,6 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const registry = services.validation.ValidationRegistry;
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
-        Command: validator.checkModes,
         IP: validator.checkIP
     };
     registry.register(checks, validator);
@@ -20,11 +19,6 @@ export function registerValidationChecks(services: CiscoIosServices) {
  */
 export class CiscoIosValidator {
 
-    checkModes(commands: Command, accept: ValidationAcceptor): void{
-        if(commands.commands?.$type == Configure_cmd){
-             accept('error', 'Script has a configure Command', {node: commands, property: 'commands'});
-        }
-    }
 
     checkIP(ip: IP, accept:ValidationAcceptor): void {
         if(ip.ip){
