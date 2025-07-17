@@ -16,7 +16,7 @@ Command:
     )
     ;
 
-Enable_cmds:
+Enable_cmds infers Command:
     commands=(
         Configure_cmd
         |Show_cmd
@@ -48,7 +48,7 @@ Show_cmd_options:
         | 'interface' NL
     ;
 
-Configure_cmds:
+Configure_cmds infers Command:
         Hostname_cmd
         | Interface_cmd
     ;
@@ -69,7 +69,7 @@ Interface_number:
     number = INT '/' INT
     ;
 
-Interface_cmds:
+Interface_cmds infers Command:
     IP_cmd
     |Shutdown_cmd
     |Interface_cmd
