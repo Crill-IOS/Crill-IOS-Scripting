@@ -57,21 +57,34 @@ Hostname_cmd:
     ;
 
 Interface_cmd:
-    'interface' Interface_types 
+    'interface' types=Interface_types NL
     ;
 
 Interface_types:
-    'gigabitethernet' Interface_number NL
-    |'vlan' INT NL
+
+    Interface_type_gigabitethernet
+    | Interface_type_vlan
     ;
+Interface_type_gigabitethernet:
+    
+    type= 'gigabitethernet' number=Interface_number 
+    ;
+
+Interface_type_vlan:
+    type ='vlan' INT 
+    ;
+
+
 Interface_number:
-    number = INT '/' INT
+     number= INT '/' INT sub =Sub_Interface_number?
+    ;
+Sub_Interface_number returns string:
+    ('.' INT)
     ;
 
 Interface_cmds:
     IP_cmd
     |Shutdown_cmd
-    |Interface_cmd
     |'exit' NL 
     ;
 

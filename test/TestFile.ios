@@ -1,4 +1,1 @@
-configure terminal
-ping 1.1.1.1
-
-hostname hallo
+interface gigabitethernet 1/1.10

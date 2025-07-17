@@ -19,7 +19,6 @@ export function registerValidationChecks(services: CiscoIosServices) {
  */
 export class CiscoIosValidator {
 
-
     checkIP(ip: IP, accept:ValidationAcceptor): void {
         if(ip.ip){
             const  splitIP= String(ip.ip).split('.')
