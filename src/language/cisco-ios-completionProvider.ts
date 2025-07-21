@@ -2,9 +2,7 @@ import { AstNode, LangiumDocument} from "langium";
 import { DefaultCompletionProvider } from "langium/lsp";
 import { CompletionParams, CancellationToken, CompletionList} from "vscode-languageserver";
 import { CiscoIosServices } from "./cisco-ios-module.js";
-import { Interface_type_gigabitethernet, Script, isConfigure_cmds, isEnable_cmds} from "./generated/ast.js";
-
-
+import { Interface_type_gigabitethernet, Script, isConfigure_cmds, isEnable_cmds, isExit_cmd } from "./generated/ast.js";
 
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
@@ -28,64 +26,63 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     }
     
-    
+    /**
+     * returns the mode at the cursor's position
+     * @param node root node
+     * @param params parameters
+     * @returns mode at cursor's position
+     */
     private modeAtPosition(node: AstNode, params: CompletionParams):string{
         const script = node as Script;
+        const modeStack:string[]  = ["enable"];
         
-        let mode:string[]  = ["enable"];
-        
-        
+        // if script is empty return "enable"
         if(!script.script){
-            const out = mode.pop();
-            if (!out) {
-                return "enable";
-            }
-            return out;
+            return "enable";
         }
 
         const lines = script.script.lines;
-        const position = params.position
+        const targetLine = params.position.line;
 
-        
-        let counter = 0;
-        for(const line of lines){
-            if (counter >= position.line){
-                break
-            }
+        // targetLine is the line of the cursor's position
+        for (let i = 0; i < lines.length && i < targetLine; i++) {
+            let  line = lines[i];
+
             // check "configure terminal" command
-            if(isEnable_cmds(line)) {
+            if (isEnable_cmds(line)) {
                 if(line.commands.$type === "Configure_cmd"){
                     if(line.commands.options.option === 'terminal'){
-                        mode.push('configure');
+                        modeStack.push('configure');
                         continue;
                     }
                 }
             }
 
-            if (isConfigure_cmds(line)){
+            // check "interface gigabitethernet/..." command
+            if (isConfigure_cmds(line)) {
                 if (line.commands.$type === 'Interface_cmd'){
-                    //check the diffrent modes
 
+                    //check the diffrent interface modes
                     if (line.commands.types.type ==="gigabitethernet"){
-                        const inter = line.commands.types as Interface_type_gigabitethernet
+                        const inter = line.commands.types as Interface_type_gigabitethernet;
                         if( inter.$type === 'Interface_type_gigabitethernet'){
                             if(inter.number.number && inter.number.sub){
-                                mode.push('gigabitethernet_SUB');
+                                modeStack.push('gigabitethernet_SUB');
                             } else if(inter.number.number){
-                                mode.push('gigabitethernet');
+                                modeStack.push('gigabitethernet');
                             }
                         }
                     }
                 }
             }
-            
-            counter = counter +1;
+
+            // check "exit" command
+            if (isExit_cmd(line)) {
+                modeStack.pop();
+            }
         }
 
-        const out = mode.pop();
-        if(!out){
-            return "enable"
-        }
-        return out;
+        // return last mode from modeStack or "enable" if modeStack is empty
+        return modeStack.pop() ?? "enable";
     }
 }
