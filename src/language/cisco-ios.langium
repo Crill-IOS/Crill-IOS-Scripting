@@ -83,8 +83,8 @@ Sub_Interface_number returns string:
 
 Interface_cmds:
     IP_cmd
-    |Shutdown_cmd
-    |'exit' NL 
+    | Shutdown_cmd
+    | Exit_cmd
     ;
 
 Shutdown_cmd:
@@ -94,6 +94,10 @@ Shutdown_cmd:
 
 IP_cmd:
     command='ip' Ip_cmd_options
+    ;
+
+Exit_cmd:
+    command='exit'
     ;
 
 Ip_cmd_options:
