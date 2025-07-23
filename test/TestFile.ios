@@ -1,1 +1,7 @@
-interface  
+configure terminal
+interface gigabitethernet 12/1
+
+interface gigabitethernet 12/1.10
+exit
+
+

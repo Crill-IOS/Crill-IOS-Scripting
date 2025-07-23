@@ -68,8 +68,10 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                         if( inter.$type === 'Interface_type_gigabitethernet'){
                             if(inter.number.number && inter.number.sub){
                                 modeStack.push('gigabitethernet_SUB');
+                                continue;
                             } else if(inter.number.number){
                                 modeStack.push('gigabitethernet');
+                                continue;
                             }
                         }
                     }
