@@ -22,7 +22,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         // }
         const root: AstNode = document.parseResult.value;
         console.log(this.modeAtPosition(root, params));
-
+        
 
         return super.getCompletion(document,params,_cancelToken);
 

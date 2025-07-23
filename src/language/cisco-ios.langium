@@ -18,8 +18,7 @@ Enable_cmds :
         Configure_cmd
         |Show_cmd
         |Ping_cmd
-    )
-    ;
+    );
 
 Ping_cmd:
     'ping' options=IP NL
