@@ -19,7 +19,7 @@ Enable_cmds :
         |Show_cmd
         |Ping_cmd
     );
-
+//ping a remote host via hostname or Ip address
 Ping_cmd:
     'ping' options=IP NL
     ;

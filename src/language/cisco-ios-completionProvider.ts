@@ -14,11 +14,16 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
         this.services;
-        // return {
-        //     isIncomplete: false,
-        //     items: []
-        // }
+
         const root: AstNode = document.parseResult.value;
+        const contexts = this.buildContexts(document, params.position);
+
+        for(const context of contexts){
+            for (const feature of context.features){
+                console.log(feature.type); 
+            }
+        }
+
         console.log(this.modeAtPosition(root, params));
         
 
