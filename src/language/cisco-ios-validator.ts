@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , IP} from './generated/ast.js';
+import { CiscoIosAstType , IP, Username_cmd} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -9,7 +9,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const registry = services.validation.ValidationRegistry;
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
-        IP: validator.checkIP
+        IP: validator.checkIP,
+        Username_cmd: validator.checkUsername_cmd
     };
     registry.register(checks, validator);
 }
@@ -28,6 +29,19 @@ export class CiscoIosValidator {
                 
                 if(ip_number > 255 || ip_number < 0 ){
                     accept("error", "This is not a valid IP-Address", {node: ip, property: 'ip'});
+                }
+            }
+        }
+    }
+
+    checkUsername_cmd(username_cmd: Username_cmd, accept: ValidationAcceptor):void {
+        if(username_cmd.options){
+            let occuredOptions:string[]= [];
+            for(const option of username_cmd.options){
+                if(occuredOptions.includes(option.$type)){
+                    accept("error", "Already Defined (duplicate)", {node:option});
+                }else {
+                    occuredOptions.push(option.$type);
                 }
             }
         }

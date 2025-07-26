@@ -48,8 +48,30 @@ Configure_cmds:
     commands=(
         Hostname_cmd
         | Interface_cmd
+        | Username_cmd
     )
     ;
+Username_cmd :
+    'username' name=INPUT options+= Username_cmd_option* NL;
+
+
+    
+Username_cmd_option:
+    PrivilegeOption | PasswordOption | SecretOption | AlgorithmTypeOption;
+
+PrivilegeOption:
+    'privilege' value=INT;
+
+PasswordOption:
+    'password' value=INPUT;
+
+SecretOption:
+    'secret' value=INPUT;
+
+AlgorithmTypeOption:
+    'algorithm-type' value=('md5' | 'scrypt' | 'sha256');
+
+
 
 Hostname_cmd:
     'hostname' name=INPUT NL
