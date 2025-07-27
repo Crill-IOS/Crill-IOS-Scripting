@@ -11,7 +11,6 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         super(services); 
     }
 
-
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
         this.services;
 
