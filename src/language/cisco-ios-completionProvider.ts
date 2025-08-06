@@ -14,13 +14,13 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
-        
         let completions: CompletionItem[] = [];
         const root: AstNode = document.parseResult.value;
         const contexts = this.buildContexts(document, params.position);
         const mode = this.modeAtPosition(root,params);
         //testing:
-        this.getCompletionsFromRule(mode);
+        console.log(this.getDirectFirstLayerKeywords(mode));
+        //this.getCompletionsFromRule(mode);
         //end testing/
         const acceptor: CompletionAcceptor = (context, value) => {
             const completionItem = this.fillCompletionItem(context, value);
@@ -60,11 +60,45 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         }
         return completions;
     }
-    
 
+    getDirectFirstLayerKeywords(ruleName: string): string[] {
+    const result: string[] = [];
+    const grammar = this.services.Grammar;
+    const rule = grammar.rules.find(r => r.name === ruleName);
+    if (!rule || !ast.isParserRule(rule)) return result;
 
+    const def = rule.definition;
 
+    const collectDirectChildren = (element: ast.AbstractElement | undefined): void => {
+        if (!element) return;
 
+        if (ast.isAlternatives(element) || ast.isGroup(element)) {
+            for (const alt of element.elements) {
+                collectDirectChildren(alt);
+            }
+        } else if (ast.isAssignment(element)) {
+            collectDirectChildren(element.terminal);
+        } else if (ast.isRuleCall(element)) {
+            const refRule = element.rule.ref;
+            if (refRule && ast.isParserRule(refRule)) {
+                const innerDef = refRule.definition;
+                if (ast.isGroup(innerDef) || ast.isAlternatives(innerDef)) {
+                    const firstEl = innerDef.elements[0];
+                    if (ast.isKeyword(firstEl)) {
+                        result.push(firstEl.value);
+                    }
+                } else if (ast.isKeyword(innerDef)) {
+                    result.push(innerDef.value);
+                }
+            }
+        } else if (ast.isKeyword(element)) {
+            result.push(element.value);
+        }
+    };
+
+    collectDirectChildren(def);
+    return result;
+}
 
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
         if (ast.isKeyword(next.feature)) {
