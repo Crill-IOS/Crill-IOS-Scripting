@@ -1,9 +1,10 @@
 import { AstNode, LangiumDocument, MaybePromise, } from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
-import { CompletionParams, CancellationToken, CompletionList} from "vscode-languageserver";
+import { CompletionItem, CompletionParams, CancellationToken, CompletionList} from "vscode-languageserver";
 import { CiscoIosServices } from "./cisco-ios-module.js";
 import { Interface_type_gigabitethernet, Script, isConfigure_cmds, isEnable_cmds, isExit_cmd,  } from "./generated/ast.js";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
+
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
@@ -13,22 +14,57 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
-        this.services;
+        
+        let completions: CompletionItem[] = [];
         const root: AstNode = document.parseResult.value;
         const contexts = this.buildContexts(document, params.position);
         const mode = this.modeAtPosition(root,params);
+        //testing:
+        this.getCompletionsFromRule(mode);
+        //end testing/
+        const acceptor: CompletionAcceptor = (context, value) => {
+            const completionItem = this.fillCompletionItem(context, value);
+            if (completionItem) {
+                completions.push(completionItem);
+            }
+        };
+
         for (const context of contexts){
             for (const feature of context.features){
-                if(feature.feature.$type === "Keyword"){
-                    //wie bekomme ich den value wenn es ein keyword ist usw
-                }
-                
+                this.completionFor(context, feature, acceptor);
             }
         }
         console.log(mode);
-        return super.getCompletion(document,params,_cancelToken);
-
+        return CompletionList.create(this.deduplicateItems(completions), true);
     }
+
+
+    protected getCompletionsFromRule(mode: string): CompletionItem[] {
+        let completions: CompletionItem[] = [];
+        const grammar = this.services.Grammar;
+        const rule = grammar.rules.find(r => r.name === mode);
+        if (rule && ast.isParserRule(rule)){
+            const def = rule.definition;
+
+            if (ast.isAssignment(def)){
+                const terminal = def.terminal
+                if (ast.isAlternatives(terminal)){
+                    const alt = terminal;
+                    //console.log(alt.elements[0]);
+                    if (ast.isRuleCall(alt.elements[0])){
+                        const rule = alt.elements[0];
+                        console.log(rule.rule.ref?.definition);
+                    }
+                }
+            }
+        }
+        return completions;
+    }
+    
+
+
+
+
 
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
         if (ast.isKeyword(next.feature)) {

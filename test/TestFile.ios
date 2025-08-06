@@ -1,0 +1,3 @@
+
+configure terminal
+ip address 1.1.1.1
