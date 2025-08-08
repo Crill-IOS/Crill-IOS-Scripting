@@ -7,8 +7,6 @@ entry Script:
 Stat:
    lines+=(
     Enable_cmds
-    | Configure_cmds
-    | Interface_cmds 
     | Comment 
     | NL)+ 
    ;
@@ -19,7 +17,7 @@ Enable_cmds :
         |Show_cmd
         |Ping_cmd
     );
-//ping a remote host via hostname or Ip address
+
 Ping_cmd:
     'ping' options=IP NL
     ;
@@ -34,7 +32,7 @@ Configure_cmd:
 
 Configure_cmd_options:
     option=
-        'terminal' NL
+        'terminal' NL lines+=Configure_cmds+ Exit_cmd
         |'memory' NL
     ;
 
@@ -49,6 +47,7 @@ Configure_cmds:
         Hostname_cmd
         | Interface_cmd
         | Username_cmd
+        | NL
     )
     ;
 Username_cmd :
@@ -119,7 +118,7 @@ IP_cmd:
     ;
 
 Exit_cmd:
-    command='exit'
+    command='exit' NL
     ;
 
 Ip_cmd_options:

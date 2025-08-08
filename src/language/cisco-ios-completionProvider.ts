@@ -17,10 +17,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         const root: AstNode = document.parseResult.value;
         const contexts = this.buildContexts(document, params.position);
         const mode = this.modeAtPosition(root,params);
-        //testing:
-        console.log(this.getDirectFirstLayerKeywords(mode));
-        //this.getCompletionsFromRule(mode);
-        //end testing/
+        
         const acceptor: CompletionAcceptor = (context, value) => {
             const completionItem = this.fillCompletionItem(context, value);
             if (completionItem) {
@@ -38,27 +35,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     }
 
 
-    protected getCompletionsFromRule(mode: string): CompletionItem[] {
-        let completions: CompletionItem[] = [];
-        const grammar = this.services.Grammar;
-        const rule = grammar.rules.find(r => r.name === mode);
-        if (rule && ast.isParserRule(rule)){
-            const def = rule.definition;
-
-            if (ast.isAssignment(def)){
-                const terminal = def.terminal
-                if (ast.isAlternatives(terminal)){
-                    const alt = terminal;
-                    //console.log(alt.elements[0]);
-                    if (ast.isRuleCall(alt.elements[0])){
-                        const rule = alt.elements[0];
-                        console.log(rule.rule.ref?.definition);
-                    }
-                }
-            }
-        }
-        return completions;
-    }
+    
 
     getDirectFirstLayerKeywords(ruleName: string): string[] {
     const result: string[] = [];
@@ -183,4 +160,29 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         // return last mode from modeStack or "enable" if modeStack is empty
         return modeStack.pop() ?? "Enable_cmds";
     }
+
+/*  
+How to walk the something
+    protected getCompletionsFromRule(mode: string): CompletionItem[] {
+        let completions: CompletionItem[] = [];
+        const grammar = this.services.Grammar;
+        const rule = grammar.rules.find(r => r.name === mode);
+        if (rule && ast.isParserRule(rule)){
+            const def = rule.definition;
+
+            if (ast.isAssignment(def)){
+                const terminal = def.terminal
+                if (ast.isAlternatives(terminal)){
+                    const alt = terminal;
+                    //console.log(alt.elements[0]);
+                    if (ast.isRuleCall(alt.elements[0])){
+                        const rule = alt.elements[0];
+                        console.log(rule.rule.ref?.definition);
+                    }
+                }
+            }
+        }
+        return completions;
+    }
+*/
 }
