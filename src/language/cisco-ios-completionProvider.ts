@@ -9,9 +9,8 @@ import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js"
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     constructor(private readonly services: CiscoIosServices) {
-        super(services); 
+        super(services);
     }
-
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
         let completions: CompletionItem[] = [];
