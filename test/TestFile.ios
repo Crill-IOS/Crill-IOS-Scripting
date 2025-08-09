@@ -1,2 +1,16 @@
+ping 2.2.2.2
+show interface
 configure terminal
-hostname hallo
+hostname gustav
+exit 
+
+configure terminal
+interface gigabitethernet 1/1
+ip address 1.1.1.1
+exit
+hostname gustav
+exit
+configure terminal
+
+interface gigabitethernet 1/0
+ 
