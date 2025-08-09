@@ -1,4 +1,4 @@
-import { AstNode, LangiumDocument, MaybePromise} from "langium";
+import { LangiumDocument, MaybePromise} from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
 import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
@@ -18,7 +18,6 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
 
         let completions: CompletionItem[] = [];
-        const root: AstNode = document.parseResult.value;
         const contexts = this.buildContexts(document, params.position);
         
         const acceptor: CompletionAcceptor = (context, value) => {
@@ -27,8 +26,15 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 completions.push(completionItem);
             }
         };
-        return super.getCompletion(document,params,_cancelToken);
 
+
+        for (const context of contexts){
+            for (const feature of context.features){
+                this.completionFor(context, feature, acceptor);
+            }
+        }
+
+        return CompletionList.create(this.deduplicateItems(completions), true);
     }
     
 
@@ -37,10 +43,9 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             return this.completionForKeyword(context, next.feature, acceptor);
         } else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
+        } else if (ast.isEndOfFile(next.feature)) {
+            console.log("EOF - Detected -> from completion for");
         }
-        // Don't offer any completion for other elements (i.e. terminals, datatype rules)
-        // We - from a framework level - cannot reasonably assume their contents.
-        // Adopters can just override `completionFor` if they want to do that anyway.
     }
 
     override completionForKeyword(context: CompletionContext, keyword: ast.Keyword, acceptor: CompletionAcceptor): MaybePromise<void> {

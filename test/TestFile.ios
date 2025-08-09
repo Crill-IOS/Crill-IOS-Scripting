@@ -1,4 +1,2 @@
 configure terminal
 hostname hallo
-
-exit
