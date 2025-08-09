@@ -32,7 +32,7 @@ IP_cmd:
 
 
 Ip_cmd_options:
-    option= 'address' ip = IP NL
+    'address' ip = IP_ADDRESS NL
     ;
 
 

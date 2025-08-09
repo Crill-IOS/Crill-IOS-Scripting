@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' options=IP NL
+    'ping' options=[Ip_cmd_options:IP_ADDRESS] NL
     ;
 
 Show_cmd:
