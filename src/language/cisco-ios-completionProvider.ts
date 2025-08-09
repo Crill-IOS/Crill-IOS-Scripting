@@ -1,22 +1,25 @@
-import { AstNode, LangiumDocument, MaybePromise, } from "langium";
+import { AstNode, LangiumDocument, MaybePromise} from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
-import { CompletionItem, CompletionParams, CancellationToken, CompletionList} from "vscode-languageserver";
-import { CiscoIosServices } from "./cisco-ios-module.js";
-import { Interface_type_gigabitethernet, Script, isConfigure_cmds, isEnable_cmds, isExit_cmd,  } from "./generated/ast.js";
+import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
+import { CiscoIosServices } from "./cisco-ios-module.js";
+
 
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     constructor(private readonly services: CiscoIosServices) {
         super(services);
+        this.services;
     }
+    
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
+
+
         let completions: CompletionItem[] = [];
         const root: AstNode = document.parseResult.value;
         const contexts = this.buildContexts(document, params.position);
-        const mode = this.modeAtPosition(root,params);
         
         const acceptor: CompletionAcceptor = (context, value) => {
             const completionItem = this.fillCompletionItem(context, value);
@@ -24,57 +27,10 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 completions.push(completionItem);
             }
         };
+        return super.getCompletion(document,params,_cancelToken);
 
-        for (const context of contexts){
-            for (const feature of context.features){
-                this.completionFor(context, feature, acceptor);
-            }
-        }
-        console.log(mode);
-        return CompletionList.create(this.deduplicateItems(completions), true);
     }
-
-
     
-
-    getDirectFirstLayerKeywords(ruleName: string): string[] {
-    const result: string[] = [];
-    const grammar = this.services.Grammar;
-    const rule = grammar.rules.find(r => r.name === ruleName);
-    if (!rule || !ast.isParserRule(rule)) return result;
-
-    const def = rule.definition;
-
-    const collectDirectChildren = (element: ast.AbstractElement | undefined): void => {
-        if (!element) return;
-
-        if (ast.isAlternatives(element) || ast.isGroup(element)) {
-            for (const alt of element.elements) {
-                collectDirectChildren(alt);
-            }
-        } else if (ast.isAssignment(element)) {
-            collectDirectChildren(element.terminal);
-        } else if (ast.isRuleCall(element)) {
-            const refRule = element.rule.ref;
-            if (refRule && ast.isParserRule(refRule)) {
-                const innerDef = refRule.definition;
-                if (ast.isGroup(innerDef) || ast.isAlternatives(innerDef)) {
-                    const firstEl = innerDef.elements[0];
-                    if (ast.isKeyword(firstEl)) {
-                        result.push(firstEl.value);
-                    }
-                } else if (ast.isKeyword(innerDef)) {
-                    result.push(innerDef.value);
-                }
-            }
-        } else if (ast.isKeyword(element)) {
-            result.push(element.value);
-        }
-    };
-
-    collectDirectChildren(def);
-    return result;
-}
 
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
         if (ast.isKeyword(next.feature)) {
@@ -99,90 +55,4 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         });
     }
     
-    /**
-     * returns the mode at the cursor's position
-     * @param node root node
-     * @param params parameters
-     * @returns mode at cursor's position
-     */
-    private modeAtPosition(node: AstNode, params: CompletionParams):string{
-        const script = node as Script;
-        const modeStack:string[]  = ["Enable_cmds"];
-        
-        // if script is empty return "enable"
-        if(!script.script){
-            return "Enable_cmds";
-        }
-
-        const lines = script.script.lines;
-        const targetLine = params.position.line;
-
-        // targetLine is the line of the cursor's position
-        for (let i = 0; i < lines.length && i < targetLine; i++) {
-            let  line = lines[i];
-
-            // check "configure terminal" command
-            if (isEnable_cmds(line)) {
-                if(line.commands.$type === "Configure_cmd"){
-                    if(line.commands.options.option === 'terminal'){
-                        modeStack.push('Configure_cmds');
-                        continue;
-                    }
-                }
-            }
-
-            // check "interface gigabitethernet/..." command
-            if (isConfigure_cmds(line)) {
-                if (line.commands.$type === 'Interface_cmd'){
-
-                    //check the diffrent interface modes
-                    if (line.commands.types.type ==="gigabitethernet"){
-                        const inter = line.commands.types as Interface_type_gigabitethernet;
-                        if( inter.$type === 'Interface_type_gigabitethernet'){
-                            if(inter.number.number && inter.number.sub){
-                                modeStack.push('gigabitethernet_SUB');
-                                continue;
-                            } else if(inter.number.number){
-                                modeStack.push('Interface_cmds');
-                                continue;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // check "exit" command
-            if (isExit_cmd(line)) {
-                modeStack.pop();
-            }
-        }
-
-        // return last mode from modeStack or "enable" if modeStack is empty
-        return modeStack.pop() ?? "Enable_cmds";
-    }
-
-/*  
-How to walk the something
-    protected getCompletionsFromRule(mode: string): CompletionItem[] {
-        let completions: CompletionItem[] = [];
-        const grammar = this.services.Grammar;
-        const rule = grammar.rules.find(r => r.name === mode);
-        if (rule && ast.isParserRule(rule)){
-            const def = rule.definition;
-
-            if (ast.isAssignment(def)){
-                const terminal = def.terminal
-                if (ast.isAlternatives(terminal)){
-                    const alt = terminal;
-                    //console.log(alt.elements[0]);
-                    if (ast.isRuleCall(alt.elements[0])){
-                        const rule = alt.elements[0];
-                        console.log(rule.rule.ref?.definition);
-                    }
-                }
-            }
-        }
-        return completions;
-    }
-*/
 }
