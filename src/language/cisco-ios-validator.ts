@@ -63,7 +63,7 @@ export class CiscoIosValidator {
             let occuredOptions:string[]= [];
             for(const option of username_cmd.options){
                 if(occuredOptions.includes(option.$type)){
-                    accept("error", "Already Defined (duplicate)", {node:option});
+                    accept("error", `Already Defined ${option.$cstNode?.text} (duplicate)`, {node:option});
                 }else {
                     occuredOptions.push(option.$type);
                 }
