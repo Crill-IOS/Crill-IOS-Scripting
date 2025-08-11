@@ -2,7 +2,8 @@
  hostname gustav
  username hallo algorithm-type md5 privilege 15
  interface gigabitethernet 0/1
- ip address 1.1.1.1
+ ip address 1.1.1.1 255.128.0.0
  exit
  exit
- ping 1.1.1.1
+
+ 

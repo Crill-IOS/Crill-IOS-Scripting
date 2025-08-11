@@ -32,7 +32,7 @@ IP_cmd:
 
 
 Ip_cmd_options:
-    'address' ip = IP_ADDRESS NL
+    'address' ip = IP mask= SUBNETMASK NL
     ;
 
 

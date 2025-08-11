@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , IP, Username_cmd} from './generated/ast.js';
+import { CiscoIosAstType , IP, SUBNETMASK, Username_cmd} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -10,6 +10,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
         IP: validator.checkIP,
+        SUBNETMASK: validator.chekcSUBNETMASK,
         Username_cmd: validator.checkUsername_cmd
     };
     registry.register(checks, validator);
@@ -21,16 +22,31 @@ export function registerValidationChecks(services: CiscoIosServices) {
 export class CiscoIosValidator {
 
     checkIP(ip: IP, accept:ValidationAcceptor): void {
-        if(ip.ip){
-            const  splitIP= String(ip.ip).split('.')
+        if(ip.value){
+            const  splitIP= String(ip.value).split('.');
 
             for ( const num of splitIP){
                 const ip_number = parseInt(num,10);
                 
                 if(ip_number > 255 || ip_number < 0 ){
-                    accept("error", "This is not a valid IP-Address", {node: ip, property: 'ip'});
+                    accept("error", "This is not a valid IP-Address", {node: ip, property: 'value'});
                 }
             }
+        }
+    }
+
+    chekcSUBNETMASK(subnetmask:SUBNETMASK, accept:ValidationAcceptor):void{
+        if(subnetmask.value){
+            const splitSUBNETMASK = String(subnetmask.value).split('.');
+
+            for (const num of splitSUBNETMASK){
+                const sub_number = parseInt(num,10);
+                if(sub_number.toString(2).length !=8){
+                    if (sub_number.toString(2) != "0"){
+                        accept("error", "This is not a valid SubNet-Maskt", {node: subnetmask, property: "value"});
+                    }
+                };
+            }   
         }
     }
 

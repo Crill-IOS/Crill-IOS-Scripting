@@ -1,12 +1,12 @@
-
-
-IP: ip = IP_ADDRESS;
+//Only Parser Rules can be checked with the validator:
+IP: value = IPv4_DDC;
+SUBNETMASK: value = IPv4_DDC;
 
 Exit:
     command='exit' NL
     ;
 
-terminal IP_ADDRESS:(INT'.'INT'.'INT'.'INT);
+terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
 terminal COMMENT: /[!#].+/;
 terminal INPUT: /[a-zA-Z_][a-zA-Z0-9\-_\/]*/;
 terminal INT: /[0-9]+/;
