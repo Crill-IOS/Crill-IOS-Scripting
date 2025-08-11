@@ -2,7 +2,7 @@
     "projectName": "CiscoIos",
     "languages": [{
         "id": "cisco-ios",
-        "grammar": "src/language/cisco-ios.langium",
+        "grammar": "src/language/grammars/cisco-ios.langium",
         "fileExtensions": [".ios"],
         "textMate": {
             "out": "syntaxes/cisco-ios.tmLanguage.json"

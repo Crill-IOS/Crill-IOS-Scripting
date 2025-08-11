@@ -1,1 +1,8 @@
-username hallo algorithm-type md5 password a privilege 1 secret a
+ configure terminal
+ hostname gustav
+ username hallo algorithm-type md5 privilege 15
+ interface gigabitethernet 0/1
+ ip address 1.1.1.1
+ exit
+ exit
+ ping 1.1.1.1
