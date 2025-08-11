@@ -36,17 +36,25 @@ export class CiscoIosValidator {
     }
 
     chekcSUBNETMASK(subnetmask:SUBNETMASK, accept:ValidationAcceptor):void{
-        if(subnetmask.value){
+        if(subnetmask.value){   
             const splitSUBNETMASK = String(subnetmask.value).split('.');
-
+            let sub_binary: string = "";
             for (const num of splitSUBNETMASK){
                 const sub_number = parseInt(num,10);
-                if(sub_number.toString(2).length !=8){
-                    if (sub_number.toString(2) != "0"){
-                        accept("error", "This is not a valid SubNet-Maskt", {node: subnetmask, property: "value"});
-                    }
-                };
-            }   
+                if (sub_number > 255){
+
+                }
+                const sub_number_binary = sub_number.toString(2);
+                let temp = sub_number_binary;
+                for (let i = 0; i<(8-sub_number_binary.length); i++) {
+                    temp = "0" + temp;
+                }
+                sub_binary = sub_binary +temp;
+            }
+            if (sub_binary.match(/10+1/) || sub_binary.length != 32 || !sub_binary.includes("0")){
+                accept("error", "This is not a valid Subnet-Mask", {node: subnetmask, property: 'value'});
+            }
+            console.log(sub_binary);
         }
     }
 
