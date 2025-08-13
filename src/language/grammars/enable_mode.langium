@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' IP SUBNETMASK NL
+    'ping' ip=IP mask=SUBNETMASK NL
     ;
 
 Show_cmd:

@@ -54,7 +54,6 @@ export class CiscoIosValidator {
             if (sub_binary.match(/10+1/) || sub_binary.length != 32 || !sub_binary.includes("0")){
                 accept("error", "This is not a valid Subnet-Mask", {node: subnetmask, property: 'value'});
             }
-            console.log(sub_binary);
         }
     }
 
