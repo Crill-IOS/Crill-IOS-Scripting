@@ -1,7 +1,7 @@
 //Only Parser Rules can be checked with the validator:
 IP: value = IPv4_DDC;
 SUBNETMASK: value = IPv4_DDC;
-
+Hostname_Input :value= INPUT; 
 Exit:
     command='exit' NL
     ;

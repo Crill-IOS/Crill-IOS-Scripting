@@ -47,7 +47,7 @@ AlgorithmTypeOption:
 
 
 Hostname_cmd:
-    'hostname' name=INPUT NL
+    'hostname' Hostname_Input NL
     ;
 
 Interface_cmd:
