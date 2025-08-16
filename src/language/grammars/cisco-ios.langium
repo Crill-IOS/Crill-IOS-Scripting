@@ -11,7 +11,7 @@ Stat:
    lines+=(
     Enable_cmds
     | Comment
-    | NL)+ 
+    )+ 
    ;
 
 Comment: 
