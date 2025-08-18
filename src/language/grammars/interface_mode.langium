@@ -27,12 +27,18 @@ Shutdown_cmd:
 
 
 IP_cmd:
-    command='ip' Ip_cmd_options
+    'ip' option=Ip_cmd_options
     ;
 
 
 Ip_cmd_options:
-    'address' ip = IP mask= SUBNETMASK 'secondary'? NL
+    Ip_cmd_option_address
+    | Ip_cmd_option_ospf
     ;
 
-
+Ip_cmd_option_address:
+    'address' ip = IP mask= SUBNETMASK 'secondary'? NL
+    ;
+Ip_cmd_option_ospf:
+    'ospf' option = ('cost' | 'priority')
+    ;
