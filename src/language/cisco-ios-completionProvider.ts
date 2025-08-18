@@ -6,6 +6,13 @@ import { CiscoIosServices } from "./cisco-ios-module.js";
 
 
 
+interface CompletionInfo {
+  label: string;
+  description: string;
+  insert: string;
+}
+const details: {[key:string]: CompletionInfo} = require("./details/test1.json");
+
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     constructor(private readonly services: CiscoIosServices) {
@@ -27,7 +34,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             }
         };
 
-
+        console.log("-----------------------------------------------")
         for (const context of contexts){
             for (const feature of context.features){
                 this.completionFor(context, feature, acceptor);
@@ -39,12 +46,37 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     
 
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
-        if (ast.isKeyword(next.feature)) {
+        console.log(next);
+        console.log("SPLITTER_____________________________________________________________");
+        let detail: CompletionInfo;
+        if (next.type){
+            detail = details[next.type];
+            if (detail){
+                acceptor(context,{
+                    label: detail.label,
+                    detail: detail.description,
+                    sortText: "1",
+                    kind: 1,
+                    insertText: detail.insert
+                })
+            }
+        }
+
+        else if (ast.isKeyword(next.feature)) {
             return this.completionForKeyword(context, next.feature, acceptor);
         } else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
-        } else if (ast.isEndOfFile(next.feature)) {
-            console.log("EOF - Detected -> from completion for");
+        } else if (ast.isRuleCall(next.feature)){
+            if (next.feature.rule.ref?.name == "NL"){
+                detail = details["NL"]
+                acceptor(context, {
+                    label: detail.label,
+                    detail: detail.description,
+                    sortText: "1",
+                    kind: 1,
+                    insertText: detail.insert
+            })
+            }
         }
     }
 
@@ -52,12 +84,13 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         if (!this.filterKeyword(context, keyword)) {
             return;
         }
+        
         acceptor(context, {
             label: keyword.value,
             kind: this.getKeywordCompletionItemKind(keyword),
             detail: 'Keyword',
-            sortText: '1'
+            sortText: '1',
+
         });
     }
-    
 }

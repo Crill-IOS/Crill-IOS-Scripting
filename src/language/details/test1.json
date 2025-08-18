@@ -1,0 +1,22 @@
+{
+    "IP": {
+        "label":"IP-Address",
+        "description": "ip....",
+        "insert": "1.2.3.4"
+    },
+    "SUBNETMASK": {
+        "label": "Subnetmask",
+        "description": "subnetmask...",
+        "insert": "255.255.255.0"
+    },
+    "Hostname_Input":{
+        "label":"hostname",
+        "description": "This Systems Network Name hihi",
+        "insert": "R1"
+    },
+    "NL": {
+        "label":"CR",
+        "description": "End of the command",
+        "insert": "\n"
+    }
+}
