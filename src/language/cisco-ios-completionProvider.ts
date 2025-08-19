@@ -11,7 +11,7 @@ interface CompletionInfo {
   description: string;
   insert: string;
 }
-const details: {[key:string]: CompletionInfo} = require("./details/test1.json");
+const details: {[key:string]: CompletionInfo} = require("./details/Command_Details.json");
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
@@ -49,6 +49,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         console.log(next);
         console.log("SPLITTER_____________________________________________________________");
         let detail: CompletionInfo;
+        
         if (next.type){
             detail = details[next.type];
             if (detail){
@@ -61,8 +62,8 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 })
             }
         }
-
-        else if (ast.isKeyword(next.feature)) {
+        
+        if (ast.isKeyword(next.feature)) {
             return this.completionForKeyword(context, next.feature, acceptor);
         } else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
@@ -88,7 +89,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         acceptor(context, {
             label: keyword.value,
             kind: this.getKeywordCompletionItemKind(keyword),
-            detail: 'Keyword',
+            detail: 'From OLD logic',
             sortText: '1',
 
         });

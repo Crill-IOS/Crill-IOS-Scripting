@@ -1,6 +1,6 @@
 {
     "IP": {
-        "label":"IP-Address",
+        "label":"IP-Address lol",
         "description": "ip....",
         "insert": "1.2.3.4"
     },
@@ -18,5 +18,10 @@
         "label":"CR",
         "description": "End of the command",
         "insert": "\n"
+    },
+    "Ip_cmd_option_address": {
+        "label":"address",
+        "description": "set an address to this interface",
+        "insert": "address"
     }
 }
