@@ -1,0 +1,41 @@
+
+[   {
+        "name" : "Enable Mode",
+        "subCommands": [
+            {
+                "name": "configure",
+                "description": "lets you configure basic things on the system",
+                "supportet": true,
+                "attributes": [
+                    {
+                        "name": "terminal",
+                        "description": "switches the cli into the Configure-Terminal-mode",
+                        "supportet": true
+                    },
+                    {
+                        "name": "memory",
+                        "description": "configures the system from NV memory",
+                        "supportet": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name" : "Configure Mode",
+        "subCommands": [
+            {
+                "name": "hostname",
+                "description": "sets the networkname of this device",
+                "supportet": true,
+                "attributes": [
+                    {
+                        "name": "Input Hostname",
+                        "description": "Input that represents the Networkname of the system",
+                        "supportet": true
+                    }    
+                ]
+            }
+        ]
+    }
+]
