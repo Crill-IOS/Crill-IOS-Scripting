@@ -16,6 +16,11 @@
                         "name": "memory",
                         "description": "configures the system from NV memory",
                         "supportet": true
+                    },
+                    {
+                        "name": "network",
+                        "description": "configures the system from TFTP network",
+                        "supportet": false
                     }
                 ]
             }
