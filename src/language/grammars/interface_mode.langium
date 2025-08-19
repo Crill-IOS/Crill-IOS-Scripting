@@ -42,3 +42,4 @@ Ip_cmd_option_address:
 Ip_cmd_option_ospf:
     'ospf' option = ('cost' | 'priority')
     ;
+
