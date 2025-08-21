@@ -205,6 +205,7 @@ Interface_type_vlan:
 Interface_number:
      number= INT '/' INT sub =Sub_Interface_number?
     ;
+
 Sub_Interface_number returns string:
     ('.' INT)
     ;

@@ -1,9 +1,12 @@
-ping 1.1.1.2 255.0.0.0
-configure terminal 
-interface gigabitethernet 1/2
-ip address 1.1.1.1 255.0.0.0 secondary
-ip address 1.2.3.4 255.255.255.0 secondary
+ping 255.1.1.1 255.255.255.0
+configure terminal
+username Gustav algorithm-type md5 password gusta 
+username gustav 
+interface gigabitethernet 1/1 
+ip address 255.2.3.4 255.255.255.0
+exit
 
-exit 
+hostname 
 
-hostname R1   
+
+
