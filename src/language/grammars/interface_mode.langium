@@ -16,7 +16,7 @@ Exit_interface infers Exit:
 
 Interface_cmds:
     NL
-    |IP_cmd
+    |IP_cmd_interface
     | Shutdown_cmd
     | Exit_interface
     ;
@@ -26,7 +26,7 @@ Shutdown_cmd:
     ;
 
 
-IP_cmd:
+IP_cmd_interface:
     'ip' option=Ip_cmd_options
     ;
 

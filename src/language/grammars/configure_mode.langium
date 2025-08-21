@@ -5,6 +5,7 @@ import 'enable_mode'
 
 //child Modes
 import 'interface_mode'
+import 'line_mode'
 
 //Exit Command
 Exit_configure infers Exit:
@@ -19,13 +20,17 @@ Configure_cmds:
         | Hostname_cmd
         | Interface_cmd
         | Username_cmd
+        | Banner_cmd
+        | IP_cmd
+        | Crypto_cmd
+        | Line_cmd
         | Exit_configure
     )
     ;
 
 
 Username_cmd :
-    'username' name=INPUT options+= Username_cmd_option* NL;
+    'username' name=USERNAME_INPUT options+= Username_cmd_option* NL;
 
 
     
@@ -36,18 +41,145 @@ PrivilegeOption:
     'privilege' value=INT;
 
 PasswordOption:
-    'password' value=INPUT;
+    'password' value=USERNAME_INPUT;
 
 SecretOption:
-    'secret' value=INPUT;
+    'secret' value=USERNAME_INPUT;
 
 AlgorithmTypeOption:
-    'algorithm-type' value=('md5' | 'scrypt' | 'sha256');
+    'algorithm-type' option=AlgorithmType_Options;
+
+AlgorithmType_Options: MD5Option | ScryptOption | Sha256Option;
+
+MD5Option:
+    'md5' option=MD5Option_cmd;
+
+MD5Option_cmd: 'secret' value=USERNAME_INPUT;
+
+ScryptOption:
+    'scrypt' option=ScryptOption_cmd;
+
+ScryptOption_cmd: 'secret' value=USERNAME_INPUT;
 
 
+Sha256Option:
+    'sha256' option=Sha256Option_cmd;
+
+Sha256Option_cmd: 'secret' value=USERNAME_INPUT;
+
+
+Banner_cmd:
+    'banner' options= Banner_cmd_option NL;
+
+Banner_cmd_option:
+    ConfigSaveOption | ExecOption | IncomingOption | LoginOption | MOTDOption | PromptTimeoutOption | SlipPPPOption;
+
+ConfigSaveOption:
+    'config-save' value=BANNER_MESSAGE;
+
+ExecOption:
+    'exec' value=BANNER_MESSAGE;
+
+IncomingOption:
+    'incoming' value=BANNER_MESSAGE;
+
+LoginOption:
+    'login' value=BANNER_MESSAGE;
+
+MOTDOption:
+    'motd' value=BANNER_MESSAGE;
+
+PromptTimeoutOption:
+    'prompt-timeout' value=BANNER_MESSAGE;
+
+SlipPPPOption:
+    'slip-ppp' value=BANNER_MESSAGE;
+
+IP_cmd:
+    'ip' option=IP_cmd_option
+    ;
+
+IP_cmd_option:
+    Domainname_cmd
+    | SSH_cmd
+    ;
+
+Domainname_cmd:
+    'domain-name' value=DOMAINNAME_INPUT NL
+    ;
+
+SSH_cmd:
+    'ssh' option=SSHOptions 
+    ;
+
+SSHOptions:
+    'version' value=VERSION_INPUT NL
+    ;
 
 Hostname_cmd:
     'hostname' Hostname_Input NL
+    ;
+
+Crypto_cmd:
+    'crypto' option=Crypto_cmd_option NL
+    ;
+
+Crypto_cmd_option:
+    Key_cmd
+    ;
+
+Key_cmd:
+    'key' option=Key_cmd_option
+    ;
+
+Key_cmd_option:
+    Generate_cmd
+    ;
+
+Generate_cmd:
+    'generate' option=Generate_cmd_option
+    ;
+
+Generate_cmd_option:
+    Rsa_cmd
+    ;
+
+Rsa_cmd:
+    'rsa' option=Rsa_cmd_option
+    ;
+
+Rsa_cmd_option:
+      UsageKeys_cmd
+    ;
+
+UsageKeys_cmd:
+    'usage-keys' option=UsageKeys_Option
+    ;
+
+UsageKeys_Option:
+    Modulus_cmd
+    ;
+
+Modulus_cmd:
+    'modulus' value=MODULUS_INPUT
+    ;
+
+
+Line_cmd:
+    command='line' types=Line_types
+    ;
+
+Line_types:
+      Line_type_console
+    | Line_type_vty
+    ;
+
+Line_type_console:
+    type='console' number=INT NL lines+=Line_console_cmds+
+    ;
+
+Line_type_vty:
+    type='vty' start=INT end=INT NL lines+=Line_vty_cmds+
     ;
 
 Interface_cmd:
