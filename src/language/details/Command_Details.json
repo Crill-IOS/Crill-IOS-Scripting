@@ -23,5 +23,15 @@
         "label":"address",
         "description": "set an address to this interface",
         "insert": "address"
+    },
+    "DOMAINNAME_INPUT": {
+        "label":"<Domain Name>",
+        "description": "The Domain Name of the Device",
+        "insert": "4CN.at"
+    },
+    "VERSION_INPUT": {
+        "label":"2",
+        "description": "Protocol to be supported",
+        "insert": "2"
     }
 }

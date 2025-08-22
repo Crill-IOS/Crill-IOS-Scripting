@@ -10,13 +10,13 @@ USERNAME_INPUT: value=INPUT;
 MODULUS_INPUT: value=INT;
 VERSION_INPUT: value=INT;
 BANNER_MESSAGE: value=INPUT;
-DOMAINNAME_INPUT: value=INPUT;
+DOMAINNAME_INPUT: value= INPUT;
 
 
 
 terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
 terminal COMMENT: /[!#].+/;
-terminal INPUT: /[A-Za-z_][A-Za-z0-9\-_.\/]*/;
 terminal INT: /[0-9]+/;
+terminal INPUT: /[A-Za-z0-9\-_.\/]+/;
 hidden terminal WS: /[ \t]+/;
 terminal NL: '\r'? '\n';
