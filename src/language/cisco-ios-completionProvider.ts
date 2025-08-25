@@ -1,6 +1,6 @@
-import { LangiumDocument, MaybePromise} from "langium";
+import { AstNode, LangiumDocument, MaybePromise} from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
-import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
+import { CompletionParams, CancellationToken, CompletionList, CompletionItem, CompletionItemKind } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
 
@@ -22,9 +22,9 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
-
-
         let completions: CompletionItem[] = [];
+        
+        // Builds Completions with labels, descriptions, etc.
         const contexts = this.buildContexts(document, params.position);
         
         const acceptor: CompletionAcceptor = (context, value) => {
@@ -39,6 +39,34 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             for (const feature of context.features){
                 this.completionFor(context, feature, acceptor);
             }
+        }
+
+        // Build Completions for Cross-references which can't be done in the grammar
+
+        const defaultCompletions = await super.getCompletion(document, params, _cancelToken);
+        defaultCompletions?.items.forEach(i => completions.push(i))
+        const lineText = document.textDocument.getText({
+            start: { line: params.position.line, character: 0},
+            end: params.position
+        });
+
+        if (lineText.trim().startsWith('ping')) {
+            // schlage immer 8.8.8.8 vor zum Testen
+            completions.push(
+                {
+                    label: '8.8.8.8', kind: CompletionItemKind.Value,
+                    detail: 'Dummy IP for testing'
+                }
+            )
+            
+            // sammelt alle IPs aus dem gleichen Dokument und pusht sie in die customItems dazu
+            this.collectIps(document.parseResult.value).forEach(ip => {
+                completions.push({
+                    label: ip,
+                    kind: CompletionItemKind.Text,
+                    detail: 'IP from this document'
+                });
+            });
         }
 
         return CompletionList.create(this.deduplicateItems(completions), true);
@@ -94,4 +122,62 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
         });
     }
+
+    /**
+     * Sammelt die IP-Adressen aus dem gesamten Dokument. In Visited werden die angesehenen Nodes gespeichert damit kein Loop erzeugt wird.
+     * @param node startNode
+     * @returns String-Array mit gesammelten IPs
+     */
+    collectIps(node: AstNode): string[] {
+    const result: string[] = [];
+    const visited = new Set<AstNode>();
+
+    /**
+     * Schaut nach ob eine node eine IP ist. Wenn ja fügt zu result hinzu.
+     * @param node Node die geprüft wird
+     * @returns
+     */
+    function checkForIps(node: AstNode) {
+        if (visited.has(node)) return;
+        visited.add(node);
+
+        
+        // wenn Node vom Type 'IP' dann hinzufügen
+        if (node.$type === 'IP' /*&& typeof (node as any).ip === 'string' //man könnte noch die Eigenschaft ip wie in der .langium file prüfen aber macht keinen unterschied*/) {
+            result.push((node as any).value);
+        }
+
+        // Alle Eigenschaften des Knotens durchgehen
+        // und potenziell Subknoten.
+        for (const property in node) {
+            const wert = (node as any)[property];
+            /*
+                z.B. {
+                        $type: 'IP,
+                        ip: '192.168.0.1',
+                        mask: '255.255.255.0'
+                        ...
+                    }
+                
+                ist $type, ip und mask die properties
+                und 'IP', '192.168.0.1' und '255.255.255.0' die werte
+            */
+           
+            if (Array.isArray(wert)) {
+                // Wenn es ein Array ist, jeden Eintrag prüfen
+                for (const eintrag of wert) {
+                    if (eintrag && typeof eintrag === 'object' && '$type' in eintrag) {
+                        checkForIps(eintrag);
+                    }
+                }
+            } else if (wert && typeof wert === 'object' && '$type' in wert) {
+                // Einzelnes Kind-Objekt prüfen
+                checkForIps(wert);
+            }
+        }
+    }
+
+    checkForIps(node);
+    return result;
+}
 }
