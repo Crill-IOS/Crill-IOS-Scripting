@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' (hostname=[Hostname_Input] | ip=IP mask=SUBNETMASK) NL
+    'ping' (hostname=[Hostname_Input] | ip=IP) NL
     ;
 
 Show_cmd:
