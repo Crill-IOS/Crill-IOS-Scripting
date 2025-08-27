@@ -14,9 +14,9 @@
         "description": "This Systems Network Name hihi",
         "insert": "R1"
     },
-    "NL": {
-        "label":"CR",
-        "description": "End of the command",
+    "CR": {
+        "label":"<CR>",
+        "description": "End of command",
         "insert": "\n"
     },
     "Ip_cmd_option_address": {

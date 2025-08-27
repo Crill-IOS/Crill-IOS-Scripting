@@ -109,14 +109,20 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
         } else if (ast.isRuleCall(next.feature)){
             if (next.feature.rule.ref?.name == "NL"){
-                detail = details["NL"]
-                acceptor(context, {
-                    label: detail.label,
-                    detail: detail.description,
-                    sortText: "1",
-                    kind: 1,
-                    insertText: detail.insert
-            })
+                const document = context.document.textDocument;
+                const offset = document.offsetAt(context.position);
+                const correctLine = document.offsetAt({line:context.position.line, character:0})
+                const textBeforeCursor = document.getText().substring(correctLine, offset)
+
+                if (textBeforeCursor.trim().length > 0) {
+                    let detail = details["CR"];
+                    acceptor(context, {
+                        label: detail.label,
+                        detail: detail.description,
+                        sortText: "1",
+                        insertText: detail.insert
+                    });
+                }
             }
         }
     }
