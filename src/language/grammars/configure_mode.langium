@@ -15,7 +15,7 @@ Exit_configure infers Exit:
 
 //Start-------------------------------
 Configure_cmds:
-    commands=(
+    (
         NL
         | Hostname_cmd
         | Interface_cmd
