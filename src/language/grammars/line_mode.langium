@@ -71,19 +71,20 @@ TransportInput_cmd:
     ;
 
 TransportInputList:
-    options+=TransportProto+
+    TransportProto
     ;
 
 TransportProto:
+    options+=(
       SshKeyword
-    | TelnetKeyword
+    | TelnetKeyword)
     ;
 
-SshKeyword:
-    keyword='ssh'
+SshKeyword returns string:
+    'ssh'
     ;
 
-TelnetKeyword:
-    keyword='telnet'
+TelnetKeyword returns string:
+    'telnet'
     ;
 
