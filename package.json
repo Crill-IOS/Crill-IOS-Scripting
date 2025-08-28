@@ -80,7 +80,7 @@
             {
                 "language": "cisco-ios",
                 "scopeName": "source.cisco-ios",
-                "path": "syntaxes/cisco-ios.tmLanguage.json"
+                "path": "src/syntaxes/cisco-ios.tmLanguage.json"
             }
         ]
     },
