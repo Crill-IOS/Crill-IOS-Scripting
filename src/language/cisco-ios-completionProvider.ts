@@ -1,8 +1,9 @@
-import { AstNode, LangiumDocument, MaybePromise} from "langium";
+import { AstNode, LangiumDocument, MaybePromise } from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
-import { CompletionParams, CancellationToken, CompletionList, CompletionItem, CompletionItemKind } from "vscode-languageserver";
+import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
+import { IP, Ping_cmd, Username_cmd, USERNAME_INPUT } from "./generated/ast.js";
 
 
 
@@ -24,7 +25,6 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
         let completions: CompletionItem[] = [];
         
-        // Builds Completions with labels, descriptions, etc.
         const contexts = this.buildContexts(document, params.position);
         
         const acceptor: CompletionAcceptor = (context, value) => {
@@ -40,46 +40,6 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 this.completionFor(context, feature, acceptor);
             }
         }
-
-        // Build Completions for Cross-references which can't be done in the grammar
-
-        const defaultCompletions = await super.getCompletion(document, params, _cancelToken);
-        defaultCompletions?.items.forEach(i => completions.push(i))
-        const lineText = document.textDocument.getText({
-            start: { line: params.position.line, character: 0},
-            end: params.position
-        });
-
-        // 'ping' Completions
-
-        if (lineText.trim() === 'ping') {
-            // schlage immer 8.8.8.8 vor zum Testen
-            completions.push(
-                {
-                    label: '8.8.8.8', kind: CompletionItemKind.Value,
-                    detail: 'Dummy IP for testing'
-                }
-            )
-            
-            // sammelt alle IPs aus dem gleichen Dokument und pusht sie in die customItems dazu
-            this.collectIps(document.parseResult.value).forEach(ip => {
-                completions.push({
-                    label: ip,
-                    kind: CompletionItemKind.Text,
-                    detail: 'IP from this document'
-                });
-            });
-        }
-
-        // 'username' Completions
-
-        if (lineText.trim() === 'username')
-            this.collectUsernames(document.parseResult.value).forEach(username => {
-                completions.push({
-                    label: username,
-                    kind: CompletionItemKind.Text,
-                    detail: 'Username from this document'
-                })})
 
         return CompletionList.create(this.deduplicateItems(completions), true);
     }
@@ -101,6 +61,34 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                     insertText: detail.insert
                 })
             }
+        }
+        
+        // Custom Cross References
+        // die acceptor Inhalte kann man noch in eine Datei wie 'Command_Details.json' auslagern
+        const node: AstNode | undefined = context.node;
+
+        if (node && node.$type === Ping_cmd) {
+            this.collectFromType(IP, context.document.parseResult.value).forEach(ip => {
+                acceptor(context, {
+                    label: ip,
+                    detail: 'IP from this Document',
+                    sortText: '2',
+                    kind: 12,
+                    insertText: ip
+                });
+            });
+        }
+
+        if (node && node.$type === Username_cmd) {
+            this.collectFromType(USERNAME_INPUT, context.document.parseResult.value).forEach(username => {
+                acceptor(context, {
+                    label: username,
+                    detail: 'Username from this Document',
+                    sortText: '2',
+                    kind: 12,
+                    insertText: username
+                });
+            });
         }
         
         if (ast.isKeyword(next.feature)) {
@@ -142,100 +130,51 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     }
 
     /**
-     * Sammelt die IP-Adressen aus dem gesamten Dokument. In Visited werden die angesehenen Nodes gespeichert damit kein Loop erzeugt wird.
+     * Sammelt die gewünschten Node values aus dem gesamten Dokument. In Visited werden die angesehenen Nodes gespeichert damit kein Loop erzeugt wird.
      * @param node startNode
-     * @returns String-Array mit gesammelten IPs
+     * @returns String-Array mit gesammelten Values
      */
-    collectIps(node: AstNode): string[] {
+    collectFromType(type: string, node: AstNode): string[] {
     const result: string[] = [];
     const visited = new Set<AstNode>();
 
         /**
-         * Schaut nach ob eine node eine IP ist. Wenn ja fügt zu result hinzu.
+         * Schaut nach ob eine node den type hat. Wenn ja fügt zu result hinzu.
          * @param node Node die geprüft wird
          * @returns
          */
-        function checkForIps(node: AstNode) {
+        function checkForType(node: AstNode) {
             if (visited.has(node)) return;
             visited.add(node);
 
-            
-            // wenn Node vom Type 'IP' dann hinzufügen
-            if (node.$type === 'IP' /*&& typeof (node as any).ip === 'string' //man könnte noch die Eigenschaft ip wie in der .langium file prüfen aber macht keinen unterschied*/) {
+            if (node.$type === type) {
                 result.push((node as any).value);
             }
 
-            // Alle Eigenschaften des Knotens durchgehen
-            // und potenziell Subknoten.
+            // Alle Eigenschaften des Knotens durchgehen und potenziell Subknoten.
             for (const property in node) {
                 const wert = (node as any)[property];
-                /*
-                    z.B. {
+                /*z.B. {
                             $type: 'IP,
                             ip: '192.168.0.1',
                             mask: '255.255.255.0'
                             ...
-                        }
-                    
-                    ist $type, ip und mask die properties
-                    und 'IP', '192.168.0.1' und '255.255.255.0' die werte
+                        } ist $type, ip und mask die properties und 'IP', '192.168.0.1' und '255.255.255.0' die werte
                 */
             
                 if (Array.isArray(wert)) {
-                    // Wenn es ein Array ist, jeden Eintrag prüfen
                     for (const eintrag of wert) {
                         if (eintrag && typeof eintrag === 'object' && '$type' in eintrag) {
-                            checkForIps(eintrag);
+                            checkForType(eintrag);
                         }
                     }
                 } else if (wert && typeof wert === 'object' && '$type' in wert) {
-                    // Einzelnes Kind-Objekt prüfen
-                    checkForIps(wert);
+                    checkForType(wert);
                 }
             }
         }
 
-        checkForIps(node);
-        return result;
-    }
-
-    /**
-     * Sammelt die Usernames aus dem gesamten Dokument. In Visited werden die angesehenen Nodes gespeichert damit kein Loop erzeugt wird.
-     * @param node startNode
-     * @returns String-Array mit gesammelten Usernames
-     */
-    collectUsernames(node: AstNode): string[] {
-    const result: string[] = [];
-    const visited = new Set<AstNode>();
-
-        /**
-         * Schaut nach ob eine node ein Username ist. Wenn ja fügt zu result hinzu.
-         * @param node Node die geprüft wird
-         * @returns
-         */
-        function checkForIps(node: AstNode) {
-            if (visited.has(node)) return;
-            visited.add(node);
-            
-            if (node.$type === 'USERNAME_INPUT') {
-                result.push((node as any).value);
-            }
-
-            for (const property in node) {
-                const wert = (node as any)[property];    
-                if (Array.isArray(wert)) {
-                    for (const eintrag of wert) {
-                        if (eintrag && typeof eintrag === 'object' && '$type' in eintrag) {
-                            checkForIps(eintrag);
-                        }
-                    }
-                } else if (wert && typeof wert === 'object' && '$type' in wert) {
-                    checkForIps(wert);
-                }
-            }
-        }
-
-        checkForIps(node);
+        checkForType(node);
         return result;
     }
 }
