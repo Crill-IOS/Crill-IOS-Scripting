@@ -5,7 +5,7 @@
         "grammar": "src/language/grammars/cisco-ios.langium",
         "fileExtensions": [".ios"],
         "textMate": {
-            "out": "src/syntaxes/cisco-ios.tmLanguage.json"
+            "out": "src/syntaxes/default_cisco-ios.tmLanguage.json"
         },
         "monarch": {
             "out": "src/syntaxes/cisco-ios.monarch.ts"
