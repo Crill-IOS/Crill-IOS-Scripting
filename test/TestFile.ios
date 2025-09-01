@@ -1,6 +1,8 @@
 
+
 configure terminal
-hostname R1 
+
+hostname R1
 ip domain-name 4CN.at
 
 ip domain-name example.local
@@ -38,4 +40,3 @@ line vty 0 924
 
 exit
 show run
-
