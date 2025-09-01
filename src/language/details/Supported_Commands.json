@@ -1,46 +1,436 @@
-
-[   {
-        "name" : "Enable Mode",
-        "subCommands": [
-            {
-                "name": "configure",
-                "description": "lets you configure basic things on the system",
-                "supportet": true,
-                "attributes": [
-                    {
-                        "name": "terminal",
-                        "description": "switches the cli into the Configure-Terminal-mode",
-                        "supportet": true
-                    },
-                    {
-                        "name": "memory",
-                        "description": "configures the system from NV memory",
-                        "supportet": true
-                    },
-                    {
-                        "name": "network",
-                        "description": "configures the system from TFTP network",
-                        "supportet": false
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "name" : "Configure Mode",
-        "subCommands": [
-            {
+[
+  {
+    "name": "Enable Mode",
+    "subCommands": [
+      {
+        "name": "configure",
+        "description": "lets you configure basic things on the system",
+        "supportet": true,
+        "attributes": [
+          {
+            "name": "terminal",
+            "description": "switches the cli into the Configure-Terminal-mode",
+            "supportet": true,
+            "attributes": [
+              {
                 "name": "hostname",
                 "description": "sets the networkname of this device",
                 "supportet": true,
                 "attributes": [
-                    {
-                        "name": "Input Hostname",
-                        "description": "Input that represents the Networkname of the system",
-                        "supportet": true
-                    }    
+                  {
+                    "name": "Input Hostname",
+                    "description": "Input that represents the Networkname of the system",
+                    "supportet": true
+                  }
                 ]
-            }
+              },
+              {
+                "name": "username",
+                "description": "manage a local user",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "privilege",
+                    "description": "Privilege level (INT)",
+                    "supportet": true
+                  },
+                  {
+                    "name": "password",
+                    "description": "Password (INPUT)",
+                    "supportet": true
+                  },
+                  {
+                    "name": "secret",
+                    "description": "Secret (INPUT)",
+                    "supportet": true
+                  },
+                  {
+                    "name": "algorithm-type",
+                    "description": "Hash algorithm with secret",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "md5",
+                        "description": "MD5 algorithm",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "secret",
+                            "description": "Secret (INPUT)",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "scrypt",
+                        "description": "scrypt algorithm",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "secret",
+                            "description": "Secret (INPUT)",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "sha256",
+                        "description": "SHA-256 algorithm",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "secret",
+                            "description": "Secret (INPUT)",
+                            "supportet": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "banner",
+                "description": "set system banners (message is INPUT up to NL)",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "config-save",
+                    "description": "Config-save banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "exec",
+                    "description": "Exec banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "incoming",
+                    "description": "Incoming banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "login",
+                    "description": "Login banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "motd",
+                    "description": "MOTD banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "prompt-timeout",
+                    "description": "Prompt-timeout banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "slip-ppp",
+                    "description": "SLIP/PPP banner",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "message",
+                        "description": "Banner text (INPUT)",
+                        "supportet": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "ip",
+                "description": "IP related configuration",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "domain-name",
+                    "description": "Domain (INPUT supports dots)",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "input",
+                        "description": "Domain as INPUT",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "ssh",
+                    "description": "SSH settings",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "version",
+                        "description": "SSH version",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "2",
+                            "description": "Only version 2 allowed",
+                            "supportet": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "crypto",
+                "description": "Crypto key management",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "key",
+                    "description": "Key operations",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "generate",
+                        "description": "Generate keys",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "rsa",
+                            "description": "RSA key options",
+                            "supportet": true,
+                            "attributes": [
+                              {
+                                "name": "usage-keys",
+                                "description": "Generate usage-keys",
+                                "supportet": true,
+                                "attributes": [
+                                  {
+                                    "name": "modulus",
+                                    "description": "Modulus size (INT)",
+                                    "supportet": true
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "line",
+                "description": "Enter line contexts",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "console 0",
+                    "description": "Console line 0",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "login",
+                        "description": "login subcommand",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "local",
+                            "description": "use local database",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "logging",
+                        "description": "logging subcommand",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "synchronous",
+                            "description": "enable synchronous logging",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "exec-timeout",
+                        "description": "Idle timeout",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "minutes",
+                            "description": "Minutes (INT)",
+                            "supportet": true
+                          },
+                          {
+                            "name": "seconds",
+                            "description": "Seconds (INT)",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "exit",
+                        "description": "Back to Configure",
+                        "supportet": true
+                      }
+                    ]
+                  },
+                  {
+                    "name": "vty <start> <end>",
+                    "description": "VTY line range",
+                    "supportet": true,
+                    "attributes": [
+                      {
+                        "name": "login",
+                        "description": "login subcommand",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "local",
+                            "description": "use local database",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "logging",
+                        "description": "logging subcommand",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "synchronous",
+                            "description": "enable synchronous logging",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "exec-timeout",
+                        "description": "Idle timeout",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "minutes",
+                            "description": "Minutes (INT)",
+                            "supportet": true
+                          },
+                          {
+                            "name": "seconds",
+                            "description": "Seconds (INT)",
+                            "supportet": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "transport",
+                        "description": "transport subcommand",
+                        "supportet": true,
+                        "attributes": [
+                          {
+                            "name": "input",
+                            "description": "allowed protocols",
+                            "supportet": true,
+                            "attributes": [
+                              {
+                                "name": "ssh",
+                                "description": "allow SSH",
+                                "supportet": true
+                              },
+                              {
+                                "name": "telnet",
+                                "description": "allow Telnet",
+                                "supportet": true
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "exit",
+                        "description": "Back to Configure",
+                        "supportet": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "interface",
+                "description": "Enter interface contexts",
+                "supportet": true,
+                "attributes": [
+                  {
+                    "name": "gigabitethernet <x>/<y>[.<z>]",
+                    "description": "Physical/subinterface",
+                    "supportet": true
+                  },
+                  {
+                    "name": "vlan <id>",
+                    "description": "SVI VLAN interface",
+                    "supportet": true
+                  }
+                ]
+              },
+              {
+                "name": "exit",
+                "description": "Exit to Enable Mode",
+                "supportet": true
+              }
+            ]
+          },
+          {
+            "name": "memory",
+            "description": "configures the system from NV memory",
+            "supportet": true
+          },
+          {
+            "name": "network",
+            "description": "configures the system from TFTP network",
+            "supportet": false
+          }
         ]
-    }
+      }
+    ]
+  }
 ]

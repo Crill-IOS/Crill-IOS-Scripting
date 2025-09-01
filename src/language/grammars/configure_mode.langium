@@ -1,3 +1,4 @@
+//------IMPORTS-------
 import 'common'
 
 //parent Modes
@@ -6,14 +7,15 @@ import 'enable_mode'
 //child Modes
 import 'interface_mode'
 import 'line_mode'
+import 'con_mode'
+import 'vty_mode'
 
-//Exit Command
+//------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
     Exit lines+=Enable_cmds+
     ;
 
-
-//Start-------------------------------
+//------CONFIGURE MODE: ENTRY-------
 Configure_cmds:
     (
         NL
@@ -28,12 +30,10 @@ Configure_cmds:
     )
     ;
 
-
+//------USERNAME-------
 Username_cmd :
     'username' name=USERNAME_INPUT options+= Username_cmd_option* NL;
 
-
-    
 Username_cmd_option:
     PrivilegeOption | PasswordOption | SecretOption | AlgorithmTypeOption;
 
@@ -41,10 +41,10 @@ PrivilegeOption:
     'privilege' value=INT;
 
 PasswordOption:
-    'password' value=USERNAME_INPUT;
+    'password' value=USERNAME_PASSWORD_INPUT;
 
 SecretOption:
-    'secret' value=USERNAME_INPUT;
+    'secret' value=USERNAME_PASSWORD_INPUT;
 
 AlgorithmTypeOption:
     'algorithm-type' option=AlgorithmType_Options;
@@ -54,20 +54,19 @@ AlgorithmType_Options: MD5Option | ScryptOption | Sha256Option;
 MD5Option:
     'md5' option=MD5Option_cmd;
 
-MD5Option_cmd: 'secret' value=USERNAME_INPUT;
+MD5Option_cmd: 'secret' value=USERNAME_PASSWORD_INPUT;
 
 ScryptOption:
     'scrypt' option=ScryptOption_cmd;
 
-ScryptOption_cmd: 'secret' value=USERNAME_INPUT;
-
+ScryptOption_cmd: 'secret' value=USERNAME_PASSWORD_INPUT;
 
 Sha256Option:
     'sha256' option=Sha256Option_cmd;
 
-Sha256Option_cmd: 'secret' value=USERNAME_INPUT;
+Sha256Option_cmd: 'secret' value=USERNAME_PASSWORD_INPUT;
 
-
+//------BANNER-------
 Banner_cmd:
     'banner' options= Banner_cmd_option NL;
 
@@ -95,6 +94,7 @@ PromptTimeoutOption:
 SlipPPPOption:
     'slip-ppp' value=BANNER_MESSAGE;
 
+//------IP (DOMAIN-NAME / SSH)-------
 IP_cmd:
     'ip' option=IP_cmd_option
     ;
@@ -116,10 +116,12 @@ SSHOptions:
     'version' value=VERSION_INPUT NL
     ;
 
+//------HOSTNAME-------
 Hostname_cmd:
     'hostname' Hostname_Input NL
     ;
 
+//------CRYPTO-------
 Crypto_cmd:
     'crypto' option=Crypto_cmd_option NL
     ;
@@ -164,7 +166,7 @@ Modulus_cmd:
     'modulus' value=MODULUS_INPUT
     ;
 
-
+//------LINE MODE-------
 Line_cmd:
     command='line' types=Line_types
     ;
@@ -182,25 +184,23 @@ Line_type_vty:
     type='vty' start=INT end=INT NL lines+=Line_vty_cmds+
     ;
 
+//------INTERFACE MODE-------
 Interface_cmd:
     'interface' types=Interface_types
     ;
 
 Interface_types:
-
     Interface_type_gigabitethernet
     | Interface_type_vlan
     ;
 
 Interface_type_gigabitethernet:
-    
     type= 'gigabitethernet' number=Interface_number NL lines+=Interface_cmds+
     ;
 
 Interface_type_vlan:
     type ='vlan' INT 
     ;
-
 
 Interface_number:
      number= INT '/' INT sub =Sub_Interface_number?
