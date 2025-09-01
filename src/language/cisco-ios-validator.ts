@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , IP, SUBNETMASK, Username_cmd} from './generated/ast.js';
+import { CiscoIosAstType , IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -11,7 +11,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const checks: ValidationChecks<CiscoIosAstType> = {
         IP: validator.checkIP,
         SUBNETMASK: validator.chekcSUBNETMASK,
-        Username_cmd: validator.checkUsername_cmd
+        Username_cmd: validator.checkUsername_cmd,
     };
     registry.register(checks, validator);
 }
