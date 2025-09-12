@@ -1,42 +1,11 @@
-
-
 configure terminal
-
-hostname R1
-ip domain-name 4CN.at
-
-ip domain-name example.local
-ip ssh version 2
-
-crypto key generate rsa usage-keys modulus 1024
-
-banner motd Authorized
-banner login PleaseLogin
-banner exec ExecBanner
-banner incoming IncomingMsg
-banner config-save SaveNow
-banner prompt-timeout PT60
-banner slip-ppp SlipPPPMsg
-
-username cisco privilege 15
-username cisco password cisco
-username cisco secret cisco
-username cisco algorithm-type md5 secret cisco
-username cisco algorithm-type scrypt secret cisco
-username cisco algorithm-type sha256 secret cisco
-
-line console 0
- login local
- logging synchronous
- exec-timeout 0 0
- exit
-
-line vty 0 924
- login local
- logging synchronous
- exec-timeout 0 0
- transport input ssh telnet
- exit
-
+interface gigabitethernet 0/0.10
 exit
-show run
+
+interface gigabitethernet 0/0
+no shut
+
+
+
+
+
