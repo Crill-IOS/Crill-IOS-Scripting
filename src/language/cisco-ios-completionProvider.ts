@@ -12,6 +12,7 @@ interface CompletionInfo {
   description: string;
   insert: string;
 }
+
 const details: {[key:string]: CompletionInfo} = require("./details/Command_Details.json");
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
@@ -58,6 +59,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                     detail: detail.description,
                     sortText: "1",
                     kind: 1,
+                    insertTextFormat: 2,
                     insertText: detail.insert
                 })
             }

@@ -33,5 +33,17 @@
         "label":"2",
         "description": "Protocol to be supported",
         "insert": "2"
+    },
+    "Sub_Interface_number": {
+        "label":".xx",
+        "description": "",
+        "insert": ".10"
+    },
+    "Interface_number": {
+        "label":"x/x",
+        "description": "number of the interface to be entered",
+        "insert": "${1:0}/${2:0}\nno shut\n$0"
     }
+
+    
 }
