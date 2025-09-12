@@ -35,10 +35,10 @@ TransportProto:
     | option=TelnetKeyword
     ;
 
-SshKeyword:
-    keyword='ssh'
+SshKeyword returns string:
+    'ssh'
     ;
 
-TelnetKeyword:
-    keyword='telnet'
+TelnetKeyword returns string:
+    'telnet'
     ;
