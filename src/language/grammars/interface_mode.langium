@@ -1,45 +1,37 @@
-import 'common'
+// interface_mode
 
-//parent Modes
+import 'common'
 import 'configure_mode'
 
-//child Modes
-import 'test'
-
-//Exit Command
+// Exit zurück in Configure-Mode
 Exit_interface infers Exit:
     Exit lines+=Configure_cmds+
     ;
 
-
-//Start-----------------------------
-
-Interface_cmds:
-    NL
-    |IP_cmd_interface
-    | Shutdown_cmd
-    | Exit_interface
-    ;
-
-Shutdown_cmd:
-    command= 'shutdown'
-    ;
-
+// ---- Gemeinsame Subcommands für alle Interfaces ----
 
 IP_cmd_interface:
-    'ip' option=Ip_cmd_options
-    ;
-
+    'ip' option=Ip_cmd_options;
 
 Ip_cmd_options:
-    Ip_cmd_option_address
+      Ip_cmd_option_address
     | Ip_cmd_option_ospf
     ;
 
 Ip_cmd_option_address:
-    'address' ip = IP mask= SUBNETMASK 'secondary'? NL
-    ;
-Ip_cmd_option_ospf:
-    'ospf' option = ('cost' | 'priority')
-    ;
+    'address' ip=IP mask=SUBNETMASK 'secondary'? NL;
 
+Ip_cmd_option_ospf:
+    'ospf' option=('cost' | 'priority') NL;
+
+Shutdown_cmd returns string:
+    'shutdown' NL;
+
+No_cmd_interface:
+    'no' option=No_cmd_interface_option NL;
+
+No_cmd_interface_option returns string:
+    'shutdown';
+
+Description_cmd:
+    'description' value=INPUT NL;

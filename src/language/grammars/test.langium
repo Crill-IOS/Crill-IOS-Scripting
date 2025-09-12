@@ -5,7 +5,7 @@ import 'interface_mode'
 
 //Exit Command
 Exit_Test infers Exit:
-    Exit lines+=Interface_cmds+
+    Exit lines+=Interface_cmd+
     ;
 
 Test_commands:

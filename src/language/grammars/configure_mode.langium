@@ -9,6 +9,9 @@ import 'interface_mode'
 import 'line_mode'
 import 'con_mode'
 import 'vty_mode'
+import 'interface_fastethernet_mode'
+import 'interface_gigabitethernet_mode'
+import 'interface_vlan_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
@@ -166,6 +169,41 @@ Modulus_cmd:
     'modulus' value=MODULUS_INPUT
     ;
 
+
+
+//------NO CMDS---------
+No_cmd:
+    'no' option=No_options NL
+    ;
+
+No_options:
+      No_banner_cmd
+    | No_ip_cmd
+    ;
+
+No_banner_cmd:
+    'banner' option=Banner_type
+    ;
+
+Banner_type returns string:
+      'motd'
+    | 'login'
+    | 'exec'
+    | 'incoming'
+    | 'prompt-timeout'
+    | 'slip-ppp'
+    | 'config-save'
+    ;
+
+No_ip_cmd:
+    'ip' option=IP_no_option
+    ;
+
+IP_no_option returns string:
+      'domain-lookup'
+    ;
+
+
 //------LINE MODE-------
 Line_cmd:
     command='line' types=Line_types
@@ -186,21 +224,23 @@ Line_type_vty:
 
 //------INTERFACE MODE-------
 Interface_cmd:
-    'interface' types=Interface_types
-    ;
+    'interface' types=Interface_types;
 
 Interface_types:
-    Interface_type_gigabitethernet
+      Interface_type_gigabitethernet
+    | Interface_type_fastethernet
     | Interface_type_vlan
     ;
 
 Interface_type_gigabitethernet:
-    type= 'gigabitethernet' number=Interface_number NL lines+=Interface_cmds+
-    ;
+    type='gigabitethernet' number=Interface_number NL lines+=Interface_gigabitethernet_cmds+;
+
+Interface_type_fastethernet:
+    type='fastethernet' number=Interface_number NL lines+=Interface_fastethernet_cmds+;
 
 Interface_type_vlan:
-    type ='vlan' INT 
-    ;
+    type='vlan' number=INT NL lines+=Interface_vlan_cmds+;
+
 
 Interface_number:
      number= INT '/' INT sub =Sub_Interface_number?
