@@ -71,31 +71,32 @@ Sha256Option_cmd: 'secret' value=USERNAME_PASSWORD_INPUT;
 
 //------BANNER-------
 Banner_cmd:
-    'banner' options= Banner_cmd_option NL;
+    'banner' option= Banner_cmd_option message=BANNER_MESSAGE NL;
 
 Banner_cmd_option:
-    ConfigSaveOption | ExecOption | IncomingOption | LoginOption | MOTDOption | PromptTimeoutOption | SlipPPPOption;
+    option = (ConfigSaveOption | ExecOption | IncomingOption | LoginOption | MOTDOption | PromptTimeoutOption | SlipPPPOption);
 
-ConfigSaveOption:
-    'config-save' value=BANNER_MESSAGE;
+ConfigSaveOption returns string:
+    'config-save'
+;
+ExecOption returns string:
+    'exec'
+;
 
-ExecOption:
-    'exec' value=BANNER_MESSAGE;
+IncomingOption returns string:
+    'incoming';
 
-IncomingOption:
-    'incoming' value=BANNER_MESSAGE;
+LoginOption returns string:
+    'login';
 
-LoginOption:
-    'login' value=BANNER_MESSAGE;
+MOTDOption returns string:
+    'motd';
 
-MOTDOption:
-    'motd' value=BANNER_MESSAGE;
+PromptTimeoutOption returns string:
+    'prompt-timeout';
 
-PromptTimeoutOption:
-    'prompt-timeout' value=BANNER_MESSAGE;
-
-SlipPPPOption:
-    'slip-ppp' value=BANNER_MESSAGE;
+SlipPPPOption returns string:
+    'slip-ppp';
 
 //------IP (DOMAIN-NAME / SSH)-------
 IP_cmd:
