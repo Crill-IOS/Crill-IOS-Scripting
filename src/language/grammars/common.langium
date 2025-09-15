@@ -17,6 +17,6 @@ DOMAINNAME_INPUT: value= INPUT;
 hidden terminal WS: /[ \t]+/;
 terminal NL: '\r'? '\n';
 terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
-terminal COMMENT: /[!#].+/;
 terminal INPUT: /[A-Za-z0-9\-_.]*[A-Za-z][A-Za-z0-9\-_.]*/;
+hidden terminal COMMENT: /!([^\n\r]*)/;
 terminal INT: /[0-9]+/;
