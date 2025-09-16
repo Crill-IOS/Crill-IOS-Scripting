@@ -3,10 +3,13 @@ ping 1.2.3.4
 ! was ist das denn hier das geht ja mal gar nicht
 
 configure terminal
-!hallo was mache ich hier
-hostname R1 !hallo was mache ich hier
+interface gigabitethernet 0/0.10
+exit
 
-username gustav algorithm-type scrypt secret hallo !hallo
- 
- 
+interface gigabitethernet 0/0
+no shut
+
+
+
+
 

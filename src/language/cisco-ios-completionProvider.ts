@@ -4,16 +4,13 @@ import { CompletionParams, CancellationToken, CompletionList, CompletionItem } f
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
 import { IP, Ping_cmd, Username_cmd, USERNAME_INPUT } from "./generated/ast.js";
-
-
+import details from "./details/Command_Details.json";
 
 interface CompletionInfo {
   label: string;
   description: string;
   insert: string;
 }
-
-const details: {[key:string]: CompletionInfo} = require("./details/Command_Details.json");
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
@@ -52,7 +49,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         let detail: CompletionInfo;
         
         if (next.type){
-            detail = details[next.type];
+            detail = detail = details[next.type as keyof typeof details];
             if (detail){
                 acceptor(context,{
                     label: detail.label,

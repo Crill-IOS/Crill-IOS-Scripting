@@ -7,3 +7,4 @@ out/
 src/language/generated/
 src/syntaxes/*
 !src/syntaxes/cisco-ios.tmLanguage.json
+public/
