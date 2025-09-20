@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , IP, Username_cmd} from './generated/ast.js';
+import { CiscoIosAstType , IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -10,7 +10,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
         IP: validator.checkIP,
-        Username_cmd: validator.checkUsername_cmd
+        SUBNETMASK: validator.chekcSUBNETMASK,
+        Username_cmd: validator.checkUsername_cmd,
     };
     registry.register(checks, validator);
 }
@@ -21,15 +22,37 @@ export function registerValidationChecks(services: CiscoIosServices) {
 export class CiscoIosValidator {
 
     checkIP(ip: IP, accept:ValidationAcceptor): void {
-        if(ip.ip){
-            const  splitIP= String(ip.ip).split('.')
+        if(ip.value){
+            const  splitIP= String(ip.value).split('.');
 
             for ( const num of splitIP){
                 const ip_number = parseInt(num,10);
                 
                 if(ip_number > 255 || ip_number < 0 ){
-                    accept("error", "This is not a valid IP-Address", {node: ip, property: 'ip'});
+                    accept("error", "This is not a valid IP-Address", {node: ip, property: 'value'});
                 }
+            }
+        }
+    }
+
+    chekcSUBNETMASK(subnetmask:SUBNETMASK, accept:ValidationAcceptor):void{
+        if(subnetmask.value){   
+            const splitSUBNETMASK = String(subnetmask.value).split('.');
+            let sub_binary: string = "";
+            for (const num of splitSUBNETMASK){
+                const sub_number = parseInt(num,10);
+                if (sub_number > 255){
+
+                }
+                const sub_number_binary = sub_number.toString(2);
+                let temp = sub_number_binary;
+                for (let i = 0; i<(8-sub_number_binary.length); i++) {
+                    temp = "0" + temp;
+                }
+                sub_binary = sub_binary +temp;
+            }
+            if (sub_binary.match(/10+1/) || sub_binary.length != 32 || !sub_binary.includes("0")){
+                accept("error", "This is not a valid Subnet-Mask", {node: subnetmask, property: 'value'});
             }
         }
     }
@@ -39,7 +62,7 @@ export class CiscoIosValidator {
             let occuredOptions:string[]= [];
             for(const option of username_cmd.options){
                 if(occuredOptions.includes(option.$type)){
-                    accept("error", "Already Defined (duplicate)", {node:option});
+                    accept("error", `Already Defined ${option.$cstNode?.text} (duplicate)`, {node:option});
                 }else {
                     occuredOptions.push(option.$type);
                 }

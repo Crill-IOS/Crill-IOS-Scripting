@@ -6,7 +6,7 @@ import 'configure_mode'
 
 //Start--------------------------------
 Enable_cmds :
-    commands=(
+    (
         NL
         |Configure_cmd
         |Show_cmd
@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' options=[Ip_cmd_options:IP_ADDRESS] NL
+    'ping' (hostname=[Hostname_Input] | ip=IP) NL
     ;
 
 Show_cmd:
@@ -30,11 +30,10 @@ Show_cmd_options:
     ;
 
 Configure_cmd: 
-    'configure' options=Configure_cmd_options
+    'configure' Configure_cmd_options
     ;
 
 Configure_cmd_options:
-    option=
         'terminal' NL lines+=Configure_cmds+ 
         |'memory' NL
     ;

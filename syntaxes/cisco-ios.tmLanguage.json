@@ -1,0 +1,17 @@
+{
+  "name": "cisco-ios",
+  "scopeName": "source.cisco-ios",
+  "fileTypes": [
+    ".ios"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "name": "keyword.control.cisco-ios",
+      "match": "\\b(address|algorithm-type|banner|config-save|configure|console|cost|crypto|domain-name|exec|exec-timeout|exit|generate|gigabitethernet|hostname|incoming|input|interface|ip|key|line|local|logging|login|md5|memory|modulus|motd|ospf|password|ping|priority|privilege|prompt-timeout|rsa|run|scrypt|secondary|secret|sha256|show|shutdown|slip-ppp|ssh|synchronous|telnet|terminal|transport|usage-keys|username|version|vlan|vty)\\b"
+    }
+  ],
+  "repository": {}
+}

@@ -10,11 +10,5 @@ entry Script:
 Stat:
    lines+=(
     Enable_cmds
-    | Comment
-    | NL)+ 
+    )+ 
    ;
-
-Comment: 
-    text=COMMENT NL;
-
-

@@ -1,8 +1,15 @@
- configure terminal
- hostname gustav
- username hallo algorithm-type md5 privilege 15
- interface gigabitethernet 0/1
- ip address 1.1.1.1
- exit
- exit
- ping 1.1.1.1
+!hakki
+ping 1.2.3.4
+! was ist das denn hier das geht ja mal gar nicht
+
+configure terminal
+interface gigabitethernet 0/0.10
+exit
+
+interface gigabitethernet 0/0
+no shut
+
+
+
+
+
