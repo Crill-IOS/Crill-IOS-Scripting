@@ -9,6 +9,10 @@
     ],
     "type": "module",
     "publisher": "Crillios",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
+        },
     "scripts": {
         "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
