@@ -18,16 +18,15 @@ _Cisco-IOS configuration scripting made easy._
 
 ## About
 
-Crill-IOS-Scripting is a tool for generating and managing Cisco IOS configurations through a more automated scripting interface. The **OLD-autocompletion** branch is an older version focused on autocompletion capabilities for commands, syntax definitions, and configuration templates.
+Crill-IOS-Scripting is a Language Server Protocol based tool that optimizes the cisco IOS scripting expirience. 
 
 ---
 
 ## Features
 
-- Autocompletion of Cisco IOS commands and syntax  
-- Predefined templates for common Cisco IOS configs  
+- Autocompletion of Cisco IOS commands and syntax   
 - Syntax highlighting support  
-- Test suite for verifying correctness of generated scripts  
+- Live error detection for error free scripts  
 - Modular architecture — easy to extend with new commands or templates  
 
 ---
@@ -41,9 +40,5 @@ Crill-IOS-Scripting is a tool for generating and managing Cisco IOS configuratio
 - Optional: TypeScript compiler (if modifying TypeScript source)  
 
 ### Installation
-
-```bash
-git clone https://github.com/Crill-IOS/Crill-IOS-Scripting.git
-cd Crill-IOS-Scripting
-git checkout OLD-autocompletion
-npm install
+Download the VScode Extension Crillios-Scripting
+link: [LINK HERE]
