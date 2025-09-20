@@ -46,4 +46,4 @@ link: [LINK HERE]
 
 ## Third-Party Licenses
 This project uses [Langium](https://github.com/langium/langium), licensed under MIT.  
-See [NOTICE](NOTICE) for details.
+See [NOTICE](https://github.com/Crill-IOS/Crill-IOS-Scripting/blob/main/NOTICE) for details.
