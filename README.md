@@ -39,4 +39,4 @@ This project uses [Langium](https://github.com/langium/langium), licensed under 
 See [NOTICE](NOTICE) for details.
 
 ## License
-Crill-IOS-Scripting is fully MIT licensed.
+Crill-IOS-Scripting is fully [MIT licenced](LICENCE).
