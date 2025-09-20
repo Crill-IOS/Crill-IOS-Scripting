@@ -22,7 +22,8 @@
         "dev": "vite",
         "dev:debug": "vite --debug --force",
         "serve": "npm run dev",
-        "test": "vitest run"
+        "test": "vitest run",
+        "build:worker": "esbuild --minify ./out/language/main-browser.js --bundle --format=iife --outfile=./public/crillios-server-worker.js"
     },
     "dependencies": {
         "@codingame/monaco-vscode-editor-service-override": "~3.2.3",
