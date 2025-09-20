@@ -96,7 +96,7 @@
     "activationEvents": [
         "onLanguage:cisco-ios"
     ],
-    "main": "./out/extension/main.cjs",
+    "main": "./out/extension/main.js",
     "bin": {
         "cisco-ios-cli": "./bin/cli.js"
     }
