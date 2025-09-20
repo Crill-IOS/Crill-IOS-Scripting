@@ -8,12 +8,9 @@ _Cisco-IOS configuration scripting made easy._
 
 - [About](#about)  
 - [Features](#features)  
-- [Getting Started](#getting-started)  
-- [Usage](#usage)  
-- [Testing](#testing)  
-- [Contributing](#contributing)  
-- [License](#license)
 - [Third-Party Licenses](#third-party-licenses)
+- [License](#license)
+
 ---
 
 ## About
@@ -31,19 +28,15 @@ Crill-IOS-Scripting is a Language Server Protocol based tool that optimizes the 
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (version XX or higher)  
-- npm or yarn  
-- Optional: TypeScript compiler (if modifying TypeScript source)  
-
-### Installation
+## Installation
 Download the VScode Extension Crillios-Scripting
+
 link: [LINK HERE]
 
 
 ## Third-Party Licenses
 This project uses [Langium](https://github.com/langium/langium), licensed under MIT.  
 See [NOTICE](NOTICE) for details.
+
+## License
+Crill-IOS-Scripting is fully MIT licensed.
