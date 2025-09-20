@@ -13,7 +13,7 @@ _Cisco-IOS configuration scripting made easy._
 - [Testing](#testing)  
 - [Contributing](#contributing)  
 - [License](#license)
-
+- [Third-Party Licenses](#third-party-licenses)
 ---
 
 ## About
@@ -42,3 +42,8 @@ Crill-IOS-Scripting is a Language Server Protocol based tool that optimizes the 
 ### Installation
 Download the VScode Extension Crillios-Scripting
 link: [LINK HERE]
+
+
+## Third-Party Licenses
+This project uses [Langium](https://github.com/langium/langium), licensed under MIT.  
+See [NOTICE](NOTICE) for details.
