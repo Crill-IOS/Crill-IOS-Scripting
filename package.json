@@ -1,6 +1,6 @@
 {
-    "name": "Crill-IOS-Scripting",
-    "description": "Please enter a brief description here",
+    "name": "crill-ios-scripting",
+    "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
         "bin",
@@ -8,6 +8,7 @@
         "src"
     ],
     "type": "module",
+    "publisher": "Crillios",
     "scripts": {
         "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
