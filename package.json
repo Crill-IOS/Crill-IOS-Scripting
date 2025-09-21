@@ -3,9 +3,10 @@
     "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
-        "bin",
-        "out",
-        "src"
+        "bin/**",
+        "out/**",
+        "src/**",
+        "syntaxes/**"
     ],
     "type": "module",
     "publisher": "Crillios",
@@ -20,7 +21,7 @@
         "langium:generate": "langium generate",
         "langium:generate:production": "langium generate --mode=production",
         "langium:watch": "langium generate --watch",
-        "vscode:prepublish": "npm run langium:generate && npm run build && npm run lint",
+        "vscode:prepublish": "npm run build && npm run lint",
         "build:web": "npm run build",
         "bundle": "vite build",
         "bundle:serve": "http-server ./dist --port 5175",
@@ -75,12 +76,12 @@
         "languages": [
             {
                 "id": "cisco-ios",
+                "extensions": [
+                    ".ios"
+                ],
                 "aliases": [
                     "Cisco-IOS",
                     "cisco-ios"
-                ],
-                "extensions": [
-                    ".ios"
                 ],
                 "configuration": "./language-configuration.json"
             }
