@@ -3,17 +3,10 @@
     "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
-        "out",
+        "out/extension/main.cjs",
+        "out/language/main.cjs",
         "src/syntaxes/cisco-ios.tmLanguage.json",
         "package.json",
-        "node_modules/langium",
-        "node_modules/chalk",
-        "node_modules/commander",
-        "node_modules/vscode-languageclient",
-        "node_modules/vscode-languageserver",
-        "node_modules/monaco-editor-wrapper",
-        "node_modules/@codingame/monaco-vscode-keybindings-service-override",
-        "node_modules/@codingame/monaco-vscode-editor-service-override",
         "LICENSE"
     ],
 
