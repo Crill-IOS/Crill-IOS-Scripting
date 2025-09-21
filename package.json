@@ -3,11 +3,20 @@
     "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
-        "bin/**",
-        "out/**",
-        "src/**",
-        "syntaxes/**"
+        "out",
+        "src/syntaxes/cisco-ios.tmLanguage.json",
+        "package.json",
+        "node_modules/langium",
+        "node_modules/chalk",
+        "node_modules/commander",
+        "node_modules/vscode-languageclient",
+        "node_modules/vscode-languageserver",
+        "node_modules/monaco-editor-wrapper",
+        "node_modules/@codingame/monaco-vscode-keybindings-service-override",
+        "node_modules/@codingame/monaco-vscode-editor-service-override",
+        "LICENSE"
     ],
+
     "type": "module",
     "publisher": "Crillios",
     "repository": {
@@ -40,7 +49,6 @@
         "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
         "monaco-editor-wrapper": "^4.0.2",
         "monaco-languageclient": "~8.1.1",
-        
         "vscode-languageclient": "~9.0.1",
         "vscode-languageserver": "~9.0.1"
     },
@@ -97,7 +105,7 @@
     "activationEvents": [
         "onLanguage:cisco-ios"
     ],
-    "main": "./out/extension/main.js",
+    "main": "./out/extension/main.cjs",
     "bin": {
         "cisco-ios-cli": "./bin/cli.js"
     }
