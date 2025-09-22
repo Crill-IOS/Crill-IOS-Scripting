@@ -9,13 +9,12 @@
         "package.json",
         "LICENSE"
     ],
-
     "type": "module",
     "publisher": "Crillios",
     "repository": {
         "type": "git",
         "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
-        },
+    },
     "scripts": {
         "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
@@ -48,7 +47,6 @@
     },
     "devDependencies": {
         "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
-        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3",
         "@types/node": "^24.3.1",
         "@types/vscode": "~1.67.0",
         "@typescript-eslint/eslint-plugin": "~7.3.1",
@@ -58,9 +56,11 @@
         "eslint": "~8.57.0",
         "http-server": "~14.1.1",
         "langium-cli": "~3.5.0",
+        "pkg": "^5.8.1",
         "typescript": "~5.1.6",
         "vite": "^7.1.5",
-        "vitest": "^3.2.4"
+        "vitest": "^3.2.4",
+        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
     },
     "volta": {
         "node": "18.19.1",
