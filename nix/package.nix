@@ -4,10 +4,11 @@
   importNpmLock,
 }:
 let
+  name = "crillios-ls";
   pkg = builtins.fromJSON (builtins.readFile ./../package.json);
 in
 buildNpmPackage {
-  pname = "crillios-ls";
+  pname = name;
   inherit (pkg) version;
   src = ./..;
 
@@ -28,5 +29,6 @@ buildNpmPackage {
     homepage = "https://crillios.com";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ MrSom3body ];
+    mainProgram = name;
   };
 }
