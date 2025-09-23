@@ -5,28 +5,37 @@ Ospf_cmd:
     'ospf' process=INT NL lines+=Ospf_cmds+
     ;
 
+
+//Exit zurück in den Configure terminal Mode
 Exit_ospf infers Exit:
-    Exit lines+=Ospf_cmds+
+    Exit lines+=Configure_cmds+
     ;
 
+//Optionen für den OSPF Modus
 Ospf_cmds:
     (
         NL
       | Ospf_router_id_cmd
       | Ospf_network_cmd
       | Ospf_passive_interface_cmd
+      | Exit_ospf
     )
     ;
+
+
+//-------Router-id--------
 
 Ospf_router_id_cmd:
     'router-id' id=IPv4_DDC NL
     ;
 
+//-------Network--------
+
 Ospf_network_cmd:
     'network' ip=IPv4_DDC mask=IPv4_DDC 'area' area=INT NL
     ;
 
-//Passive-interface
+//--------Passive-interface--------
 
 Ospf_passive_interface_cmd:
     'passive-interface' types=Ospf_interface_types
