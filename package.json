@@ -1,21 +1,29 @@
 {
-    "name": "Crill-IOS-Scripting",
-    "description": "Please enter a brief description here",
+    "name": "crill-ios-scripting",
+    "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
-        "bin",
-        "out",
-        "src"
+        "out/extension/main.cjs",
+        "out/language/main.cjs",
+        "src/syntaxes/cisco-ios.tmLanguage.json",
+        "package.json",
+        "LICENSE"
     ],
     "type": "module",
+    "publisher": "Crillios",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
+    },
     "scripts": {
         "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
+        "build:binary": "pkg ./out/language/main.cjs --targets latest-linux-x64 --output crillios-scripting",
         "lint": "eslint src --ext ts",
         "langium:generate": "langium generate",
         "langium:generate:production": "langium generate --mode=production",
         "langium:watch": "langium generate --watch",
-        "vscode:prepublish": "npm run build && npm run lint",
+        "vscode:prepublish": "npm run build && npm run lint && npm run build:binary",
         "build:web": "npm run build",
         "bundle": "vite build",
         "bundle:serve": "http-server ./dist --port 5175",
@@ -34,7 +42,6 @@
         "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
         "monaco-editor-wrapper": "^4.0.2",
         "monaco-languageclient": "~8.1.1",
-        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3",
         "vscode-languageclient": "~9.0.1",
         "vscode-languageserver": "~9.0.1"
     },
@@ -49,9 +56,11 @@
         "eslint": "~8.57.0",
         "http-server": "~14.1.1",
         "langium-cli": "~3.5.0",
+        "pkg": "^5.8.1",
         "typescript": "~5.1.6",
         "vite": "^7.1.5",
-        "vitest": "^3.2.4"
+        "vitest": "^3.2.4",
+        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
     },
     "volta": {
         "node": "18.19.1",
@@ -69,12 +78,12 @@
         "languages": [
             {
                 "id": "cisco-ios",
+                "extensions": [
+                    ".ios"
+                ],
                 "aliases": [
                     "Cisco-IOS",
                     "cisco-ios"
-                ],
-                "extensions": [
-                    ".ios"
                 ],
                 "configuration": "./language-configuration.json"
             }
@@ -95,3 +104,4 @@
         "cisco-ios-cli": "./bin/cli.js"
     }
 }
+
