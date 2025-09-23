@@ -12,6 +12,7 @@ import 'vty_mode'
 import 'interface_fastethernet_mode'
 import 'interface_gigabitethernet_mode'
 import 'interface_vlan_mode'
+import 'ospf_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
@@ -207,17 +208,12 @@ IP_no_option returns string:
 
 //------OSPF MODE-------
 Router_cmd:
-    'router' options=Router_cmd_options
+    'router' option=Router_cmd_option
     ;
 
-Router_cmd_options:
-    'ospf' option=Router_OSPF_cmd
-    | 'rip'
-;
-
-Router_OSPF_cmd:
-    ospf_proccess=OSPF_PROCESS_NUMBER
-;
+Router_cmd_option:
+    Ospf_cmd
+    ;
 
 
 //------LINE MODE-------
