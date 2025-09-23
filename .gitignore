@@ -1,3 +1,10 @@
+### nix ###
+.direnv
+/.pre-commit-config.yaml
+result
+/*-
+
+### other ###
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
