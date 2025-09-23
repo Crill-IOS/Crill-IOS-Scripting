@@ -21,9 +21,12 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     
 
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
-        let completions: CompletionItem[] = [];
+        let completions: CompletionItem[] = []; 
         
         const contexts = this.buildContexts(document, params.position);
+
+        // Handles giving no Completion for Comments
+        if (this.isCursorInComment(document, params)) return CompletionList.create([], true)
         
         const acceptor: CompletionAcceptor = (context, value) => {
             const completionItem = this.fillCompletionItem(context, value);
@@ -126,6 +129,30 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             sortText: '1',
 
         });
+    }
+
+    /**
+     * Überprüft, ob der Cursor in einem Kommentar steht
+     * @param document das gesamte Dokument
+     * @param params enthält die Cursor Position
+     * @returns true -> innerhalb eines Kommentars; false -> außerhalb eines Kommentars
+     */
+    isCursorInComment(document: LangiumDocument, params: CompletionParams): boolean {
+        const offset = document.textDocument.offsetAt(params.position);
+        
+        const text = document.textDocument.getText();
+        const lexer = this.services.parser.Lexer;
+        const lexResult = lexer.tokenize(text);
+        const commentTokens = lexResult.hidden ?? [];
+
+        for (const commentToken of commentTokens) {
+            if (offset > commentToken.startOffset 
+                && params.position.line + 1 <= (commentToken.endLine ?? -1)) {
+                return true
+            }
+        }
+
+        return false
     }
 
     /**
