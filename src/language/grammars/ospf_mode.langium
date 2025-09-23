@@ -26,13 +26,13 @@ Ospf_cmds:
 //-------Router-id--------
 
 Ospf_router_id_cmd:
-    'router-id' id=IPv4_DDC NL
+    'router-id' id=IP NL
     ;
 
 //-------Network--------
 
 Ospf_network_cmd:
-    'network' ip=IPv4_DDC mask=IPv4_DDC 'area' area=INT NL
+    'network' ip=IP mask=IP 'area' area=INT NL
     ;
 
 //--------Passive-interface--------
