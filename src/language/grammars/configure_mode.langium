@@ -29,6 +29,7 @@ Configure_cmds:
         | IP_cmd
         | Crypto_cmd
         | Line_cmd
+        | Router_cmd
         | Exit_configure
     )
     ;
@@ -203,6 +204,20 @@ No_ip_cmd:
 IP_no_option returns string:
       'domain-lookup'
     ;
+
+//------OSPF MODE-------
+Router_cmd:
+    'router' options=Router_cmd_options
+    ;
+
+Router_cmd_options:
+    'ospf' option=Router_OSPF_cmd
+    | 'rip'
+;
+
+Router_OSPF_cmd:
+    ospf_proccess=OSPF_PROCESS_NUMBER
+;
 
 
 //------LINE MODE-------

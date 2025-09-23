@@ -12,6 +12,7 @@ MODULUS_INPUT: value=INT;
 VERSION_INPUT: value=INT;
 BANNER_MESSAGE: value+=INPUT+;
 DOMAINNAME_INPUT: value= INPUT;
+OSPF_PROCESS_NUMBER: value= INT;
 
 
 hidden terminal WS: /[ \t]+/;
