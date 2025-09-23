@@ -7,7 +7,7 @@ interface gigabitethernet 0/0.10
 exit
 
 interface gigabitethernet 0/0
-no shut
+no shutdown
 
 
 

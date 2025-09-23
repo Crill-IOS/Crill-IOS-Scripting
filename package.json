@@ -3,34 +3,27 @@
     "description": "Cisco IOS scripting the easy way",
     "version": "0.0.1",
     "files": [
-        "out",
+        "out/extension/main.cjs",
+        "out/language/main.cjs",
         "src/syntaxes/cisco-ios.tmLanguage.json",
         "package.json",
-        "node_modules/langium",
-        "node_modules/chalk",
-        "node_modules/commander",
-        "node_modules/vscode-languageclient",
-        "node_modules/vscode-languageserver",
-        "node_modules/monaco-editor-wrapper",
-        "node_modules/@codingame/monaco-vscode-keybindings-service-override",
-        "node_modules/@codingame/monaco-vscode-editor-service-override",
         "LICENSE"
     ],
-
     "type": "module",
     "publisher": "Crillios",
     "repository": {
         "type": "git",
         "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
-        },
+    },
     "scripts": {
         "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
         "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
+        "build:binary": "pkg ./out/language/main.cjs --targets latest-linux-x64 --output crillios-scripting",
         "lint": "eslint src --ext ts",
         "langium:generate": "langium generate",
         "langium:generate:production": "langium generate --mode=production",
         "langium:watch": "langium generate --watch",
-        "vscode:prepublish": "npm run build && npm run lint",
+        "vscode:prepublish": "npm run build && npm run lint && npm run build:binary",
         "build:web": "npm run build",
         "bundle": "vite build",
         "bundle:serve": "http-server ./dist --port 5175",
@@ -54,7 +47,6 @@
     },
     "devDependencies": {
         "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
-        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3",
         "@types/node": "^24.3.1",
         "@types/vscode": "~1.67.0",
         "@typescript-eslint/eslint-plugin": "~7.3.1",
@@ -64,9 +56,11 @@
         "eslint": "~8.57.0",
         "http-server": "~14.1.1",
         "langium-cli": "~3.5.0",
+        "pkg": "^5.8.1",
         "typescript": "~5.1.6",
         "vite": "^7.1.5",
-        "vitest": "^3.2.4"
+        "vitest": "^3.2.4",
+        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
     },
     "volta": {
         "node": "18.19.1",
