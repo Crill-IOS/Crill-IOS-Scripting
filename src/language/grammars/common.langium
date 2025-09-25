@@ -1,5 +1,6 @@
 //Only Parser Rules can be checked with the validator:
 IP: value = IPv4_DDC;
+WILDCARDMASK: value = IPv4_DDC;
 SUBNETMASK: value = IPv4_DDC;
 Hostname_Input: name= INPUT; 
 Exit:
@@ -13,6 +14,7 @@ VERSION_INPUT: value=INT;
 BANNER_MESSAGE: value+=INPUT+;
 DOMAINNAME_INPUT: value= INPUT;
 OSPF_PROCESS_NUMBER: value= INT;
+
 
 
 hidden terminal WS: /[ \t]+/;

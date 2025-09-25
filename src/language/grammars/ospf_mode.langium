@@ -18,6 +18,9 @@ Ospf_cmds:
       | Ospf_router_id_cmd
       | Ospf_network_cmd
       | Ospf_passive_interface_cmd
+      | Ospf_priority_cmd
+      | Ospf_default_information_cmd
+      | Ospf_redistribute_cmd
       | Exit_ospf
     )
     ;
@@ -32,7 +35,7 @@ Ospf_router_id_cmd:
 //-------Network--------
 
 Ospf_network_cmd:
-    'network' ip=IP mask=IP 'area' area=INT NL
+    'network' ip=IP mask=WILDCARDMASK 'area' area=INT NL
     ;
 
 //--------Passive-interface--------
@@ -61,3 +64,28 @@ Ospf_passive_interface_number:
 Ospf_passive_Sub_Interface_number :
     sub = '.'INT
     ;
+
+
+//------default-information----------
+Ospf_default_information_cmd:
+    'default-information' option=Ospf_default_information_cmd_options NL
+    ;
+
+Ospf_default_information_cmd_options:
+    option='originate'
+    ;
+
+//-------Redistribute--------
+Ospf_redistribute_cmd:
+    'redistribute' option=Ospf_redistribute_cmd_options NL
+    ;
+
+Ospf_redistribute_cmd_options:
+    option='static'
+    ;
+
+
+//------Priority--------
+Ospf_priority_cmd:
+    'priority' value=INT NL;
+

@@ -13,6 +13,7 @@ import 'interface_fastethernet_mode'
 import 'interface_gigabitethernet_mode'
 import 'interface_vlan_mode'
 import 'ospf_mode'
+import 'rip_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
@@ -213,6 +214,7 @@ Router_cmd:
 
 Router_cmd_option:
     Ospf_cmd
+    | Rip_cmd
     ;
 
 
