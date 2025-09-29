@@ -8,7 +8,7 @@ Exit:
     ;
 
 COMMENT:
-    ("!" | "#") text+=INPUT+
+    delim=ANY text+=INPUT+
     ;
 
 COMMON :
@@ -25,7 +25,7 @@ USERNAME_INPUT: value=INPUT;
 USERNAME_PASSWORD_INPUT: value=INPUT;
 MODULUS_INPUT: value=INT;
 VERSION_INPUT: value=INT;
-BANNER_MESSAGE: delim1=(ANY| INPUT | INT) INPUT+  delim2=(ANY|INT)?;
+BANNER_MESSAGE: delim1=(ANY| INPUT | INT) message+=INPUT+  delim2=(ANY|INT)?;
 DOMAINNAME_INPUT: value= INPUT;
 OSPF_PROCESS_NUMBER: value= INT;
 
