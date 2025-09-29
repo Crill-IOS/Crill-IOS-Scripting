@@ -19,7 +19,7 @@ Ip_cmd_options:
     ;
 
 Ip_cmd_option_address:
-    'address' ip=IP mask=SUBNETMASK 'secondary'? NL;
+    'address' ip=IP mask=SUBNETMASK ('secondary')? NL;
 
 Ip_cmd_option_ospf:
     'ospf' option=('cost' | 'priority') NL;

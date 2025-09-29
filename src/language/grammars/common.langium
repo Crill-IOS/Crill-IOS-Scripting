@@ -10,7 +10,7 @@ USERNAME_INPUT: value=INPUT;
 USERNAME_PASSWORD_INPUT: value=INPUT;
 MODULUS_INPUT: value=INT;
 VERSION_INPUT: value=INT;
-BANNER_MESSAGE: value+=INPUT+;
+BANNER_MESSAGE: delim1=(ANY| INPUT | INT) INPUT+  delim2=(ANY|INT)?;
 DOMAINNAME_INPUT: value= INPUT;
 OSPF_PROCESS_NUMBER: value= INT;
 
@@ -21,3 +21,4 @@ terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
 terminal INPUT: /[A-Za-z0-9\-_.]*[A-Za-z][A-Za-z0-9\-_.]*/;
 hidden terminal COMMENT: /!([^\n\r]*)/;
 terminal INT: /[0-9]+/;
+terminal ANY: /./;
