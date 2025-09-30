@@ -2,14 +2,14 @@
 ping 1.2.3.4 !hallo was ist das denn iher das geht ja 
 !hallo was 
 
-configure terminal
-interface gigabitethernet 0/0.10
+configure terminal #ahlloi was
+interface gigabitethernet 0/0.10 #hallo was 
 exit
-hostname route
-banner motd *this is the* 
-banner config-save *aber was ist dsa denn hier* !hallo was  sit das denn hier
-banner motd #aber was ist das rout hiea# !was ist das denn hier
-interface gigabitethernet 0/0
+hostname route #hallo was sit das denn iher
+banner motd *aberwsistdasdennhier*  
+banner config-save /aber was ist dsa routerh das ist  denn hier/
+banner motd hadf h 
+interface gigabitethernet 0/0 #aber was ist das denn hier
 no shutdown
 exit
 interface fastethernet 0/0
