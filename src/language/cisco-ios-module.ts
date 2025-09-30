@@ -5,6 +5,7 @@ import { CiscoIosValidator, registerValidationChecks } from './cisco-ios-validat
 import { CiscoIosScopeProvider } from './cisco-ios-scopeProvider.js';
 import { CiscoIosCompletionProvider } from './cisco-ios-completionProvider.js';
 import { CiscoIosLinker } from './cisco-ios-linker.js';
+import { CiscoIosSemanticTokenProvider } from './cisco-ios-semanticTokenProvider.js';
 /**
  * Declaration of custom services - add your own service classes here.
  */
@@ -35,7 +36,8 @@ export const CiscoIosModule: Module<CiscoIosServices, PartialLangiumServices & C
         Linker: (services) => new CiscoIosLinker(services),
     },
     lsp: {
-        CompletionProvider: (services) => new CiscoIosCompletionProvider(services)
+        CompletionProvider: (services) => new CiscoIosCompletionProvider(services),
+        SemanticTokenProvider: (services) => new CiscoIosSemanticTokenProvider(services)
     }
 };
 

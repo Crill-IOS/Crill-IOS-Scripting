@@ -1,84 +1,103 @@
 {
-  "name": "crill-ios-scripting",
-  "description": "Cisco IOS scripting the easy way",
-  "version": "0.0.1",
-  "files": [
-    "out/extension/main.cjs",
-    "out/language/main.cjs",
-    "src/syntaxes/cisco-ios.tmLanguage.json",
-    "package.json",
-    "LICENSE"
-  ],
-
-  "type": "module",
-  "publisher": "Crillios",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
-  },
-  "scripts": {
-    "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
-    "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
-    "lint": "eslint src --ext ts",
-    "langium:generate": "langium generate",
-    "langium:generate:production": "langium generate --mode=production",
-    "langium:watch": "langium generate --watch",
-    "vscode:prepublish": "npm run build && npm run lint",
-    "build:web": "npm run build",
-    "bundle": "vite build",
-    "bundle:serve": "http-server ./dist --port 5175",
-    "dev": "vite",
-    "dev:debug": "vite --debug --force",
-    "serve": "npm run dev",
-    "test": "vitest run",
-    "build:worker": "esbuild --minify ./out/language/main-browser.js --bundle --format=iife --outfile=./public/crillios-server-worker.js"
-  },
-  "dependencies": {
-    "@codingame/monaco-vscode-editor-service-override": "~3.2.3",
-    "@codingame/monaco-vscode-keybindings-service-override": "~3.2.3",
-    "chalk": "~5.6.2",
-    "commander": "~11.0.0",
-    "langium": "~3.5.0",
-    "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
-    "monaco-editor-wrapper": "^4.0.2",
-    "monaco-languageclient": "~8.1.1",
-    "vscode-languageclient": "~9.0.1",
-    "vscode-languageserver": "~9.0.1"
-  },
-  "devDependencies": {
-    "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
-    "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3",
-    "@types/node": "^24.3.1",
-    "@types/vscode": "~1.67.0",
-    "@typescript-eslint/eslint-plugin": "~7.3.1",
-    "@typescript-eslint/parser": "~7.3.1",
-    "concurrently": "~8.2.1",
-    "esbuild": "^0.25.9",
-    "eslint": "~8.57.0",
-    "http-server": "~14.1.1",
-    "langium-cli": "~3.5.0",
-    "typescript": "~5.1.6",
-    "vite": "^7.1.5",
-    "vitest": "^3.2.4"
-  },
-  "volta": {
-    "node": "18.19.1",
-    "npm": "10.2.4"
-  },
-  "displayName": "Crill-IOS-Scripting",
-  "engines": {
-    "vscode": "^1.67.0",
-    "node": ">=18.0.0"
-  },
-  "categories": ["Programming Languages"],
-  "contributes": {
-    "languages": [
-      {
-        "id": "cisco-ios",
-        "extensions": [".ios"],
-        "aliases": ["Cisco-IOS", "cisco-ios"],
-        "configuration": "./language-configuration.json"
-      }
+    "name": "crill-ios-scripting",
+    "description": "Cisco IOS scripting the easy way",
+    "version": "0.0.1",
+    "files": [
+        "out/extension/main.cjs",
+        "out/language/main.cjs",
+        "src/syntaxes/cisco-ios.tmLanguage.json",
+        "package.json",
+        "LICENSE"
+    ],
+    "type": "module",
+    "publisher": "Crillios",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
+    },
+    "scripts": {
+        "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
+        "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.src.json --watch\" \"node esbuild.mjs --watch\"",
+        "build:binary": "pkg ./out/language/main.cjs --targets latest-linux-x64 --output crillios-scripting",
+        "lint": "eslint src --ext ts",
+        "langium:generate": "langium generate",
+        "langium:generate:production": "langium generate --mode=production",
+        "langium:watch": "langium generate --watch",
+        "vscode:prepublish": "npm run build && npm run lint && npm run build:binary",
+        "build:web": "npm run build",
+        "bundle": "vite build",
+        "bundle:serve": "http-server ./dist --port 5175",
+        "dev": "vite",
+        "dev:debug": "vite --debug --force",
+        "serve": "npm run dev",
+        "test": "vitest run",
+        "build:worker": "esbuild --minify ./out/language/main-browser.js --bundle --format=iife --outfile=./public/crillios-server-worker.js"
+    },
+    "dependencies": {
+        "@codingame/monaco-vscode-editor-service-override": "~3.2.3",
+        "@codingame/monaco-vscode-keybindings-service-override": "~3.2.3",
+        "chalk": "~5.6.2",
+        "commander": "~11.0.0",
+        "langium": "~3.5.0",
+        "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
+        "monaco-editor-wrapper": "^4.0.2",
+        "monaco-languageclient": "~8.1.1",
+        "vscode-languageclient": "~9.0.1",
+        "vscode-languageserver": "~9.0.1"
+    },
+    "devDependencies": {
+        "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
+        "@types/node": "^24.3.1",
+        "@types/vscode": "~1.67.0",
+        "@typescript-eslint/eslint-plugin": "~7.3.1",
+        "@typescript-eslint/parser": "~7.3.1",
+        "concurrently": "~8.2.1",
+        "esbuild": "^0.25.9",
+        "eslint": "~8.57.0",
+        "http-server": "~14.1.1",
+        "langium-cli": "~3.5.0",
+        "pkg": "^5.8.1",
+        "typescript": "~5.1.6",
+        "vite": "^7.1.5",
+        "vitest": "^3.2.4",
+        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
+    },
+    "volta": {
+        "node": "18.19.1",
+        "npm": "10.2.4"
+    },
+    "displayName": "Crill-IOS-Scripting",
+    "engines": {
+        "vscode": "^1.67.0",
+        "node": ">=18.0.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "cisco-ios",
+                "extensions": [
+                    ".ios"
+                ],
+                "aliases": [
+                    "Cisco-IOS",
+                    "cisco-ios"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "cisco-ios",
+                "scopeName": "source.cisco-ios",
+                "path": "src/syntaxes/cisco-ios.tmLanguage.json"
+            }
+        ]
+    },
+    "activationEvents": [
+        "onLanguage:cisco-ios"
     ],
     "grammars": [
       {
@@ -95,3 +114,4 @@
     "crillios-ls": "./out/language/main.cjs"
   }
 }
+

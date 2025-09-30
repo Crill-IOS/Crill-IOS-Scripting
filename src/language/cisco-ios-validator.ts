@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { CiscoIosAstType , IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
+import { BANNER_MESSAGE, CiscoIosAstType , COMMENT, IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -12,6 +12,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
         IP: validator.checkIP,
         SUBNETMASK: validator.chekcSUBNETMASK,
         Username_cmd: validator.checkUsername_cmd,
+        BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
+        COMMENT: validator.checkCOMMENT,
     };
     registry.register(checks, validator);
 }
@@ -69,6 +71,29 @@ export class CiscoIosValidator {
             }
         }
     }
+    checkBANNER_MESSAGE(BANNER_MESSAGE: BANNER_MESSAGE, accept: ValidationAcceptor):void {
+        let message = BANNER_MESSAGE.message.join("");
+        const delim1 = BANNER_MESSAGE.delim1.toString().at(0);
+        const delim2 = BANNER_MESSAGE.delim2?.toString().charAt(BANNER_MESSAGE.delim2.toString().length-1) || message.charAt(message.length-1);
+        const delim2Proofed = (typeof BANNER_MESSAGE.delim2 != "undefined" ? BANNER_MESSAGE.delim2.toString() : "");
+        const whole_message = BANNER_MESSAGE.delim1 + message + delim2Proofed;
+        console.log(whole_message)
+        if (delim1 != delim2){
+            accept("error", `Delimiters ${delim1} and ${delim2} dont match!`, {node:BANNER_MESSAGE});
+        }else if (whole_message.substring(1,whole_message.length -1 ).includes(delim1) || 
+                 (whole_message.substring(1,whole_message.length -1 ).includes(delim2))){
+            accept("error", `Delimiter (${delim1}) can not be inside MESSAGE`, {node:BANNER_MESSAGE});
+        }
+    }
+
+    checkCOMMENT(COMMENT: COMMENT, accept: ValidationAcceptor):void {
+        if (COMMENT.delim ==  "!" || COMMENT.delim == "#"){
+
+        }else{
+            accept("error", `Delimiter (${COMMENT.delim}) can not be used to initialize a comment!`,{node:COMMENT, property: "delim"})
+        }
+    }
+}
 
 
 
@@ -81,4 +106,4 @@ export class CiscoIosValidator {
     //     }
     // }
 
-}
+
