@@ -1,5 +1,9 @@
 KEYWORDS returns string:
-'username' 
+'exit' 
+| '#' 
+| '!' 
+| '*' 
+| 'username' 
 | 'privilege' 
 | 'password' 
 | 'secret' 
