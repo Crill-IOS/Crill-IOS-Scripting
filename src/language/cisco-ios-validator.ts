@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { BANNER_MESSAGE, CiscoIosAstType , IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
+import { BANNER_MESSAGE, CiscoIosAstType , COMMENT, IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 
 /**
@@ -13,6 +13,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         SUBNETMASK: validator.chekcSUBNETMASK,
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
+        COMMENT: validator.checkCOMMENT,
     };
     registry.register(checks, validator);
 }
@@ -83,8 +84,14 @@ export class CiscoIosValidator {
                  (whole_message.substring(1,whole_message.length -1 ).includes(delim2))){
             accept("error", `Delimiter (${delim1}) can not be inside MESSAGE`, {node:BANNER_MESSAGE});
         }
+    }
 
-        
+    checkCOMMENT(COMMENT: COMMENT, accept: ValidationAcceptor):void {
+        if (COMMENT.delim ==  "!" || COMMENT.delim == "#"){
+
+        }else{
+            accept("error", `Delimiter (${COMMENT.delim}) can not be used to initialize a comment!`,{node:COMMENT, property: "delim"})
+        }
     }
 }
 

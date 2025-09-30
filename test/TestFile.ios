@@ -1,15 +1,18 @@
-!hakki
-ping 1.2.3.4
-! was ist das denn hier das geht ja mal gar nicht
+
+ping 1.2.3.4 !hallo was ist das denn iher das geht ja 
+!hallo was 
 
 configure terminal
 interface gigabitethernet 0/0.10
 exit
-
+hostname route
+banner motd *this is the* 
+banner config-save *aber was ist dsa denn hier* !hallo was  sit das denn hier
+banner motd #aber was ist das rout hiea# !was ist das denn hier
 interface gigabitethernet 0/0
 no shutdown
-
-
-
+exit
+interface fastethernet 0/0
+no shutdown
 
 
