@@ -73,15 +73,13 @@ export class CiscoIosValidator {
     }
     checkBANNER_MESSAGE(BANNER_MESSAGE: BANNER_MESSAGE, accept: ValidationAcceptor):void {
         let message = BANNER_MESSAGE.message.join("");
-        const delim1 = BANNER_MESSAGE.delim1.toString().at(0);
-        const delim2 = BANNER_MESSAGE.delim2?.toString().charAt(BANNER_MESSAGE.delim2.toString().length-1) || message.charAt(message.length-1);
-        const delim2Proofed = (typeof BANNER_MESSAGE.delim2 != "undefined" ? BANNER_MESSAGE.delim2.toString() : "");
-        const whole_message = BANNER_MESSAGE.delim1 + message + delim2Proofed;
-        console.log(whole_message)
+        const delim1 = message.at(0);
+        const delim2 = message.charAt(message.length-1);
+        
         if (delim1 != delim2){
             accept("error", `Delimiters ${delim1} and ${delim2} dont match!`, {node:BANNER_MESSAGE});
-        }else if (whole_message.substring(1,whole_message.length -1 ).includes(delim1) || 
-                 (whole_message.substring(1,whole_message.length -1 ).includes(delim2))){
+        }else if (message.substring(1,message.length -1 ).includes(delim1) || 
+                 (message.substring(1,message.length -1 ).includes(delim2))){
             accept("error", `Delimiter (${delim1}) can not be inside MESSAGE`, {node:BANNER_MESSAGE});
         }
     }
