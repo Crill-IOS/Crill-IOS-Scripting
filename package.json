@@ -102,6 +102,7 @@
     ],
     "main": "./out/extension/main.cjs",
     "bin": {
-        "cisco-ios-cli": "./bin/cli.js"
+        "cisco-ios-cli": "./bin/cli.js",
+        "crillios-ls": "./out/language/main.cjs"
     }
 }
