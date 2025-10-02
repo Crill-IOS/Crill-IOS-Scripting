@@ -16,7 +16,6 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     constructor(private readonly services: CiscoIosServices) {
         super(services);
-        this.services;
     }
     
 
@@ -36,12 +35,12 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         };
 
         console.log("-----------------------------------------------")
+        //requests completion for every feature in every context
         for (const context of contexts){
             for (const feature of context.features){
                 this.completionFor(context, feature, acceptor);
             }
         }
-
         return CompletionList.create(this.deduplicateItems(completions), true);
     }
     
@@ -52,13 +51,13 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         let detail: CompletionInfo;
         
         if (next.type){
-            detail = detail = details[next.type as keyof typeof details];
+            detail = details[next.type as keyof typeof details];
             if (detail){
                 acceptor(context,{
                     label: detail.label,
                     detail: detail.description,
                     sortText: "1",
-                    kind: 1,
+                    kind: 1,  //kind in detail noch hinzufügen!!!
                     insertTextFormat: 2,
                     insertText: detail.insert
                 })
@@ -95,7 +94,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         
         if (ast.isKeyword(next.feature)) {
             return this.completionForKeyword(context, next.feature, acceptor);
-        } else if (ast.isCrossReference(next.feature) && context.node) {
+        }else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
         } else if (ast.isRuleCall(next.feature)){
             if (next.feature.rule.ref?.name == "NL"){
