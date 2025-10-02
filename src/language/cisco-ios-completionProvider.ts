@@ -94,7 +94,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         
         if (ast.isKeyword(next.feature)) {
             return this.completionForKeyword(context, next.feature, acceptor);
-        }else if (ast.isCrossReference(next.feature) && context.node) {
+        } else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
         } else if (ast.isRuleCall(next.feature)){
             if (next.feature.rule.ref?.name == "NL"){
