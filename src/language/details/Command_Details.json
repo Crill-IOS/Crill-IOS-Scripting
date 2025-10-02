@@ -11,7 +11,7 @@
     },
     "Hostname_Input":{
         "label":"hostname",
-        "description": "This Systems Network Name hihi",
+        "description": "This Systems Network Name",
         "insert": "R1"
     },
     "CR": {
