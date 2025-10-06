@@ -1,12 +1,13 @@
 import 'common'
 
+import 'configure_mode'
 Bgp_cmd:
     'bgp' asn=INT NL lines+=Bgp_cmds+
     ;
 
 //------Exit--------
 Exit_bgp infers Exit:
-    Exit lines+=Bgp_cmds+
+    Exit lines+= Configure_cmds+
     ;
 
 //------BGP SUBCOMMANDS (minimal)----------------------------
