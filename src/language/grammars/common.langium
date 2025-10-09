@@ -6,7 +6,7 @@ WILDCARDMASK: value = IPv4_DDC;
 SUBNETMASK: value = IPv4_DDC;
 Hostname_Input: name= INPUT; 
 Exit:
-    command='exit' NL
+    command='exit' CR
     ;
 
 COMMENT:

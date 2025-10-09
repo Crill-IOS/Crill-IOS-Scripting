@@ -4,7 +4,7 @@ import 'line_mode'
 
 // ---- VTY-Subcommand-Aggregation ----
 Line_vty_cmds:
-      NL
+      CR
     | Login_cmd
     | Logging_cmd
     | ExecTimeout_cmd
@@ -26,7 +26,7 @@ TransportInput_cmd:
     ;
 
 TransportInputList:
-    options+=TransportProto+ NL
+    options+=TransportProto+ CR
     ;
 
 // ohne "item=", pro Regel max. ein Literal

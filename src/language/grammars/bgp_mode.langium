@@ -2,7 +2,7 @@ import 'common'
 
 import 'configure_mode'
 Bgp_cmd:
-    'bgp' asn=INT NL lines+=Bgp_cmds+
+    'bgp' asn=INT CR lines+=Bgp_cmds+
     ;
 
 //------Exit--------
@@ -13,7 +13,7 @@ Exit_bgp infers Exit:
 //------BGP SUBCOMMANDS (minimal)----------------------------
 Bgp_cmds:
     (
-        NL
+        CR
       | Bgp_router_id_cmd
       | Bgp_neighbor_cmd
       | Bgp_network_cmd
@@ -22,14 +22,14 @@ Bgp_cmds:
     ;
 
 Bgp_router_id_cmd:
-    'bgp' 'router-id' id=IP NL
+    'bgp' 'router-id' id=IP CR
     ;
 
 
 //--------------------------Neighbour------------------
 
 Bgp_neighbor_cmd:
-    'neighbor' neighbour=IP option=Bgp_neighbour_options NL
+    'neighbor' neighbour=IP option=Bgp_neighbour_options CR
     ;
 
 Bgp_neighbour_options:
@@ -57,11 +57,11 @@ Bgp_update_source_interface_types:
     ;
 
 Bgp_update_source_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Bgp_update_source_interface_number NL 
+    type='gigabitethernet' number=Bgp_update_source_interface_number CR
     ;
 
 Bgp_update_source_interface_type_fastethernet:
-    type='fastethernet' number=Bgp_update_source_interface_number NL
+    type='fastethernet' number=Bgp_update_source_interface_number CR
     ;
 
 Bgp_update_source_interface_number:
@@ -91,5 +91,5 @@ Bgp_neighbour_route_reflector_option returns string:
 
 
 Bgp_network_cmd:
-    'network' ip=IP 'mask' mask=IP NL
+    'network' ip=IP 'mask' mask=IP CR
     ;
