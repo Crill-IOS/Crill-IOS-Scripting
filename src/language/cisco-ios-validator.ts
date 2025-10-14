@@ -191,7 +191,7 @@ export class CiscoIosValidator {
                     }
                     seen.push({ ip, prefix: len, cidr: `${ipStr}/${len}`, node: address });
                 } catch {
-                    accept("error", `Invalid IP or mask: ${ipStr} ${maskStr}`, { node: address.option, property: "ip" });
+                    //no lsp error handling yet (14.10.2025)
                 }
             }
         }
