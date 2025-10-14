@@ -38,6 +38,7 @@
         "@codingame/monaco-vscode-keybindings-service-override": "~3.2.3",
         "chalk": "~5.6.2",
         "commander": "~11.0.0",
+        "ipaddr.js": "^2.2.0",
         "langium": "~3.5.0",
         "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
         "monaco-editor-wrapper": "^4.0.2",
