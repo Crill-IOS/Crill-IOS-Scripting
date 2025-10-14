@@ -51,8 +51,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             }
         };
 
-        //console.log("-----------------------------------------------")
-
+        console.log("-----------------------------------------------");
         //requests completion for every feature in every context
         for (const context of contexts) {
             for (const feature of context.features) {
@@ -74,8 +73,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      * @returns nothing (could return a maybepromise)
      */
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
-        //console.log(next);
-        //console.log("SPLITTER_____________________________________________________________");
+        console.log(next.type);
         let detail: CompletionInfo;
 
         if (next.type) {
