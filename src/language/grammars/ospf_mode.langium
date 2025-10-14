@@ -2,7 +2,7 @@ import 'configure_mode'
 import 'common'
 
 Ospf_cmd:
-    'ospf' process=INT NL lines+=Ospf_cmds+
+    'ospf' process=INT CR lines+=Ospf_cmds+
     ;
 
 
@@ -14,7 +14,7 @@ Exit_ospf infers Exit:
 //Optionen für den OSPF Modus
 Ospf_cmds:
     (
-        NL
+        CR
       | Ospf_router_id_cmd
       | Ospf_network_cmd
       | Ospf_passive_interface_cmd
@@ -29,13 +29,13 @@ Ospf_cmds:
 //-------Router-id--------
 
 Ospf_router_id_cmd:
-    'router-id' id=IP NL
+    'router-id' id=IP CR
     ;
 
 //-------Network--------
 
 Ospf_network_cmd:
-    'network' ip=IP mask=WILDCARDMASK 'area' area=INT NL
+    'network' ip=IP mask=WILDCARDMASK 'area' area=INT CR
     ;
 
 //--------Passive-interface--------
@@ -50,15 +50,15 @@ Ospf_interface_types:
     ;
 
 Ospf_passive_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Ospf_passive_interface_number NL 
+    type='gigabitethernet' number=Ospf_passive_interface_number CR 
     ;
 
 Ospf_passive_interface_type_fastethernet:
-    type='fastethernet' number=Ospf_passive_interface_number NL
+    type='fastethernet' number=Ospf_passive_interface_number CR
     ;
 
 Ospf_passive_interface_number:
-     number= INT '/' INT Sub_Interface_number?
+     number= INT '/' INT Ospf_passive_Sub_Interface_number?
     ;
 
 Ospf_passive_Sub_Interface_number :
@@ -68,7 +68,7 @@ Ospf_passive_Sub_Interface_number :
 
 //------default-information----------
 Ospf_default_information_cmd:
-    'default-information' option=Ospf_default_information_cmd_options NL
+    'default-information' option=Ospf_default_information_cmd_options CR
     ;
 
 Ospf_default_information_cmd_options:
@@ -77,7 +77,7 @@ Ospf_default_information_cmd_options:
 
 //-------Redistribute--------
 Ospf_redistribute_cmd:
-    'redistribute' option=Ospf_redistribute_cmd_options NL
+    'redistribute' option=Ospf_redistribute_cmd_options CR
     ;
 
 Ospf_redistribute_cmd_options:
@@ -87,5 +87,5 @@ Ospf_redistribute_cmd_options:
 
 //------Priority--------
 Ospf_priority_cmd:
-    'priority' value=INT NL;
+    'priority' value=INT CR;
 

@@ -4,7 +4,7 @@ import 'interface_mode'
 
 // ---- FastEthernet-cmds ----
 Interface_fastethernet_cmds:
-      NL
+      CR
     | IP_cmd_interface
     | Shutdown_cmd
     | No_cmd_interface
@@ -15,7 +15,7 @@ Interface_fastethernet_cmds:
     ;
 
 Speed_cmd_fe:
-    'speed' value=INT NL;
+    'speed' value=INT CR;
 
 CarrierDelay_cmd:
-    'carrier-delay' seconds=INT NL;
+    'carrier-delay' seconds=INT CR;
