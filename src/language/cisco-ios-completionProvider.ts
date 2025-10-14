@@ -3,7 +3,6 @@ import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextF
 import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
-import { IP, Ping_cmd, Username_cmd, USERNAME_INPUT } from "./generated/ast.js";
 import details from "./details/Command_Details.json";
 
 
@@ -52,7 +51,8 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
             }
         };
 
-        console.log("-----------------------------------------------")
+        //console.log("-----------------------------------------------")
+        
         //requests completion for every feature in every context
         for (const context of contexts) {
             for (const feature of context.features) {
@@ -91,72 +91,34 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                     insertTextFormat: 2,
                     insertText: detail.insert
                 })
-            }
-        }
-
-        // Custom Cross References
-        // die acceptor Inhalte kann man noch in eine Datei wie 'Command_Details.json' auslagern
-        const node: AstNode | undefined = context.node;
-
-        if (node && node.$type === Ping_cmd) {
-            this.collectFromType(IP, context.document.parseResult.value).forEach(ip => {
-                acceptor(context, {
-                    label: ip,
-                    detail: 'IP from this Document',
-                    sortText: '2',
-                    kind: 12,
-                    insertText: ip
-                });
-            });
-        }
-
-        if (node && node.$type === Username_cmd) {
-            this.collectFromType(USERNAME_INPUT, context.document.parseResult.value).forEach(username => {
-                acceptor(context, {
-                    label: username,
-                    detail: 'Username from this Document',
-                    sortText: '2',
-                    kind: 12,
-                    insertText: username
-                });
-            });
-        }
-
-        if (ast.isKeyword(next.feature)) {
-            return this.completionForKeyword(context, next.feature, acceptor);
-        } else if (ast.isCrossReference(next.feature) && context.node) {
-            return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
-        } else if (ast.isRuleCall(next.feature)) {
-            if (next.feature.rule.ref?.name == "NL") {
-                const document = context.document.textDocument;
-                const offset = document.offsetAt(context.position);
-                const correctLine = document.offsetAt({ line: context.position.line, character: 0 })
-                const textBeforeCursor = document.getText().substring(correctLine, offset)
-
-                if (textBeforeCursor.trim().length > 0) {
-                    let detail = details["CR"];
-                    acceptor(context, {
-                        label: detail.label,
-                        detail: detail.description,
-                        sortText: "1",
-                        insertText: detail.insert
-                    });
-                }
+                //if no details were found use fallback instead
+            } else if (ast.isKeyword(next.feature)) {
+                return this.completionForKeyword(context, next.feature, acceptor);
             }
         }
     }
 
+    /**
+     * @deprecated only used as Fallback when no details exist for a feature type
+     *
+     * @description generates a Completion Item via the "keyword" name
+     * from the grammar (ast)
+     * 
+     * @param context a context from a document
+     * @param keyword a keyword from the ast
+     * @param acceptor the acceptor that saves completion items into the "completions" array
+     * 
+     * @returns nothing (could return a maybepromise)
+     */
     override completionForKeyword(context: CompletionContext, keyword: ast.Keyword, acceptor: CompletionAcceptor): MaybePromise<void> {
         if (!this.filterKeyword(context, keyword)) {
             return;
         }
-
         acceptor(context, {
             label: keyword.value,
             kind: this.getKeywordCompletionItemKind(keyword),
             detail: 'From OLD logic',
             sortText: '1',
-
         });
     }
 
