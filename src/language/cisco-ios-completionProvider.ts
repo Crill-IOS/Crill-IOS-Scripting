@@ -52,7 +52,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         };
 
         //console.log("-----------------------------------------------")
-        
+
         //requests completion for every feature in every context
         for (const context of contexts) {
             for (const feature of context.features) {
@@ -99,7 +99,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     }
 
     /**
-     * @deprecated only used as Fallback when no details exist for a feature type
+     * @deprecated only used as fallback when no details exist for a feature type
      *
      * @description generates a Completion Item via the "keyword" name
      * from the grammar (ast)
