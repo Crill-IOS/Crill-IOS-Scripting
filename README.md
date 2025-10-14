@@ -8,16 +8,10 @@
 
 ---
 
-## 🆕 What’s New
-- Initial release of the Crill-IOS VS Code extension  
-- Autocompletion, syntax highlighting & real-time validation  
-- Support for `.ios` and `.cli` configuration files  
-- Modular architecture for easy extension with new commands/templates  
 
-
-## ⚡ Features
+## Features
 - Autocompletion of Cisco IOS commands and syntax   
-- Syntax highlighting support  
+- Syntax highlighting  
 - Live error detection for error free scripts  
 - Modular architecture — easy to extend with new commands or templates 
 
@@ -30,7 +24,7 @@
 
 ## 🛠 How does it work?
 1. Install the extension from the **VS Code Marketplace**.  
-2. Create a file with the extension `.ios` or `.cli`.  
+2. Create a file with the extension `.ios`.  
 3. Start typing your Cisco IOS config – Crill-IOS suggests valid commands, highlights errors, and provides hints.  
 4. Validation runs in real-time via the built-in LSP engine.  
 
@@ -50,16 +44,15 @@ interface GigabitEthernet0/1
 ## 🚀 Installation
 Download the VS Code Extension **Crill-IOS-Scripting**.  
 
-👉 [Download via Marketplace](LINK-HERE)  
-
+[Download via Marketplace](LINK-HERE)  
+or
+(binaries comming soon!)
 ---
 
 ## 🗺 What’s planned next?
 - More advanced diagnostics with context awareness  
-- Auto-fixes for common configuration mistakes  
 - Command reference tooltips with docs  
-- Template export for “golden configs”  
-- Expanded test coverage & CI integration  
+- More Commands!
 
 ---
 
@@ -67,7 +60,7 @@ Download the VS Code Extension **Crill-IOS-Scripting**.
 - Built with [Langium](https://github.com/langium/langium) (MIT).  
 - See [NOTICE](NOTICE) for details on third-party licenses.  
 - Licensed under [MIT](LICENSE).  
-- Contributions welcome – see [CONTRIBUTING.md](CONTRIBUTING.md).  
+- Contributions welcome.  
 
 ---
 
