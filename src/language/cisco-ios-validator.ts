@@ -138,7 +138,7 @@ export class CiscoIosValidator {
                     const existing = seenIPs.get(ip);
                     if (existing) {
                         // Duplicate found: report both
-                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip"});
                         accept("error", `Duplicate IP address: ${ip}`, { node: existing.option, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
@@ -185,8 +185,8 @@ export class CiscoIosValidator {
                     for (const s of seen) {
                         if (ip.kind() !== s.ip.kind()) continue;
                         if (ip.match(s.ip, s.prefix) || s.ip.match(ip, len)) {
-                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}`, { node: address.option, property: "ip" });
-                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}`, { node: s.node.option, property: "ip" });
+                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}`, { node: address});
+                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}`, { node: s.node});
                         }
                     }
                     seen.push({ ip, prefix: len, cidr: `${ipStr}/${len}`, node: address });
