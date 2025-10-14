@@ -28,6 +28,19 @@ export function registerValidationChecks(services: CiscoIosServices) {
  */
 export class CiscoIosValidator {
 
+    /**
+     * @description
+     * checks if a IPv4 address is a valid address
+     * 
+     * @example
+     * 1.1.256.1
+     * ^this throws an error since <1.1.256.1> is not a valid IPv4 address
+     * 
+     * @param ip an ip from a document
+     * @param accept the acceptor
+     * @todo
+     * implement IPv6 support (or create a new check)
+     */
     checkIP(ip: IP, accept: ValidationAcceptor): void {
         if (ip.value) {
             const splitIP = String(ip.value).split('.');
@@ -41,7 +54,20 @@ export class CiscoIosValidator {
             }
         }
     }
-
+    /**
+     * @description
+     * checks if a IPv4 subentmask is a valid subnetmask
+     * 
+     * @example
+     * 255.255.255.1
+     * ^this throws an error since <255.255.255.1> is not a valid subnetmask
+     * 
+     * @param subnetmask a SUBNETMASK from a document
+     * @param accept the acceptor
+     * @todo
+     * 14.10.2025
+     * implement IPv6 support (or create a new check)
+     */
     chekcSUBNETMASK(subnetmask: SUBNETMASK, accept: ValidationAcceptor): void {
         if (subnetmask.value) {
             const splitSUBNETMASK = String(subnetmask.value).split('.');
@@ -63,7 +89,22 @@ export class CiscoIosValidator {
             }
         }
     }
-
+    /**
+     * @description
+     * checks if a username has the same option one or more times
+     * 
+     * @param username_cmd username from a document
+     * @param accept the acceptor
+     * 
+     * @example 
+     * "username gustav privilege 15 privilege 0"
+     * ^this throws an error since the option <privilege> appears twice
+     * 
+     * @todo
+     * 14.10.2025
+     * implement that "secret" or "password" has to
+     *  be at the end of the command (or maybe implement it in the grammar)
+     */
     checkUsername_cmd(username_cmd: Username_cmd, accept: ValidationAcceptor): void {
         if (username_cmd.options) {
             let occuredOptions: string[] = [];
@@ -76,6 +117,23 @@ export class CiscoIosValidator {
             }
         }
     }
+
+    /**
+     * @description
+     * checks if the banner message has matching
+     * delimiters and if the delimiter is part of the message
+     * 
+     * @param BANNER_MESSAGE Banner message node from a document
+     * @param accept the acceptor
+     * 
+     * @example
+     * 
+     * #this is a banner message!
+     * ^this throws an error since <#> != <!>
+     * 
+     * #this is message #2!#
+     * ^this thows an error since delim: <#> is inside the message 
+     */
     checkBANNER_MESSAGE(BANNER_MESSAGE: BANNER_MESSAGE, accept: ValidationAcceptor): void {
         let message = BANNER_MESSAGE.message.join("");
         const delim1 = message.at(0);
@@ -89,6 +147,14 @@ export class CiscoIosValidator {
         }
     }
 
+
+    /**
+     * @description
+     * contains all checks that need a scope of a whole document
+     * 
+     * @param script the "Stat" node found in grammar "cisco-ios.langium"
+     * @param accept the acceptor
+     */
     check_Stat(script: Stat, accept: ValidationAcceptor): void {
 
         //all checks that care about more than 1 node
@@ -100,6 +166,7 @@ export class CiscoIosValidator {
 
 
         /**
+         * @description
          * Checks for duplicate IP addresses within IP_cmd_interface nodes.
          * Reports an error for both the first and subsequent occurrences.
          * 
@@ -140,9 +207,8 @@ export class CiscoIosValidator {
         }
 
 
-
-
         /**
+         * @description
          * Checks for overlapping IP subnets within IP_cmd_interface nodes.
          * Reports an error for both subnets when overlap is detected.
          * 
