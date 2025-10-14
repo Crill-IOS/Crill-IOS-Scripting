@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { BANNER_MESSAGE, CiscoIosAstType, COMMENT, IP, IP_cmd_interface, isIP_cmd_interface, isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, } from './generated/ast.js';
+import { BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
 
@@ -17,7 +17,6 @@ export function registerValidationChecks(services: CiscoIosServices) {
         SUBNETMASK: validator.chekcSUBNETMASK,
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
-        COMMENT: validator.checkCOMMENT,
         Stat: validator.check_Stat,
 
     };
@@ -90,13 +89,6 @@ export class CiscoIosValidator {
         }
     }
 
-    checkCOMMENT(COMMENT: COMMENT, accept: ValidationAcceptor): void {
-        if (COMMENT.delim == "!" || COMMENT.delim == "#") {
-
-        } else {
-            accept("error", `Delimiter (${COMMENT.delim}) can not be used to initialize a comment!`, { node: COMMENT, property: "delim" })
-        }
-    }
     check_Stat(script: Stat, accept: ValidationAcceptor): void {
 
         //all checks that care about more than 1 node
