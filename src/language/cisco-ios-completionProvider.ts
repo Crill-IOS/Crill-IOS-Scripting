@@ -6,6 +6,11 @@ import { CiscoIosServices } from "./cisco-ios-module.js";
 import { IP, Ping_cmd, Username_cmd, USERNAME_INPUT } from "./generated/ast.js";
 import details from "./details/Command_Details.json";
 
+
+/**
+ * Object type to store completion Info from:
+ * "/src/language/details/Command_Details.json"
+ */
 interface CompletionInfo {
   label: string;
   description: string;
@@ -18,15 +23,28 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         super(services);
     }
     
-
+    /**
+     * @description
+     * takes the document and the params and build contexts and 
+     * returns completions for each context
+     * 
+     * @param document document that kontext
+     * @param params Completion Params that contain the cursour position
+     * @param _cancelToken Chancelation token
+     * @returns a completion list promise with completions in
+     * the current context of the cursour
+     */
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
         let completions: CompletionItem[] = []; 
         
+        //build contexts via document and params
         const contexts = this.buildContexts(document, params.position);
 
         // Handles giving no Completion for Comments
         if (this.isCursorInComment(document, params)) return CompletionList.create([], true)
         
+        // acceptor creates and saves completion items from a given context
+        // and stores it in the "completions" array
         const acceptor: CompletionAcceptor = (context, value) => {
             const completionItem = this.fillCompletionItem(context, value);
             if (completionItem) {
@@ -41,17 +59,29 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 this.completionFor(context, feature, acceptor);
             }
         }
+        // create a completion list from the collected completions
         return CompletionList.create(this.deduplicateItems(completions), true);
     }
     
-
+    /**
+     * @description
+     * creates completion Items with Details from "Command_Details.json"
+     * and puts them into the "completions" array
+     * 
+     * @param context a context from the document
+     * @param next the next feature from the context.features
+     * @param acceptor the acceptor that saves completion items into the "completions" array
+     * @returns nothing (could return a maybepromise)
+     */
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
-        console.log(next);
-        console.log("SPLITTER_____________________________________________________________");
+        //console.log(next);
+        //console.log("SPLITTER_____________________________________________________________");
         let detail: CompletionInfo;
         
         if (next.type){
             detail = details[next.type as keyof typeof details];
+            //if details exist for "next.type" create 
+            // a completion item with the details
             if (detail){
                 acceptor(context,{
                     label: detail.label,
