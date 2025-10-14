@@ -66,5 +66,5 @@ or
 
 
 <p align="center">
-  Made with ❤️ for network engineers · © Crill-IOS
+  Made with ❤️ for network engineers · Crill-IOS
 </p>
