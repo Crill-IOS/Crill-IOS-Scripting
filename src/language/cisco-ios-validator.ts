@@ -1,6 +1,9 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { BANNER_MESSAGE, CiscoIosAstType , COMMENT, IP, SUBNETMASK, Username_cmd,} from './generated/ast.js';
+import { BANNER_MESSAGE, CiscoIosAstType , COMMENT, IP, IP_cmd_interface, isIP_cmd_interface, isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd,} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
+import { AstUtils } from 'langium';
+
+
 
 /**
  * Register custom validation checks.
@@ -14,6 +17,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
         COMMENT: validator.checkCOMMENT,
+        Stat: validator.check_for_double_IPs,
+
     };
     registry.register(checks, validator);
 }
@@ -89,6 +94,34 @@ export class CiscoIosValidator {
 
         }else{
             accept("error", `Delimiter (${COMMENT.delim}) can not be used to initialize a comment!`,{node:COMMENT, property: "delim"})
+        }
+    }
+    check_for_double_IPs(script: Stat, accept: ValidationAcceptor): void{
+        let ipHistory:string[] = [];
+        let commandHistory: IP_cmd_interface[] = [];
+        const addresses = 
+        AstUtils.streamAllContents(AstUtils.findRootNode(script))
+        .filter(e => e.$type == "IP_cmd_interface" )
+        
+        console.log(addresses + "address")
+        for (let address of addresses){
+            console.log("here")
+            if (isIP_cmd_interface(address) && isIp_cmd_option_address(address.option)){
+                const ip = address.option.ip?.value
+                if (ipHistory.includes(ip)){
+                    let pos =ipHistory.lastIndexOf(ip)
+                    accept("error", `Duplicate ip address ${ip}`,{node:address.option, property: "ip",})
+                    let old = commandHistory[pos];
+                    if (old){
+                        accept("error", `duplicate ip address ${ip}`, {node:old.option, property: "ip"})
+                    }
+                    
+                }else {
+                    ipHistory.push(ip);
+                    commandHistory.push(address);
+                }
+            }
+            
         }
     }
 }
