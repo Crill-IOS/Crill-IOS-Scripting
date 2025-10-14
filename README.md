@@ -15,30 +15,14 @@
 - Live error detection for error free scripts  
 - Modular architecture — easy to extend with new commands or templates 
 
-![Syntax Highlighting Example](screenshots/highlighting.png)  
-*Syntax highlighting for IOS commands*  
-
-![Autocomplete Example](screenshots/autocomplete.png)  
-*Command suggestions & validation in real time*  
-
-
 ## 🛠 How does it work?
 1. Install the extension from the **VS Code Marketplace**.  
 2. Create a file with the extension `.ios`.  
 3. Start typing your Cisco IOS config – Crill-IOS suggests valid commands, highlights errors, and provides hints.  
 4. Validation runs in real-time via the built-in LSP engine.  
 
-```bash
-! Example
-interface GigabitEthernet0/1
- description Uplink to Core
- ip address 192.168.0.1 255.255.255.0
- no shutdown
-```
 
-![Live Validation Example](screenshots/validation.png)  
-*Errors and warnings are highlighted instantly*  
-
+![Live Validation Example](screenshots/validation.png)  *Errors and warnings are highlighted instantly*  
 ---
 
 ## 🚀 Installation
