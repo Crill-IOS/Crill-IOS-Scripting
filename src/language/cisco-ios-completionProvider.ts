@@ -12,9 +12,9 @@ import details from "./details/Command_Details.json";
  * "/src/language/details/Command_Details.json"
  */
 interface CompletionInfo {
-  label: string;
-  description: string;
-  insert: string;
+    label: string;
+    description: string;
+    insert: string;
 }
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
@@ -22,7 +22,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     constructor(private readonly services: CiscoIosServices) {
         super(services);
     }
-    
+
     /**
      * @description
      * takes the document and the params and build contexts and 
@@ -35,14 +35,14 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      * the current context of the cursour
      */
     override async getCompletion(document: LangiumDocument, params: CompletionParams, _cancelToken?: CancellationToken): Promise<CompletionList | undefined> {
-        let completions: CompletionItem[] = []; 
-        
+        let completions: CompletionItem[] = [];
+
         //build contexts via document and params
         const contexts = this.buildContexts(document, params.position);
 
         // Handles giving no Completion for Comments
         if (this.isCursorInComment(document, params)) return CompletionList.create([], true)
-        
+
         // acceptor creates and saves completion items from a given context
         // and stores it in the "completions" array
         const acceptor: CompletionAcceptor = (context, value) => {
@@ -54,15 +54,15 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
         console.log("-----------------------------------------------")
         //requests completion for every feature in every context
-        for (const context of contexts){
-            for (const feature of context.features){
+        for (const context of contexts) {
+            for (const feature of context.features) {
                 this.completionFor(context, feature, acceptor);
             }
         }
         // create a completion list from the collected completions
         return CompletionList.create(this.deduplicateItems(completions), true);
     }
-    
+
     /**
      * @description
      * creates completion Items with Details from "Command_Details.json"
@@ -77,13 +77,13 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         //console.log(next);
         //console.log("SPLITTER_____________________________________________________________");
         let detail: CompletionInfo;
-        
-        if (next.type){
+
+        if (next.type) {
             detail = details[next.type as keyof typeof details];
             //if details exist for "next.type" create 
             // a completion item with the details
-            if (detail){
-                acceptor(context,{
+            if (detail) {
+                acceptor(context, {
                     label: detail.label,
                     detail: detail.description,
                     sortText: "1",
@@ -93,7 +93,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 })
             }
         }
-        
+
         // Custom Cross References
         // die acceptor Inhalte kann man noch in eine Datei wie 'Command_Details.json' auslagern
         const node: AstNode | undefined = context.node;
@@ -121,16 +121,16 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                 });
             });
         }
-        
+
         if (ast.isKeyword(next.feature)) {
             return this.completionForKeyword(context, next.feature, acceptor);
         } else if (ast.isCrossReference(next.feature) && context.node) {
             return this.completionForCrossReference(context, next as NextFeature<ast.CrossReference>, acceptor);
-        } else if (ast.isRuleCall(next.feature)){
-            if (next.feature.rule.ref?.name == "NL"){
+        } else if (ast.isRuleCall(next.feature)) {
+            if (next.feature.rule.ref?.name == "NL") {
                 const document = context.document.textDocument;
                 const offset = document.offsetAt(context.position);
-                const correctLine = document.offsetAt({line:context.position.line, character:0})
+                const correctLine = document.offsetAt({ line: context.position.line, character: 0 })
                 const textBeforeCursor = document.getText().substring(correctLine, offset)
 
                 if (textBeforeCursor.trim().length > 0) {
@@ -150,7 +150,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         if (!this.filterKeyword(context, keyword)) {
             return;
         }
-        
+
         acceptor(context, {
             label: keyword.value,
             kind: this.getKeywordCompletionItemKind(keyword),
@@ -168,14 +168,14 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      */
     isCursorInComment(document: LangiumDocument, params: CompletionParams): boolean {
         const offset = document.textDocument.offsetAt(params.position);
-        
+
         const text = document.textDocument.getText();
         const lexer = this.services.parser.Lexer;
         const lexResult = lexer.tokenize(text);
         const commentTokens = lexResult.hidden ?? [];
 
         for (const commentToken of commentTokens) {
-            if (offset > commentToken.startOffset 
+            if (offset > commentToken.startOffset
                 && params.position.line + 1 <= (commentToken.endLine ?? -1)) {
                 return true
             }
@@ -190,8 +190,8 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      * @returns String-Array mit gesammelten Values
      */
     collectFromType(type: string, node: AstNode): string[] {
-    const result: string[] = [];
-    const visited = new Set<AstNode>();
+        const result: string[] = [];
+        const visited = new Set<AstNode>();
 
         /**
          * Schaut nach ob eine node den type hat. Wenn ja fügt zu result hinzu.
@@ -216,7 +216,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
                             ...
                         } ist $type, ip und mask die properties und 'IP', '192.168.0.1' und '255.255.255.0' die werte
                 */
-            
+
                 if (Array.isArray(wert)) {
                     for (const eintrag of wert) {
                         if (eintrag && typeof eintrag === 'object' && '$type' in eintrag) {
