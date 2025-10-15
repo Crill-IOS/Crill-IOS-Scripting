@@ -5,7 +5,6 @@ import {
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
-
 import * as ipaddr from "ipaddr.js";
 
 
@@ -180,14 +179,14 @@ export class CiscoIosValidator {
         function check_if_script_contains_no_ip_domain_lookup(script: Stat) {
             const cmds = AstUtils.streamAllContents(AstUtils.findRootNode(script))
                 .filter(e => e.$type === "No_ip_cmd_option_domain_lookup");
-            
+
             if (cmds.count() > 1) {
                 for (let cmd of cmds) {
                     accept("warning", "Script contains the <no ip domain-lookup> more than once.", { node: cmd })
                 }
             }
             else if (cmds.count() <= 0) {
-                accept("hint", "Script does not contain the <no ip domain-lookup> command.", { node: script.lines[0]})
+                accept("hint", "Script does not contain the <no ip domain-lookup> command.", { node: script.lines[0] })
             }
         }
 
