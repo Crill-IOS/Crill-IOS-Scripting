@@ -209,7 +209,7 @@ No_ip_cmd_options:
         No_ip_cmd_option_domain_lookup
     ;
 No_ip_cmd_option_domain_lookup:
-    command='domain-lookup'
+    type='domain-lookup'
     ;
 
 //------OSPF MODE-------
