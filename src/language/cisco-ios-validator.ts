@@ -1,5 +1,8 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import { BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, } from './generated/ast.js';
+import {
+    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface,
+    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd,
+} from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
 
@@ -160,8 +163,33 @@ export class CiscoIosValidator {
         //all checks that care about more than 1 node
         check_double_ips_Interface(script);
         check_overlapping_ips_Interface(script);
+        check_if_script_contains_no_ip_domain_lookup(script);
 
-        //all check functions that care about more than 1 node
+
+
+        /**
+         * @description
+         * checks if the script contains the <no ip domain-lookup> 
+         * at least once and not more than once
+         * 
+         * throws a hint if the scrpt doesnt contain the command
+         * throws a waring if the script contains it more than once 
+         * 
+         * @param script the "Stat" node found in grammar "cisco-ios.langium"
+         */
+        function check_if_script_contains_no_ip_domain_lookup(script: Stat) {
+            const cmds = AstUtils.streamAllContents(AstUtils.findRootNode(script))
+                .filter(e => e.$type === "No_ip_cmd_option_domain_lookup");
+            
+            if (cmds.count() > 1) {
+                for (let cmd of cmds) {
+                    accept("warning", "Script contains the <no ip domain-lookup> more than once.", { node: cmd })
+                }
+            }
+            else if (cmds.count() <= 0) {
+                accept("hint", "Script does not contain the <no ip domain-lookup> command.", { node: script.lines[0]})
+            }
+        }
 
 
 
@@ -197,7 +225,7 @@ export class CiscoIosValidator {
                     const existing = seenIPs.get(ip);
                     if (existing) {
                         // Duplicate found: report both
-                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip"});
+                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
                         accept("error", `Duplicate IP address: ${ip}`, { node: existing.option, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
@@ -243,8 +271,8 @@ export class CiscoIosValidator {
                     for (const s of seen) {
                         if (ip.kind() !== s.ip.kind()) continue;
                         if (ip.match(s.ip, s.prefix) || s.ip.match(ip, len)) {
-                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}`, { node: address});
-                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}`, { node: s.node});
+                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}`, { node: address });
+                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}`, { node: s.node });
                         }
                     }
                     seen.push({ ip, prefix: len, cidr: `${ipStr}/${len}`, node: address });
