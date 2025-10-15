@@ -43,6 +43,11 @@
         "label":"x/x",
         "description": "number of the interface to be entered",
         "insert": "${1:0}/${2:0}\nno shutdown\n$0"
+    },
+    "No_ip_cmd_option_domain_lookup":{
+        "label":"domain-lookup",
+        "description": "stops ip domain lookup",
+        "insert": "domain-lookup"
     }
 
     

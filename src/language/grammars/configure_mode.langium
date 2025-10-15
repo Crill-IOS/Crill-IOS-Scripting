@@ -34,6 +34,7 @@ Configure_cmds:
         | Line_cmd
         | Router_cmd
         | Exit_configure
+        | No_cmd
     )
     ;
 
@@ -201,11 +202,14 @@ Banner_type returns string:
     ;
 
 No_ip_cmd:
-    'ip' option=IP_no_option
+    'ip' option= No_ip_cmd_options
     ;
 
-IP_no_option returns string:
-      'domain-lookup'
+No_ip_cmd_options:
+        No_ip_cmd_option_domain_lookup
+    ;
+No_ip_cmd_option_domain_lookup:
+    command='domain-lookup'
     ;
 
 //------OSPF MODE-------
