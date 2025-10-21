@@ -15,11 +15,15 @@ COMMENT:
 
 COMMON :
     NL|
-    COMMENT
+    COMMENTLINE
     ;
 
-CR:
-    COMMENT? NL
+COMMENTLINE:
+    delim=('#'|'!') text+=INPUT+
+    ;
+
+fragment CR :
+    comment=COMMENT? NL
     ;
 
 INPUT returns string:
