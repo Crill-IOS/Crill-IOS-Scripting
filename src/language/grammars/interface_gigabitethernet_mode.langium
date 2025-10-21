@@ -4,7 +4,7 @@ import 'interface_mode'
 
 // ---- GigabitEthernet-cmds ----
 Interface_gigabitethernet_cmds:
-      CR
+      NL
     | IP_cmd_interface
     | Shutdown_cmd
     | No_cmd_interface
