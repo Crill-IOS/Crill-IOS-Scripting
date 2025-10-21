@@ -1,7 +1,7 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import {
-    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface,
-    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd,
+    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, Ip_cmd_option_address,
+    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
@@ -20,6 +20,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
         Stat: validator.check_Stat,
+        Generate_cmd: validator.checkGenerate_cmd,
 
     };
     registry.register(checks, validator);
@@ -149,6 +150,19 @@ export class CiscoIosValidator {
         }
     }
 
+    //UNFINISHED:
+    checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor):void {
+        console.log("root node: "+ AstUtils.findRootNode(generate).$type)
+        //findet nichts auch wenn ein <Domainname_cmd> im file geschrieben ist
+        const ip_domain_name = AstUtils.streamAllContents(AstUtils.findRootNode(generate))
+                .filter(e => e.$type === "Domainname_cmd");
+        //findet nichts auch wenn ein <Hostname_cmd> im file geschrieben ist
+        const hostnames = AstUtils.streamAllContents(AstUtils.findRootNode(generate))
+                .filter(e => e.$type === "Hostname_cmd");
+
+        console.log(`hostname: ${hostnames.count()} domain-name ${ip_domain_name.count()}`)
+    }
+
 
     /**
      * @description
@@ -225,7 +239,7 @@ export class CiscoIosValidator {
                     if (existing) {
                         // Duplicate found: report both
                         accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
-                        accept("error", `Duplicate IP address: ${ip}`, { node: existing.option, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}`, { node: existing.option as Ip_cmd_option_address, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
                     }
