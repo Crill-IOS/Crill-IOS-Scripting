@@ -48,6 +48,11 @@
         "label":"domain-lookup",
         "description": "stops ip domain lookup",
         "insert": "domain-lookup"
+    },
+    "Description_cmd":{
+        "label":"description",
+        "description": "describes the interface",
+        "insert": "description"
     }
 
     
