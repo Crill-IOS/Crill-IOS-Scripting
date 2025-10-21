@@ -3,9 +3,11 @@ ping 1.2.3.4 !hallo was ist das denn iher das geht ja
 !hallo was 
 
 configure terminal #ahlloi was
-interface gigabitethernet 0/0.10 #hallo was 
-exit 
+#was ist das denn hier
+
 hostname route #hallo was sit das denn iher
+crypto key generate rsa usage-keys modulus 1024
+ip domain-name gustav
 banner motd *aberwsistdasdennhier*  
 banner config-save /aber was ist dsa routerh das ist  denn hier/
 banner motd hadf h 

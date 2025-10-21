@@ -150,16 +150,20 @@ export class CiscoIosValidator {
         }
     }
 
-    //UNFINISHED:
     checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor):void {
-        console.log("root node: "+ AstUtils.findRootNode(generate).$type)
-        //findet nichts auch wenn ein <Domainname_cmd> im file geschrieben ist
+        //gets all the ip domain name commands
         const ip_domain_name = AstUtils.streamAllContents(AstUtils.findRootNode(generate))
                 .filter(e => e.$type === "Domainname_cmd");
-        //findet nichts auch wenn ein <Hostname_cmd> im file geschrieben ist
+        //gets all teh hostname commands
         const hostnames = AstUtils.streamAllContents(AstUtils.findRootNode(generate))
                 .filter(e => e.$type === "Hostname_cmd");
 
+        if (hostnames.count() < 1){
+            accept("error", `Set a hostname before generating keys!`,{node:generate})
+        }
+        if (ip_domain_name.count() < 1){
+            accept("error", `Set a domain-name before generating keys!`,{node:generate})
+        }
         console.log(`hostname: ${hostnames.count()} domain-name ${ip_domain_name.count()}`)
     }
 
