@@ -13,7 +13,7 @@ Exit_bgp infers Exit:
 //------BGP SUBCOMMANDS (minimal)----------------------------
 Bgp_cmds:
     (
-        CR
+        COMMON
       | Bgp_router_id_cmd
       | Bgp_neighbor_cmd
       | Bgp_network_cmd
