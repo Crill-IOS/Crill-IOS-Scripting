@@ -14,11 +14,6 @@
         "description": "This Systems Network Name",
         "insert": "R1"
     },
-    "CR": {
-        "label":"<CR>",
-        "description": "End of command",
-        "insert": "\n"
-    },
     "Ip_cmd_option_address": {
         "label":"address",
         "description": "set an address to this interface",
@@ -53,7 +48,10 @@
         "label":"description",
         "description": "describes the interface",
         "insert": "description"
+    },
+    "COMMENT":{
+        "label":"<CR>",
+        "description": "possible end of a command",
+        "insert": "\n"
     }
-
-    
 }
