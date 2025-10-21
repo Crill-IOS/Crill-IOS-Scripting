@@ -2,7 +2,7 @@ import 'configure_mode'
 import 'common'
 
 Ospf_cmd:
-    'ospf' process=INT CR lines+=Ospf_cmds+
+    'ospf' process=INT cr=CR lines+=Ospf_cmds+
     ;
 
 
@@ -14,7 +14,7 @@ Exit_ospf infers Exit:
 //Optionen für den OSPF Modus
 Ospf_cmds:
     (
-        CR
+        cr=CR
       | Ospf_router_id_cmd
       | Ospf_network_cmd
       | Ospf_passive_interface_cmd
@@ -29,13 +29,13 @@ Ospf_cmds:
 //-------Router-id--------
 
 Ospf_router_id_cmd:
-    'router-id' id=IP CR
+    'router-id' id=IP cr=CR
     ;
 
 //-------Network--------
 
 Ospf_network_cmd:
-    'network' ip=IP mask=WILDCARDMASK 'area' area=INT CR
+    'network' ip=IP mask=WILDCARDMASK 'area' area=INT cr=CR
     ;
 
 //--------Passive-interface--------
@@ -50,11 +50,11 @@ Ospf_interface_types:
     ;
 
 Ospf_passive_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Ospf_passive_interface_number CR 
+    type='gigabitethernet' number=Ospf_passive_interface_number cr=CR 
     ;
 
 Ospf_passive_interface_type_fastethernet:
-    type='fastethernet' number=Ospf_passive_interface_number CR
+    type='fastethernet' number=Ospf_passive_interface_number cr=CR
     ;
 
 Ospf_passive_interface_number:
@@ -68,7 +68,7 @@ Ospf_passive_Sub_Interface_number :
 
 //------default-information----------
 Ospf_default_information_cmd:
-    'default-information' option=Ospf_default_information_cmd_options CR
+    'default-information' option=Ospf_default_information_cmd_options cr=CR
     ;
 
 Ospf_default_information_cmd_options:
@@ -77,7 +77,7 @@ Ospf_default_information_cmd_options:
 
 //-------Redistribute--------
 Ospf_redistribute_cmd:
-    'redistribute' option=Ospf_redistribute_cmd_options CR
+    'redistribute' option=Ospf_redistribute_cmd_options cr=CR
     ;
 
 Ospf_redistribute_cmd_options:
@@ -87,5 +87,5 @@ Ospf_redistribute_cmd_options:
 
 //------Priority--------
 Ospf_priority_cmd:
-    'priority' value=INT CR;
+    'priority' value=INT cr=CR;
 

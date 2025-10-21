@@ -1,6 +1,6 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import {
-    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface,
+    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, Ip_cmd_option_address, isIP_cmd_interface,
     isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
@@ -224,8 +224,8 @@ export class CiscoIosValidator {
                     const existing = seenIPs.get(ip);
                     if (existing) {
                         // Duplicate found: report both
-                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
-                        accept("error", `Duplicate IP address: ${ip}`, { node: existing.option, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option as Ip_cmd_option_address, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}`, { node: existing.option as Ip_cmd_option_address, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
                     }

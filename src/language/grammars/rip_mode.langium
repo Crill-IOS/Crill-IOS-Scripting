@@ -2,7 +2,7 @@ import 'configure_mode'
 import 'common'
 
 Rip_cmd:
-    'rip' CR lines+=Rip_cmds+
+    'rip' cr=CR lines+=Rip_cmds+
     ;
 
 
@@ -14,7 +14,7 @@ Exit_rip infers Exit:
 //Optionen für den RIP Modus
 Rip_cmds:
     (
-        CR
+        cr=CR
       | Rip_no_cmds
       | Rip_network_cmd
       | Rip_version_cmd
@@ -29,7 +29,7 @@ Rip_cmds:
 //-------no auto-sum--------
 
 Rip_no_cmds:
-    'no' options=Rip_no_cmd_options CR
+    'no' options=Rip_no_cmd_options cr=CR
     ;
 
 Rip_no_cmd_options:
@@ -39,7 +39,7 @@ Rip_no_cmd_options:
 //-------Network--------
 
 Rip_network_cmd:
-    'network' ip=IP CR
+    'network' ip=IP cr=CR
     ;
 
 //------Version---------
@@ -58,11 +58,11 @@ Rip_interface_types:
     ;
 
 Rip_passive_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Rip_passive_interface_number CR 
+    type='gigabitethernet' number=Rip_passive_interface_number cr=CR 
     ;
 
 Rip_passive_interface_type_fastethernet:
-    type='fastethernet' number=Rip_passive_interface_number CR
+    type='fastethernet' number=Rip_passive_interface_number cr=CR
     ;
 
 Rip_passive_interface_number:
@@ -75,7 +75,7 @@ Rip_passive_Sub_Interface_number :
 
 //------default-information----------
 Rip_default_information_cmd:
-    'default-information' option=Rip_default_information_cmd_options CR
+    'default-information' option=Rip_default_information_cmd_options cr=CR
     ;
 
 Rip_default_information_cmd_options:
@@ -84,7 +84,7 @@ Rip_default_information_cmd_options:
 
 //-------Redistribute--------
 Rip_redistribute_cmd:
-    'redistribute' option=Rip_redistribute_cmd_options CR
+    'redistribute' option=Rip_redistribute_cmd_options cr=CR
     ;
 
 Rip_redistribute_cmd_options:

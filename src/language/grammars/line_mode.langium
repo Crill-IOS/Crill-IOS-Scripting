@@ -14,7 +14,7 @@ Login_cmd:
     ;
 
 Line_LoginOption:
-    option='local' CR
+    option='local' cr=CR
     ;
 
 // logging
@@ -23,7 +23,7 @@ Logging_cmd:
     ;
 
 Line_LoggingOption:
-    option='synchronous' CR
+    option='synchronous' cr=CR
     ;
 
 // exec-timeout
@@ -32,5 +32,5 @@ ExecTimeout_cmd:
     ;
 
 Line_ExecTimeoutValue:
-    minutes=INT seconds=INT CR
+    minutes=INT seconds=INT cr=CR
     ;

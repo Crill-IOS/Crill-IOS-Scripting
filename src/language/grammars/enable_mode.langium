@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' (hostname=[Hostname_Input] | ip=IP) CR
+    'ping' (hostname=[Hostname_Input] | ip=IP) cr=CR
     ;
 
 Show_cmd:
@@ -25,8 +25,8 @@ Show_cmd:
 
 Show_cmd_options:
     option=
-        'run' CR
-        | 'interface' CR
+        'run' cr=CR
+        | 'interface' cr=CR
     ;
 
 Configure_cmd: 
@@ -34,6 +34,6 @@ Configure_cmd:
     ;
 
 Configure_cmd_options:
-        'terminal' CR lines+=Configure_cmds+ 
-        |'memory' CR
+        'terminal' cr=CR lines+=Configure_cmds+ 
+        |'memory' cr=CR
     ;

@@ -5,7 +5,7 @@ import 'interface_mode'
 
 // ---- VLAN-cmds ----
 Interface_vlan_cmds:
-      CR
+      cr=CR
     | IP_cmd_interface
     | Description_cmd
     | Ip_Helper_cmd
@@ -13,4 +13,4 @@ Interface_vlan_cmds:
     ;
 
 Ip_Helper_cmd:
-    'ip' 'helper-address' value=IP CR;
+    'ip' 'helper-address' value=IP cr=CR;
