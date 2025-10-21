@@ -9,6 +9,7 @@ Exit:
     command='exit' CR
     ;
 
+//end of line comments
 COMMENT:
     delim=('#'|'!') text+=INPUT+
     ;
@@ -18,6 +19,7 @@ COMMON :
     COMMENTLINE
     ;
 
+// start of line comments
 COMMENTLINE:
     delim=('#'|'!') text+=INPUT+
     ;
