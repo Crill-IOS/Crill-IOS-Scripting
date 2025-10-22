@@ -15,7 +15,7 @@ Interface_gigabitethernet_cmds:
     ;
 
 Duplex_cmd:
-    'duplex' option=Duplex_option cr=CR;
+    'duplex' option=Duplex_option CR;
 
 Duplex_option:
       option=Duplex_auto
@@ -34,4 +34,4 @@ Duplex_half returns string:
 
 
 Speed_cmd:
-    'speed' value=INT cr=CR;
+    'speed' value=INT CR;

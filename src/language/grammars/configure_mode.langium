@@ -40,7 +40,7 @@ Configure_cmds:
 
 //------USERNAME-------
 Username_cmd :
-    'username' name=USERNAME_INPUT options+= Username_cmd_option* cr=CR;
+    'username' name=USERNAME_INPUT options+= Username_cmd_option* CR;
 
 Username_cmd_option:
     PrivilegeOption | PasswordOption | SecretOption | AlgorithmTypeOption;
@@ -76,7 +76,7 @@ Sha256Option_cmd: 'secret' value=USERNAME_PASSWORD_INPUT;
 
 //------BANNER-------
 Banner_cmd:
-    'banner' option= Banner_cmd_option message=BANNER_MESSAGE cr=CR;
+    'banner' option= Banner_cmd_option message=BANNER_MESSAGE CR;
 
 Banner_cmd_option:
     option = (ConfigSaveOption | ExecOption | IncomingOption | LoginOption | MOTDOption | PromptTimeoutOption | SlipPPPOption);
@@ -114,7 +114,7 @@ IP_cmd_option:
     ;
 
 Domainname_cmd:
-    'domain-name' value=DOMAINNAME_INPUT cr=CR
+    'domain-name' value=DOMAINNAME_INPUT CR
     ;
 
 SSH_cmd:
@@ -122,7 +122,7 @@ SSH_cmd:
     ;
 
 SSHOptions:
-    'version' value=VERSION_INPUT cr=CR
+    'version' value=VERSION_INPUT CR
     ;
 
 //------HOSTNAME-------
@@ -132,7 +132,7 @@ Hostname_cmd:
 
 //------CRYPTO-------
 Crypto_cmd:
-    'crypto' option=Crypto_cmd_option cr=CR
+    'crypto' option=Crypto_cmd_option CR
     ;
 
 Crypto_cmd_option:
@@ -179,7 +179,7 @@ Modulus_cmd:
 
 //------NO CMDS---------
 No_cmd:
-    'no' option=No_options cr=CR
+    'no' option=No_options CR
     ;
 
 No_options:
@@ -235,11 +235,11 @@ Line_types:
     ;
 
 Line_type_console:
-    type='console' number=INT cr=CR lines+=Line_console_cmds+
+    type='console' number=INT CR lines+=Line_console_cmds+
     ;
 
 Line_type_vty:
-    type='vty' start=INT end=INT cr=CR lines+=Line_vty_cmds+
+    type='vty' start=INT end=INT CR lines+=Line_vty_cmds+
     ;
 
 //------INTERFACE MODE-------
@@ -253,13 +253,13 @@ Interface_types:
     ;
 
 Interface_type_gigabitethernet:
-    type='gigabitethernet' number=Interface_number cr=CR lines+=Interface_gigabitethernet_cmds+;
+    type='gigabitethernet' number=Interface_number CR lines+=Interface_gigabitethernet_cmds+;
 
 Interface_type_fastethernet:
-    type='fastethernet' number=Interface_number cr=CR lines+=Interface_fastethernet_cmds+;
+    type='fastethernet' number=Interface_number CR lines+=Interface_fastethernet_cmds+;
 
 Interface_type_vlan:
-    type='vlan' number=INT cr=CR lines+=Interface_vlan_cmds+;
+    type='vlan' number=INT CR lines+=Interface_vlan_cmds+;
 
 
 Interface_number:

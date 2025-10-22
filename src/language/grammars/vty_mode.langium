@@ -26,7 +26,7 @@ TransportInput_cmd:
     ;
 
 TransportInputList:
-    options+=TransportProto+ cr=CR
+    options+=TransportProto+ CR
     ;
 
 // ohne "item=", pro Regel max. ein Literal

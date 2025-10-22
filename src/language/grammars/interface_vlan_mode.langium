@@ -13,4 +13,4 @@ Interface_vlan_cmds:
     ;
 
 Ip_Helper_cmd:
-    'ip' 'helper-address' value=IP cr=CR;
+    'ip' 'helper-address' value=IP CR;

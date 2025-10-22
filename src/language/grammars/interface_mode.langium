@@ -19,19 +19,19 @@ Ip_cmd_options:
     ;
 
 Ip_cmd_option_address:
-    'address' ip=IP mask=SUBNETMASK ('secondary')? cr=CR;
+    'address' ip=IP mask=SUBNETMASK ('secondary')? CR;
 
 Ip_cmd_option_ospf:
-    'ospf' option=('cost' | 'priority') cr=CR;
+    'ospf' option=('cost' | 'priority') CR;
 
 Shutdown_cmd:
-    'shutdown' cr=CR;
+    'shutdown' CR;
 
 No_cmd_interface:
-    'no' option=No_cmd_interface_option cr=CR;
+    'no' option=No_cmd_interface_option CR;
 
 No_cmd_interface_option:
-    'shutdown' cr=CR;
+    'shutdown' CR;
 
 Description_cmd:
-    'description' value=INPUT cr=CR;
+    'description' value=INPUT CR;
