@@ -1,6 +1,6 @@
 import { SemanticTokenAcceptor, AbstractSemanticTokenProvider } from 'langium/lsp';
 import { AstNode } from 'langium';
-import { isInterface_types } from './generated/ast.js';
+import { isCOMMON, isInterface_types } from './generated/ast.js';
 
 const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: string }> = {
     // Grundkonfig
@@ -17,6 +17,7 @@ const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: str
 
     // Allgemein
     COMMON: { type: 'comment'},
+    COMMENT: { type: 'comment' },
     // zukünftig
     OSPF_PROCESS_NUMBER: { type: 'number'},
 
@@ -33,15 +34,24 @@ export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider
             return
         }
 
-        const n = node as any
-        const cr = n.cr;
+        // const n = node as any    // not needed anymore because of change to CR fragment
+        // const cr = n.cr;
 
-        if (cr && cr.$type === 'COMMENT') {
-            if (cr.$cstNode) {
+        // if (cr && cr.$type === 'COMMENT') {
+        //     if (cr.$cstNode) {
+        //         acceptor({
+        //             cst: cr.$cstNode,
+        //             type: 'comment'
+        //         });
+        //     }
+        // }
+
+        if (isCOMMON(node)) {
+            if (node.$type == "COMMENTLINE" && node.$cstNode) {
                 acceptor({
-                    cst: cr.$cstNode,
+                    cst: node.$cstNode,
                     type: 'comment'
-                });
+                })
             }
         }
 
