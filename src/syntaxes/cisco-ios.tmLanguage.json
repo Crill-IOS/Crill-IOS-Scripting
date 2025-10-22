@@ -7,11 +7,11 @@
   "patterns": [
     {
       "name": "keyword",
-      "match": "\\b(configure|interface|line|exit|router|)\\b"
+      "match": "\\b(configure|interface|line|exit|router)\\b"
     },
     {
       "name": "variable",
-      "match": "\\b(hostname|username|banner|ip|crypto|exec-timeout|login|logging|no)"
+      "match": "\\b(hostname|username|banner|ip|crypto|exec-timeout|login|logging|no)\\b"
     }
   ],
   "repository": {}
