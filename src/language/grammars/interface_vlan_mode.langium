@@ -5,7 +5,7 @@ import 'interface_mode'
 
 // ---- VLAN-cmds ----
 Interface_vlan_cmds:
-      cr=CR
+      COMMON
     | IP_cmd_interface
     | Description_cmd
     | Ip_Helper_cmd

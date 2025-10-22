@@ -14,7 +14,7 @@ Exit_ospf infers Exit:
 //Optionen für den OSPF Modus
 Ospf_cmds:
     (
-        cr=CR
+        COMMON
       | Ospf_router_id_cmd
       | Ospf_network_cmd
       | Ospf_passive_interface_cmd

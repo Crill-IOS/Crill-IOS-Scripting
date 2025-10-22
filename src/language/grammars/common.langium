@@ -9,17 +9,23 @@ Exit:
     command='exit' cr=CR
     ;
 
+//end of line comments
 COMMENT:
     delim=('#'|'!') text+=INPUT+
     ;
 
 COMMON :
     NL|
-    comment=COMMENT
+    COMMENTLINE
     ;
 
-CR:
-    COMMENT? NL
+// start of line comments
+COMMENTLINE:
+    delim=('#'|'!') text+=INPUT+
+    ;
+
+fragment CR :
+    comment=COMMENT? NL
     ;
 
 INPUT returns string:

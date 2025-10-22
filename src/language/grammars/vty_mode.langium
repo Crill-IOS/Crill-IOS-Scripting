@@ -4,7 +4,7 @@ import 'line_mode'
 
 // ---- VTY-Subcommand-Aggregation ----
 Line_vty_cmds:
-      cr=CR
+      COMMON
     | Login_cmd
     | Logging_cmd
     | ExecTimeout_cmd

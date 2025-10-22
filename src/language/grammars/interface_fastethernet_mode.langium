@@ -4,7 +4,7 @@ import 'interface_mode'
 
 // ---- FastEthernet-cmds ----
 Interface_fastethernet_cmds:
-      cr=CR
+      COMMON
     | IP_cmd_interface
     | Shutdown_cmd
     | No_cmd_interface

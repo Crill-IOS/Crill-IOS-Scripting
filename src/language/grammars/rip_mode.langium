@@ -14,7 +14,7 @@ Exit_rip infers Exit:
 //Optionen für den RIP Modus
 Rip_cmds:
     (
-        cr=CR
+        COMMON
       | Rip_no_cmds
       | Rip_network_cmd
       | Rip_version_cmd

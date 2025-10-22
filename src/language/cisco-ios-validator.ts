@@ -1,7 +1,7 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import {
-    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, Ip_cmd_option_address, isIP_cmd_interface,
-    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd,
+    BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, Ip_cmd_option_address,
+    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
@@ -20,6 +20,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
         Stat: validator.check_Stat,
+        Generate_cmd: validator.checkGenerate_cmd,
 
     };
     registry.register(checks, validator);
@@ -149,6 +150,46 @@ export class CiscoIosValidator {
         }
     }
 
+    /**
+     * @description
+     * checks if a domain-name and hostname is set,
+     * before generating a crypto key
+     * 
+     * @param generate the crypto key generate rule from the grammar
+     * @param accept the acceptor
+     * 
+     * @todo
+     * does not check if hostname or domain-name was set
+     * BEFORE generating a crypto key ONLY
+     * if those were set in the whole script
+     */
+    checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor): void {
+    // Get root node and collect relevant commands in script order
+    const root = AstUtils.findRootNode(generate);
+    const allCommands = Array.from(AstUtils.streamAllContents(root));
+
+    // indexes of commands 
+    const generateIndex = allCommands.indexOf(generate);
+    const hostnameIndex = allCommands.findIndex(e => e.$type === "Hostname_cmd");
+    const domainIndex = allCommands.findIndex(e => e.$type === "Domainname_cmd");
+
+    
+    // hostname must exist and come before generate
+    if (hostnameIndex === -1) {
+        accept("error", `set a hostname before generating keys!`, { node: generate.$container.$container });
+    } else if (hostnameIndex > generateIndex) {
+        accept("error", `hostname must be defined before generating keys!`, { node: generate.$container.$container });
+    }
+
+    // domain-name must exist and come before generate
+    if (domainIndex === -1) {
+        accept("error", `set a domain-name before generating keys!`, { node: generate.$container.$container });
+    } else if (domainIndex > generateIndex) {
+        accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
+    }
+}
+
+
 
     /**
      * @description
@@ -224,7 +265,7 @@ export class CiscoIosValidator {
                     const existing = seenIPs.get(ip);
                     if (existing) {
                         // Duplicate found: report both
-                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option as Ip_cmd_option_address, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
                         accept("error", `Duplicate IP address: ${ip}`, { node: existing.option as Ip_cmd_option_address, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
