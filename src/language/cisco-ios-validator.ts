@@ -164,30 +164,30 @@ export class CiscoIosValidator {
      * if those were set in the whole script
      */
     checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor): void {
-    // Get root node and collect relevant commands in script order
-    const root = AstUtils.findRootNode(generate);
-    const allCommands = Array.from(AstUtils.streamAllContents(root));
+        // Get root node and collect relevant commands in script order
+        const root = AstUtils.findRootNode(generate);
+        const allCommands = Array.from(AstUtils.streamAllContents(root));
 
-    // indexes of commands 
-    const generateIndex = allCommands.indexOf(generate);
-    const hostnameIndex = allCommands.findIndex(e => e.$type === "Hostname_cmd");
-    const domainIndex = allCommands.findIndex(e => e.$type === "Domainname_cmd");
+        // indexes of commands 
+        const generateIndex = allCommands.indexOf(generate);
+        const hostnameIndex = allCommands.findIndex(e => e.$type === "Hostname_cmd");
+        const domainIndex = allCommands.findIndex(e => e.$type === "Domainname_cmd");
 
-    
-    // hostname must exist and come before generate
-    if (hostnameIndex === -1) {
-        accept("error", `set a hostname before generating keys!`, { node: generate.$container.$container });
-    } else if (hostnameIndex > generateIndex) {
-        accept("error", `hostname must be defined before generating keys!`, { node: generate.$container.$container });
+
+        // hostname must exist and come before generate
+        if (hostnameIndex === -1) {
+            accept("error", `set a hostname before generating keys!`, { node: generate.$container.$container });
+        } else if (hostnameIndex > generateIndex) {
+            accept("error", `hostname must be defined before generating keys!`, { node: generate.$container.$container });
+        }
+
+        // domain-name must exist and come before generate
+        if (domainIndex === -1) {
+            accept("error", `set a domain-name before generating keys!`, { node: generate.$container.$container });
+        } else if (domainIndex > generateIndex) {
+            accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
+        }
     }
-
-    // domain-name must exist and come before generate
-    if (domainIndex === -1) {
-        accept("error", `set a domain-name before generating keys!`, { node: generate.$container.$container });
-    } else if (domainIndex > generateIndex) {
-        accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
-    }
-}
 
 
 
