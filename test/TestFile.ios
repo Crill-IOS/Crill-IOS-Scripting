@@ -14,8 +14,16 @@ banner motd hadf h
 interface gigabitethernet 0/0 #aber was ist das denn hier 
 no shutdown 
 
+line console 0
+exec-timeout 0 0
+exit
+
+line vty 0 1
+exec-timeout 0 0
+
 
 exit
+
 interface fastethernet 0/0
 no shutdown
 

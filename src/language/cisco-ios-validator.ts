@@ -1,7 +1,9 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import {
     BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, Ip_cmd_option_address,
-    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd
+    isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd, Line_types,
+    isLine_ExecTimeoutValue,
+    isExit,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
@@ -21,6 +23,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
         Stat: validator.check_Stat,
         Generate_cmd: validator.checkGenerate_cmd,
+        Line_types: validator.checkLine_types,
 
     };
     registry.register(checks, validator);
@@ -186,6 +189,20 @@ export class CiscoIosValidator {
             accept("error", `set a domain-name before generating keys!`, { node: generate.$container.$container });
         } else if (domainIndex > generateIndex) {
             accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
+        }
+    }
+
+    checkLine_types(linecmd: Line_types, accept: ValidationAcceptor): void {
+        let cmds = []
+        for (let cmd of linecmd.lines){
+            if(!isExit(cmd)){
+                cmds.push(cmd)
+            }else{
+                break
+            }
+        }
+        if (cmds.findIndex(e => isLine_ExecTimeoutValue(e))<0){
+            accept("info", `line mode has no exec-timeout command!`, { node: linecmd.$container, property: "command" });
         }
     }
 
