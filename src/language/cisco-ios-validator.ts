@@ -191,7 +191,13 @@ export class CiscoIosValidator {
             accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
         }
     }
-
+    /**
+     * @description
+     * check if a  line_types instance contains the <exec-timeout> command 
+     * 
+     * @param linecmd a line_types instance in a script
+     * @param accept the acceptor
+     */
     checkLine_types(linecmd: Line_types, accept: ValidationAcceptor): void {
         let cmds = []
         for (let cmd of linecmd.lines){
