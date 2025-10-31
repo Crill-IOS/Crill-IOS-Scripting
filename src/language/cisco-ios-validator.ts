@@ -55,11 +55,12 @@ export class CiscoIosValidator {
                 const ip_number = parseInt(num, 10);
 
                 if (ip_number > 255 || ip_number < 0) {
-                    accept("error", "This is not a valid IP-Address", { node: ip, property: 'value' });
+                    accept("error", "This is not a valid IP-Address!", { node: ip, property: 'value' });
                 }
             }
         }
     }
+    
     /**
      * @description
      * checks if a IPv4 subentmask is a valid subnetmask
@@ -91,7 +92,7 @@ export class CiscoIosValidator {
                 sub_binary = sub_binary + temp;
             }
             if (sub_binary.match(/10+1/) || sub_binary.length != 32 || !sub_binary.includes("0")) {
-                accept("error", "This is not a valid Subnet-Mask", { node: subnetmask, property: 'value' });
+                accept("error", "This is not a valid Subnetmask!", { node: subnetmask, property: 'value' });
             }
         }
     }
@@ -116,7 +117,7 @@ export class CiscoIosValidator {
             let occuredOptions: string[] = [];
             for (const option of username_cmd.options) {
                 if (occuredOptions.includes(option.$type)) {
-                    accept("error", `Already Defined ${option.$cstNode?.text} (duplicate)`, { node: option });
+                    accept("error", `Already defined ${option.$cstNode?.text} (duplicate)!`, { node: option });
                 } else {
                     occuredOptions.push(option.$type);
                 }
@@ -160,11 +161,6 @@ export class CiscoIosValidator {
      * 
      * @param generate the crypto key generate rule from the grammar
      * @param accept the acceptor
-     * 
-     * @todo
-     * does not check if hostname or domain-name was set
-     * BEFORE generating a crypto key ONLY
-     * if those were set in the whole script
      */
     checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor): void {
         // Get root node and collect relevant commands in script order
@@ -176,21 +172,21 @@ export class CiscoIosValidator {
         const hostnameIndex = allCommands.findIndex(e => e.$type === "Hostname_cmd");
         const domainIndex = allCommands.findIndex(e => e.$type === "Domainname_cmd");
 
-
         // hostname must exist and come before generate
         if (hostnameIndex === -1) {
-            accept("error", `set a hostname before generating keys!`, { node: generate.$container.$container });
+            accept("error", `Set a hostname before generating keys!`, { node: generate.$container.$container });
         } else if (hostnameIndex > generateIndex) {
-            accept("error", `hostname must be defined before generating keys!`, { node: generate.$container.$container });
+            accept("error", `A hostname must be defined before generating keys!`, { node: generate.$container.$container });
         }
 
         // domain-name must exist and come before generate
         if (domainIndex === -1) {
-            accept("error", `set a domain-name before generating keys!`, { node: generate.$container.$container });
+            accept("error", `Set a domain-name before generating keys!`, { node: generate.$container.$container });
         } else if (domainIndex > generateIndex) {
-            accept("error", `domain-name must be defined before generating keys!`, { node: generate.$container.$container });
+            accept("error", `A domain-name must be defined before generating keys!`, { node: generate.$container.$container });
         }
     }
+
     /**
      * @description
      * check if a  line_types instance contains the <exec-timeout> command 
@@ -208,11 +204,9 @@ export class CiscoIosValidator {
             }
         }
         if (cmds.findIndex(e => isLine_ExecTimeoutValue(e))<0){
-            accept("info", `line mode has no exec-timeout command!`, { node: linecmd.$container, property: "command" });
+            accept("info", `Line mode has no exec-timeout command!`, { node: linecmd.$container, property: "command" });
         }
     }
-
-
 
     /**
      * @description
@@ -222,13 +216,10 @@ export class CiscoIosValidator {
      * @param accept the acceptor
      */
     check_Stat(script: Stat, accept: ValidationAcceptor): void {
-
         //all checks that care about more than 1 node
         check_double_ips_Interface(script);
         check_overlapping_ips_Interface(script);
         check_if_script_contains_no_ip_domain_lookup(script);
-
-
 
         /**
          * @description
@@ -246,15 +237,13 @@ export class CiscoIosValidator {
 
             if (cmds.count() > 1) {
                 for (let cmd of cmds) {
-                    accept("warning", "Script contains the <no ip domain-lookup> more than once.", { node: cmd })
+                    accept("warning", "Script contains the <no ip domain-lookup> command more than once.", { node: cmd })
                 }
             }
             else if (cmds.count() <= 0) {
                 accept("hint", "Script does not contain the <no ip domain-lookup> command.", { node: script.lines[0] })
             }
         }
-
-
 
         /**
          * @description
@@ -288,15 +277,14 @@ export class CiscoIosValidator {
                     const existing = seenIPs.get(ip);
                     if (existing) {
                         // Duplicate found: report both
-                        accept("error", `Duplicate IP address: ${ip}`, { node: address.option, property: "ip" });
-                        accept("error", `Duplicate IP address: ${ip}`, { node: existing.option as Ip_cmd_option_address, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}!`, { node: address.option, property: "ip" });
+                        accept("error", `Duplicate IP address: ${ip}!`, { node: existing.option as Ip_cmd_option_address, property: "ip" });
                     } else {
                         seenIPs.set(ip, address);
                     }
                 }
             }
         }
-
 
         /**
          * @description
@@ -334,8 +322,8 @@ export class CiscoIosValidator {
                     for (const s of seen) {
                         if (ip.kind() !== s.ip.kind()) continue;
                         if (ip.match(s.ip, s.prefix) || s.ip.match(ip, len)) {
-                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}`, { node: address });
-                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}`, { node: s.node });
+                            accept("error", `Overlapping subnet: ${s.cidr} ↔ ${ipStr}/${len}!`, { node: address });
+                            accept("error", `Overlapping subnet: ${ipStr}/${len} ↔ ${s.cidr}!`, { node: s.node });
                         }
                     }
                     seen.push({ ip, prefix: len, cidr: `${ipStr}/${len}`, node: address });
