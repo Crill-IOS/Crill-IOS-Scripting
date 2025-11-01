@@ -18,13 +18,12 @@ export function registerValidationChecks(services: CiscoIosServices) {
     const validator = services.validation.CiscoIosValidator;
     const checks: ValidationChecks<CiscoIosAstType> = {
         IP: validator.checkIP,
-        SUBNETMASK: validator.chekcSUBNETMASK,
+        SUBNETMASK: validator.checkSUBNETMASK,
         Username_cmd: validator.checkUsername_cmd,
         BANNER_MESSAGE: validator.checkBANNER_MESSAGE,
         Stat: validator.check_Stat,
         Generate_cmd: validator.checkGenerate_cmd,
         Line_types: validator.checkLine_types,
-
     };
     registry.register(checks, validator);
 }
@@ -33,7 +32,6 @@ export function registerValidationChecks(services: CiscoIosServices) {
  * Implementation of custom validations.
  */
 export class CiscoIosValidator {
-
     /**
      * @description
      * checks if a IPv4 address is a valid address
@@ -60,7 +58,7 @@ export class CiscoIosValidator {
             }
         }
     }
-    
+
     /**
      * @description
      * checks if a IPv4 subentmask is a valid subnetmask
@@ -75,27 +73,28 @@ export class CiscoIosValidator {
      * 14.10.2025
      * implement IPv6 support (or create a new check)
      */
-    chekcSUBNETMASK(subnetmask: SUBNETMASK, accept: ValidationAcceptor): void {
+    checkSUBNETMASK(subnetmask: SUBNETMASK, accept: ValidationAcceptor): void {
         if (subnetmask.value) {
             const splitSUBNETMASK = String(subnetmask.value).split('.');
             let sub_binary: string = "";
+            
             for (const num of splitSUBNETMASK) {
                 const sub_number = parseInt(num, 10);
-                if (sub_number > 255) {
-
-                }
                 const sub_number_binary = sub_number.toString(2);
                 let temp = sub_number_binary;
+
                 for (let i = 0; i < (8 - sub_number_binary.length); i++) {
                     temp = "0" + temp;
                 }
                 sub_binary = sub_binary + temp;
             }
+            
             if (sub_binary.match(/10+1/) || sub_binary.length != 32 || !sub_binary.includes("0")) {
                 accept("error", "This is not a valid Subnetmask!", { node: subnetmask, property: 'value' });
             }
         }
     }
+
     /**
      * @description
      * checks if a username has the same option one or more times
@@ -150,7 +149,7 @@ export class CiscoIosValidator {
             accept("error", `Delimiters ${delim1} and ${delim2} dont match!`, { node: BANNER_MESSAGE });
         } else if (message.substring(1, message.length - 1).includes(delim1) ||
             (message.substring(1, message.length - 1).includes(delim2))) {
-            accept("error", `Delimiter (${delim1}) can not be inside MESSAGE`, { node: BANNER_MESSAGE });
+            accept("error", `Delimiter (${delim1}) can not be inside MESSAGE!`, { node: BANNER_MESSAGE });
         }
     }
 
@@ -197,13 +196,13 @@ export class CiscoIosValidator {
     checkLine_types(linecmd: Line_types, accept: ValidationAcceptor): void {
         let cmds = []
         for (let cmd of linecmd.lines){
-            if(!isExit(cmd)){
+            if (!isExit(cmd)) {
                 cmds.push(cmd)
-            }else{
+            } else {
                 break
             }
         }
-        if (cmds.findIndex(e => isLine_ExecTimeoutValue(e))<0){
+        if (cmds.findIndex(e => isLine_ExecTimeoutValue(e)) < 0) {
             accept("info", `Line mode has no exec-timeout command!`, { node: linecmd.$container, property: "command" });
         }
     }
