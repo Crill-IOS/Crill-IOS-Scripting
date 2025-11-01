@@ -2,7 +2,14 @@ import { SemanticTokenAcceptor, AbstractSemanticTokenProvider } from 'langium/ls
 import { AstNode } from 'langium';
 import { isCOMMON, isInterface_types } from './generated/ast.js';
 
+/**
+ * Contains highlighting information AstNodes
+ */
 const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: string }> = {
+    // Allgemein
+    COMMON: { type: 'comment'},
+    COMMENT: { type: 'comment' },
+
     // Grundkonfig
     Hostname_Input: { type: 'string' },
     USERNAME_INPUT: { type: 'string'},
@@ -14,17 +21,20 @@ const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: str
     USERNAME_PASSWORD_INPUT: { type: 'string'},
     IP: { type: 'string'},
     SUBNETMASK: { type: 'string'},
-
-    // Allgemein
-    COMMON: { type: 'comment'},
-    COMMENT: { type: 'comment' },
+    
     // zukünftig
     OSPF_PROCESS_NUMBER: { type: 'number'},
-
 };
 
 export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider {
+    /**
+     * A basic function from langium that highlights an element based on the given acceptor
+     * @param node current AstNode
+     * @param acceptor 
+     * @returns 
+     */
     protected override highlightElement(node: AstNode, acceptor: SemanticTokenAcceptor): void {
+        // Highlights interface types like 'gigabitethernet'
         if (isInterface_types(node)) {
             acceptor({
                 node,
@@ -33,19 +43,8 @@ export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider
             })
             return
         }
-
-        // const n = node as any    // not needed anymore because of change to CR fragment
-        // const cr = n.cr;
-
-        // if (cr && cr.$type === 'COMMENT') {
-        //     if (cr.$cstNode) {
-        //         acceptor({
-        //             cst: cr.$cstNode,
-        //             type: 'comment'
-        //         });
-        //     }
-        // }
-
+        
+        // Highlights comments written after commands
         if (isCOMMON(node)) {
             if (node.$type == "COMMENTLINE" && node.$cstNode) {
                 acceptor({
@@ -55,9 +54,14 @@ export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider
             }
         }
 
+        // Gets highlighting-information from map for current AstNode
         const mapping = TOKEN_MAP[node.$type];
+        
+        // If no highlighting-information exists then skip current AstNode
         if (!mapping) return;
         
+        // If highlighting-information exists and a CstNode exists then highlight the CstNode
+        // CstNode is used instead of AstNode, because the CstNode contains text information like start- and endposition
         if (node.$cstNode) {
             acceptor({ cst: node.$cstNode, type: mapping.type})
         } 
