@@ -4,6 +4,7 @@ import {
     isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd, Line_types,
     isLine_ExecTimeoutValue,
     isExit,
+    isKEYWORDS,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
 import { AstUtils } from 'langium';
@@ -141,10 +142,16 @@ export class CiscoIosValidator {
      * ^this thows an error since delim: <#> is inside the message 
      */
     checkBANNER_MESSAGE(BANNER_MESSAGE: BANNER_MESSAGE, accept: ValidationAcceptor): void {
-        let message = BANNER_MESSAGE.message.join("");
+        let message = ""
+        for (let str of BANNER_MESSAGE.message){
+            if (isKEYWORDS(str)){
+                message = message+str.keywords
+            }else{
+                message = message+str
+            }
+        }
         const delim1 = message.at(0);
         const delim2 = message.charAt(message.length - 1);
-
         if (delim1 != delim2) {
             accept("error", `Delimiters ${delim1} and ${delim2} dont match!`, { node: BANNER_MESSAGE });
         } else if (message.substring(1, message.length - 1).includes(delim1) ||
