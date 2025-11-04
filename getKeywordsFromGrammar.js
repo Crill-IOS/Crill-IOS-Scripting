@@ -29,7 +29,7 @@ for (let file of files) {
 
 
 
-const data = 'KEYWORDS returns string:\n' + [...keywords].join(" \n| ") + "\n;";
+const data = 'KEYWORDS:\nkeywords = (' + [...keywords].join(" \n| ") + ")\n;";
 
 fs.writeFileSync('./src/language/grammars/keywords.langium', data, 'utf-8');
 
