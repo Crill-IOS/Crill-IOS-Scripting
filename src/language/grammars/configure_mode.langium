@@ -127,7 +127,7 @@ SSHOptions:
 
 //------HOSTNAME-------
 Hostname_cmd:
-    'hostname' value=Hostname_Input CR
+    'hostname' value=HOSTNAME_INPUT CR
     ;
 
 //------CRYPTO-------

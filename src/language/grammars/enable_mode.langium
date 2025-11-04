@@ -16,7 +16,7 @@ Enable_cmds :
 
 
 Ping_cmd:
-    'ping' (hostname=[Hostname_Input] | ip=IP) CR
+    'ping' (ip=IP) CR
     ;
 
 Show_cmd:

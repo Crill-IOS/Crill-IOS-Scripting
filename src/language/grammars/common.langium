@@ -4,7 +4,7 @@ import 'keywords'
 IP: value = IPv4_DDC;
 WILDCARDMASK: value = IPv4_DDC;
 SUBNETMASK: value = IPv4_DDC;
-Hostname_Input: name= INPUT; 
+
 Exit:
     command='exit' CR
     ;
@@ -32,7 +32,7 @@ INPUT returns string:
     INPUT_lexer | KEYWORDS
     ;
 
-
+HOSTNAME_INPUT: value= INPUT; 
 USERNAME_INPUT: value=INPUT;
 USERNAME_PASSWORD_INPUT: value=INPUT;
 MODULUS_INPUT: value=INT;
