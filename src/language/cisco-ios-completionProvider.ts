@@ -75,27 +75,25 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      * @returns nothing (could return a maybepromise)
      */
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
-        // for debugging
-        //console.log(next.type);
+        console.log(next);
         let detail: CompletionInfo;
 
-        if (next.type) {
-            detail = details[next.type as keyof typeof details];
-            //if details exist for "next.type" create 
-            // a completion item with the details
-            if (detail) {
-                acceptor(context, {
-                    label: detail.label,
-                    detail: detail.description,
-                    sortText: "1",
-                    kind: 1,  //kind in detail noch hinzufügen!!!
-                    insertTextFormat: 2,
-                    insertText: detail.insert
-                })
-                //if no details were found use fallback instead
-            } else if (ast.isKeyword(next.feature)) {
-                return this.completionForKeyword(context, next.feature, acceptor);
-            }
+
+        detail = details[next.type as keyof typeof details];
+        //if details exist for "next.type" create 
+        // a completion item with the details
+        if (detail) {
+            acceptor(context, {
+                label: detail.label,
+                detail: detail.description,
+                sortText: "1",
+                kind: 1,  //kind in detail noch hinzufügen!!!
+                insertTextFormat: 2,
+                insertText: detail.insert
+            })
+            //if no details were found use fallback instead
+        } else if (ast.isKeyword(next.feature) && next.type!= "KEYWORDS" ) {
+            return this.completionForKeyword(context, next.feature, acceptor);
         }
     }
 
