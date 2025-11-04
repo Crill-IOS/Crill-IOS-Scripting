@@ -9,8 +9,8 @@
         "description": "subnetmask...",
         "insert": "255.255.255.0"
     },
-    "Hostname_Input":{
-        "label":"hostname",
+    "HOSTNAME_INPUT":{
+        "label":"<hostname>",
         "description": "This Systems Network Name",
         "insert": "R1"
     },
@@ -53,5 +53,11 @@
         "label":"<CR>",
         "description": "possible end of a command",
         "insert": "\n"
+    },
+     "BANNER_MESSAGE":{
+        "label":"<message>",
+        "description": "The Banner message",
+        "insert": "#Authorized acces only!#"
     }
+
 }
