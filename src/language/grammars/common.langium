@@ -50,6 +50,6 @@ Star returns string:
 hidden terminal WS: /[ \t]+/;
 terminal NL: '\r'? '\n';
 terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
-terminal INPUT_lexer: /[A-Za-z0-9\-_.]*[A-Za-z][A-Za-z0-9\-_.]*/;
+terminal INPUT_lexer: /[A-Za-z0-9\-_.,]*[A-Za-z][A-Za-z0-9\-_.,]*/;
 terminal INT: /[0-9]+/;
 
