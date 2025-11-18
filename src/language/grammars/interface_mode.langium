@@ -28,7 +28,7 @@ Shutdown_cmd:
     'shutdown' CR;
 
 No_cmd_interface:
-    'no' option=No_cmd_interface_option CR;
+    'no' option=No_cmd_interface_option;
 
 No_cmd_interface_option:
     'shutdown' CR;
