@@ -33,7 +33,7 @@
 
       packages = forEachSystem (pkgs: {
         crillios-ls = pkgs.callPackage ./nix/package.nix { };
-        default = self.packages.${pkgs.system}.crillios-ls;
+        default = self.packages.${pkgs.stdenv.hostPlatform.system}.crillios-ls;
       });
 
       devShells = forEachSystem (
