@@ -46,7 +46,7 @@ Username_cmd_option:
     PrivilegeOption | PasswordOption | SecretOption | AlgorithmTypeOption;
 
 PrivilegeOption:
-    'privilege' value=INT;
+    'privilege' value=PRIVILEGE_INPUT;
 
 PasswordOption:
     'password' value=USERNAME_PASSWORD_INPUT;
