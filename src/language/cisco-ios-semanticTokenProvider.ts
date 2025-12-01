@@ -11,7 +11,7 @@ const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: str
     COMMENT: { type: 'comment' },
 
     // Grundkonfig
-    Hostname_Input: { type: 'string' },
+    HOSTNAME_INPUT: { type: 'string' },
     USERNAME_INPUT: { type: 'string'},
     BANNER_MESSAGE: { type: 'string' },
     DOMAINNAME_INPUT: { type: 'string' },
