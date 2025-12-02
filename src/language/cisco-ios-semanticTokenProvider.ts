@@ -22,6 +22,8 @@ const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: str
     USERNAME_PASSWORD_INPUT: { type: 'string'},
     IP: { type: 'string'},
     SUBNETMASK: { type: 'string'},
+    WILDCARDMASK: { type: 'string' },
+    OSPF_AREA_NUMBER: { type: 'string'},
     
     // zukünftig
     OSPF_PROCESS_NUMBER: { type: 'number'},
