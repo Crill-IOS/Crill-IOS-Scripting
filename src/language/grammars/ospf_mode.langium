@@ -35,7 +35,7 @@ Ospf_router_id_cmd:
 //-------Network--------
 
 Ospf_network_cmd:
-    'network' ip=IP mask=WILDCARDMASK 'area' area=INT CR
+    'network' ip=IP mask=WILDCARDMASK 'area' area=OSPF_AREA_NUMBER CR
     ;
 
 //--------Passive-interface--------
