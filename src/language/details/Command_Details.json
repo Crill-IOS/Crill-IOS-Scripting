@@ -9,6 +9,11 @@
         "description": "subnetmask...",
         "insert": "255.255.255.0"
     },
+    "WILDCARDMASK": {
+        "label": "Wildcardmask",
+        "description": "wildcardmask...",
+        "insert": "0.0.0.255"
+    },
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
         "description": "This Systems Network Name",
@@ -58,6 +63,11 @@
         "label":"<message>",
         "description": "The Banner message",
         "insert": "#Authorized acces only!#"
+    },
+     "OSPF_AREA_NUMBER":{
+        "label":"OSPF_AREA_NUMBER",
+        "description": "Area number",
+        "insert": "10"
     }
 
 }
