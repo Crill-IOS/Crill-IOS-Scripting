@@ -1,13 +1,15 @@
 {
     "name": "crill-ios-scripting",
     "description": "Cisco IOS scripting the easy way",
+    "icon":"./logo_small.png",    
     "version": "0.0.1",
     "files": [
         "out/extension/main.cjs",
         "out/language/main.cjs",
         "src/syntaxes/cisco-ios.tmLanguage.json",
         "package.json",
-        "LICENSE"
+        "LICENSE",
+        "logo_small.png"
     ],
     "type": "module",
     "publisher": "Crillios",
