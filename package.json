@@ -1,8 +1,8 @@
 {
     "name": "crill-ios-scripting",
     "description": "Cisco IOS scripting the easy way",
-    "icon":"./logo_small.png",    
-    "version": "0.0.1",
+    "icon": "./logo_small.png",
+    "version": "0.0.2",
     "files": [
         "out/extension/main.cjs",
         "out/language/main.cjs",
@@ -12,7 +12,7 @@
         "logo_small.png"
     ],
     "type": "module",
-    "publisher": "Crillios",
+    "publisher": "Crill",
     "repository": {
         "type": "git",
         "url": "https://github.com/Crill-IOS/Crill-IOS-Scripting"
@@ -36,41 +36,46 @@
         "build:worker": "esbuild --minify ./out/language/main-browser.js --bundle --format=iife --outfile=./public/crillios-server-worker.js"
     },
     "dependencies": {
-        "@codingame/monaco-vscode-editor-service-override": "~3.2.3",
-        "@codingame/monaco-vscode-keybindings-service-override": "~3.2.3",
-        "chalk": "~5.6.2",
-        "commander": "~11.0.0",
+        "@codingame/monaco-vscode-editor-service-override": "3.2.3",
+        "@codingame/monaco-vscode-keybindings-service-override": "3.2.3",
+        "chalk": "5.6.2",
+        "commander": "11.0.0",
         "ipaddr.js": "^2.2.0",
-        "langium": "~3.5.0",
-        "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~3.2.3",
+        "langium": "3.5.0",
+        "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@3.2.3",
         "monaco-editor-wrapper": "^4.0.2",
-        "monaco-languageclient": "~8.1.1",
-        "vscode-languageclient": "~9.0.1",
-        "vscode-languageserver": "~9.0.1"
+        "monaco-languageclient": "8.3.1",
+        "vscode-languageclient": "9.0.1",
+        "vscode-languageserver": "9.0.1"
     },
     "devDependencies": {
-        "@codingame/esbuild-import-meta-url-plugin": "~1.0.2",
+        "@codingame/esbuild-import-meta-url-plugin": "1.0.2",
         "@types/node": "^24.3.1",
-        "@types/vscode": "~1.67.0",
-        "@typescript-eslint/eslint-plugin": "~7.3.1",
-        "@typescript-eslint/parser": "~7.3.1",
-        "concurrently": "~8.2.1",
+        "@types/vscode": "1.67.0",
+        "@typescript-eslint/eslint-plugin": "7.3.1",
+        "@typescript-eslint/parser": "7.3.1",
+        "concurrently": "8.2.1",
         "esbuild": "^0.25.9",
-        "eslint": "~8.57.0",
-        "http-server": "~14.1.1",
-        "langium-cli": "~3.5.0",
+        "eslint": "8.57.0",
+        "http-server": "14.1.1",
+        "langium-cli": "3.5.0",
         "pkg": "^5.8.1",
         "rimraf": "^6.0.1",
-        "typescript": "~5.1.6",
+        "typescript": "5.1.6",
         "vite": "^7.1.5",
         "vitest": "^3.2.4",
-        "vscode": "npm:@codingame/monaco-vscode-api@~3.2.3"
+        "vscode": "npm:@codingame/monaco-vscode-api@3.2.3"
+    },
+    "overrides": {
+        "vscode": "npm:@codingame/monaco-vscode-api@3.2.3",
+        "@codingame/monaco-vscode-editor-api": "3.2.3",
+        "@codingame/monaco-vscode-keybindings-api": "3.2.3"
     },
     "volta": {
-        "node": "18.19.1",
+        "node": "20.19.6",
         "npm": "10.2.4"
     },
-    "displayName": "Crill-IOS-Scripting",
+    "displayName": "Crill-IOS",
     "engines": {
         "vscode": "^1.67.0",
         "node": ">=18.0.0"
