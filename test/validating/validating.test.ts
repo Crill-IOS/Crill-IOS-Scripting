@@ -1,66 +1,82 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { EmptyFileSystem, type LangiumDocument } from "langium";
-import { expandToString as s } from "langium/generate";
 import { parseHelper } from "langium/test";
 import type { Diagnostic } from "vscode-languageserver-types";
 import { createCiscoIosServices } from "../../src/language/cisco-ios-module.js";
-import { Model, isModel } from "../../src/language/generated/ast.js";
+import { Script, isScript } from "../../src/language/generated/ast.js";
 
 let services: ReturnType<typeof createCiscoIosServices>;
-let parse:    ReturnType<typeof parseHelper<Model>>;
-let document: LangiumDocument<Model> | undefined;
+let parse:    ReturnType<typeof parseHelper<Script>>;
+let document: LangiumDocument<Script> | undefined;
 
 beforeAll(async () => {
     services = createCiscoIosServices(EmptyFileSystem);
-    const doParse = parseHelper<Model>(services.CiscoIos);
+    const doParse = parseHelper<Script>(services.CiscoIos);
     parse = (input: string) => doParse(input, { validation: true });
-
-    // activate the following if your linking test requires elements from a built-in library, for example
-    // await services.shared.workspace.WorkspaceManager.initializeWorkspace([]);
 });
 
-describe('Validating', () => {
-  
-    test('check no errors', async () => {
+describe('Validating tests', () => {
+    test('validate simple configure terminal mode without no ip domain-lookup', async () => {
         document = await parse(`
-            person Langium
+            configure terminal
+            exit
+            
         `);
 
         expect(
-            // here we first check for validity of the parsed document object by means of the reusable function
-            //  'checkDocumentValid()' to sort out (critical) typos first,
-            // and then evaluate the diagnostics by converting them into human readable strings;
-            // note that 'toHaveLength()' works for arrays and strings alike ;-)
-            checkDocumentValid(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
+            checkParseResult(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
+        ).toContain(
+            "Script does not contain the <no ip domain-lookup> command."
+        );
+    });
+
+    test('validate simple configure terminal mode', async () => {
+        document = await parse(`
+            configure terminal
+            no ip domain-lookup
+            exit
+
+        `);
+
+        expect(
+            checkParseResult(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
         ).toHaveLength(0);
     });
 
     test('check capital letter validation', async () => {
         document = await parse(`
-            person langium
+            configure terminal
+            interface GigabitEthernet 0/0
+            ip address 192.168.1.256 255.255.255.0
+            no shutdown
+            exit
+
         `);
 
         expect(
-            checkDocumentValid(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
-        ).toEqual(
-            // 'expect.stringContaining()' makes our test robust against future additions of further validation rules
-            expect.stringContaining(s`
-                [1:19..1:26]: Person name should start with a capital.
-            `)
+            checkParseResult(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
+        ).toContain(
+            "This is not a valid IP-Address!"
         );
     });
 });
 
-function checkDocumentValid(document: LangiumDocument): string | undefined {
-    return document.parseResult.parserErrors.length && s`
-        Parser errors:
-          ${document.parseResult.parserErrors.map(e => e.message).join('\n  ')}
-    `
-        || document.parseResult.value === undefined && `ParseResult is 'undefined'.`
-        || !isModel(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a '${Model}'.`
-        || undefined;
+function checkParseResult(document: LangiumDocument): string | undefined {
+    if (document.parseResult.parserErrors.length > 0) {
+        return 'Parser errors: ' + document.parseResult.parserErrors.map(e => e.message).join('\n  ')
+    }
+
+    if (document.parseResult.value === undefined) {
+        return 'ParseResult is undefined'
+    }
+
+    if (!isScript(document.parseResult.value)) {
+        return 'Root AST object is a ' + document.parseResult.value.$type + ', expected a ' + Script
+    }
+
+    return undefined;   // all checks passed!
 }
 
 function diagnosticToString(d: Diagnostic) {
-    return `[${d.range.start.line}:${d.range.start.character}..${d.range.end.line}:${d.range.end.character}]: ${d.message}`;
+    return d.message;
 }
