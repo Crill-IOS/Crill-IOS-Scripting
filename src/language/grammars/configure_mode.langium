@@ -14,6 +14,7 @@ import 'interface_gigabitethernet_mode'
 import 'interface_vlan_mode'
 import 'ospf_mode'
 import 'rip_mode'
+import 'bgp_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
@@ -33,6 +34,7 @@ Configure_cmds:
         | Line_cmd
         | Router_cmd
         | Exit_configure
+        | No_cmd
     )
     ;
 
@@ -44,7 +46,7 @@ Username_cmd_option:
     PrivilegeOption | PasswordOption | SecretOption | AlgorithmTypeOption;
 
 PrivilegeOption:
-    'privilege' value=INT;
+    'privilege' value=PRIVILEGE_INPUT;
 
 PasswordOption:
     'password' value=USERNAME_PASSWORD_INPUT;
@@ -125,7 +127,7 @@ SSHOptions:
 
 //------HOSTNAME-------
 Hostname_cmd:
-    'hostname' Hostname_Input CR
+    'hostname' value=HOSTNAME_INPUT CR
     ;
 
 //------CRYPTO-------
@@ -200,11 +202,14 @@ Banner_type returns string:
     ;
 
 No_ip_cmd:
-    'ip' option=IP_no_option
+    'ip' option= No_ip_cmd_options
     ;
 
-IP_no_option returns string:
-      'domain-lookup'
+No_ip_cmd_options:
+        No_ip_cmd_option_domain_lookup
+    ;
+No_ip_cmd_option_domain_lookup:
+    type='domain-lookup'
     ;
 
 //------OSPF MODE-------
@@ -215,6 +220,7 @@ Router_cmd:
 Router_cmd_option:
     Ospf_cmd
     | Rip_cmd
+    | Bgp_cmd
     ;
 
 

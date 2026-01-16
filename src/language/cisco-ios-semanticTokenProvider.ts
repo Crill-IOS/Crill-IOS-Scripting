@@ -1,44 +1,72 @@
 import { SemanticTokenAcceptor, AbstractSemanticTokenProvider } from 'langium/lsp';
 import { AstNode } from 'langium';
+import { isCOMMON, isInterface_types } from './generated/ast.js';
 
+/**
+ * Contains highlighting information AstNodes
+ */
 const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: string }> = {
-    Comment: { type: 'comment' },
+    // Allgemein
+    COMMON: { type: 'comment'},
+    COMMENT: { type: 'comment' },
 
-    Hostname_Input: { type: 'variable', modifier: 'declaration' },
-    USERNAME_INPUT: { type: 'string', modifier: 'declaration' },
+    // Grundkonfig
+    HOSTNAME_INPUT: { type: 'string' },
+    USERNAME_INPUT: { type: 'string'},
     BANNER_MESSAGE: { type: 'string' },
-    DOMAINNAME_INPUT: { type: 'variable' },
-    INPUT: { type: 'variable' },
-
-    INT: { type: 'number' },
-    VERSION_INPUT: { type: 'number' },
-    MODULUS_INPUT: { type: 'number' },
-
-    IP: { type: 'variable', modifier: 'readonly' },
-    SUBNETMASK: { type: 'variable', modifier: 'readonly' },
-    Interface_number: { type: 'number'},
-
-    Username_cmd_option: { type: 'variable', modifier: 'declaration' },
+    DOMAINNAME_INPUT: { type: 'string' },
+    Interface_number: { type: 'string'},
+    VERSION_INPUT: { type: 'string'},
+    MODULUS_INPUT: { type: 'string'},
+    PRIVILEGE_INPUT: { type: 'string'},
+    USERNAME_PASSWORD_INPUT: { type: 'string'},
+    IP: { type: 'string'},
+    SUBNETMASK: { type: 'string'},
+    WILDCARDMASK: { type: 'string' },
+    OSPF_AREA_NUMBER: { type: 'string'},
+    
+    // zukünftig
+    OSPF_PROCESS_NUMBER: { type: 'number'},
 };
 
 export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider {
+    /**
+     * A basic function from langium that highlights an element based on the given acceptor
+     * @param node current AstNode
+     * @param acceptor 
+     * @returns 
+     */
     protected override highlightElement(node: AstNode, acceptor: SemanticTokenAcceptor): void {
-        const mapping = TOKEN_MAP[node.$type];
-        if (!mapping) return;
-
-        if (mapping.type === 'keyword') {
-            const keywordText = mapping.keyword ?? node.$cstNode?.container?.content?.[0]?.text;
-            if (keywordText) {
-                acceptor({ node, keyword: keywordText, type: 'keyword' });
-            }
-        } else if (mapping.type === 'function') {
-            const firstToken = node.$cstNode?.container?.content?.[0];
-            if (firstToken) {
-                acceptor({ cst: firstToken, type: 'function', modifier: mapping.modifier });
-            }
-        } else if (node.$cstNode) {
-            acceptor({ cst: node.$cstNode, type: mapping.type, modifier: mapping.modifier });
+        // Highlights interface types like 'gigabitethernet'
+        if (isInterface_types(node)) {
+            acceptor({
+                node,
+                property: 'type',
+                type: 'variable',
+            })
+            return
         }
-    }
+        
+        // Highlights comments written after commands
+        if (isCOMMON(node)) {
+            if (node.$type == "COMMENTLINE" && node.$cstNode) {
+                acceptor({
+                    cst: node.$cstNode,
+                    type: 'comment'
+                })
+            }
+        }
 
+        // Gets highlighting-information from map for current AstNode
+        const mapping = TOKEN_MAP[node.$type];
+        
+        // If no highlighting-information exists then skip current AstNode
+        if (!mapping) return;
+        
+        // If highlighting-information exists and a CstNode exists then highlight the CstNode
+        // CstNode is used instead of AstNode, because the CstNode contains text information like start- and endposition
+        if (node.$cstNode) {
+            acceptor({ cst: node.$cstNode, type: mapping.type})
+        } 
+    }
 }

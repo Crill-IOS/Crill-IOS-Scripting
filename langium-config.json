@@ -1,6 +1,7 @@
 {
     "projectName": "CiscoIos",
     "languages": [{
+        "caseInsensitive": true,
         "id": "cisco-ios",
         "grammar": "src/language/grammars/cisco-ios.langium",
         "fileExtensions": [".ios"],

@@ -6,27 +6,12 @@
   ],
   "patterns": [
     {
-      "include": "#comments"
+      "name": "keyword",
+      "match": "\\b(configure|interface|line|exit|router)\\b"
     },
     {
-      "name": "keyword.control.crillios",
-      "match": "\\b(address|hostname|ip|show|username|ping)\\b"
-    },
-    {
-      "name": "constant.numeric.ip.crillios",
-      "match": "\\b([0-9]{1,3}(\\.[0-9]{1,3}){3})(/[0-9]{1,2})?\\b"
-    },
-    {
-      "name": "entity.name.function.crillios",
-      "match": "\\b(gigabitethernet|vlan)\\s*[0-9/]+\\b"
-    },
-    {
-      "name": "comment.line.hashtag.crillios",
-      "match": "#.*$"
-    },
-    {
-      "name": "comment.line.exclamation.crillios",
-      "match": "!.*$"
+      "name": "variable",
+      "match": "\\b(hostname|username|banner|ip|crypto|exec-timeout|login|logging|no)\\b"
     }
   ],
   "repository": {}

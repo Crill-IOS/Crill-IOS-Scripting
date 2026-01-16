@@ -9,15 +9,15 @@
         "description": "subnetmask...",
         "insert": "255.255.255.0"
     },
-    "Hostname_Input":{
-        "label":"hostname",
+    "WILDCARDMASK": {
+        "label": "Wildcardmask",
+        "description": "wildcardmask...",
+        "insert": "0.0.0.255"
+    },
+    "HOSTNAME_INPUT":{
+        "label":"<hostname>",
         "description": "This Systems Network Name",
         "insert": "R1"
-    },
-    "CR": {
-        "label":"<CR>",
-        "description": "End of command",
-        "insert": "\n"
     },
     "Ip_cmd_option_address": {
         "label":"address",
@@ -42,8 +42,36 @@
     "Interface_number": {
         "label":"x/x",
         "description": "number of the interface to be entered",
-        "insert": "${1:0}/${2:0}\nno shutdown\n$0"
+        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0"
+    },
+    "No_ip_cmd_option_domain_lookup":{
+        "label":"domain-lookup",
+        "description": "stops ip domain lookup",
+        "insert": "domain-lookup"
+    },
+    "Description_cmd":{
+        "label":"description",
+        "description": "describes the interface",
+        "insert": "description"
+    },
+    "COMMENT":{
+        "label":"<CR>",
+        "description": "possible end of a command",
+        "insert": "\n"
+    },
+     "BANNER_MESSAGE":{
+        "label":"<message>",
+        "description": "The Banner message",
+        "insert": "#Authorized acces only!#"
+    },
+     "OSPF_AREA_NUMBER":{
+        "label":"OSPF Area Number",
+        "description": "Area number",
+        "insert": "10"
+    },
+     "OSPF_PROCESS_NUMBER":{
+        "label":"OSPF_PROCESS_NUMBER",
+        "description": "Area number",
+        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0"
     }
-
-    
 }

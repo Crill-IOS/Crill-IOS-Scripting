@@ -4,7 +4,7 @@ import 'interface_mode'
 
 // ---- GigabitEthernet-cmds ----
 Interface_gigabitethernet_cmds:
-      NL
+      COMMON
     | IP_cmd_interface
     | Shutdown_cmd
     | No_cmd_interface
@@ -15,7 +15,7 @@ Interface_gigabitethernet_cmds:
     ;
 
 Duplex_cmd:
-    'duplex' option=Duplex_option NL;
+    'duplex' option=Duplex_option CR;
 
 Duplex_option:
       option=Duplex_auto
@@ -34,4 +34,4 @@ Duplex_half returns string:
 
 
 Speed_cmd:
-    'speed' value=INT NL;
+    'speed' value=INT CR;

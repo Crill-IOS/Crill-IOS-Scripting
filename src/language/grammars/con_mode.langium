@@ -4,7 +4,7 @@ import 'line_mode'
 
 // ---- Console-Subcommand-Aggregation ----
 Line_console_cmds:
-      NL
+      COMMON
     | Login_cmd
     | Logging_cmd
     | ExecTimeout_cmd
