@@ -2,6 +2,7 @@
 
 import 'common'
 import 'configure_mode'
+import 'acl_mode'
 
 // Exit zurück in Configure-Mode
 Exit_interface infers Exit:
@@ -16,6 +17,8 @@ IP_cmd_interface:
 Ip_cmd_options:
       Ip_cmd_option_address
     | Ip_cmd_option_ospf
+    | Ip_cmd_option_nat
+    | Ip_cmd_option_access_group
     ;
 
 Ip_cmd_option_address:
@@ -23,6 +26,42 @@ Ip_cmd_option_address:
 
 Ip_cmd_option_ospf:
     'ospf' option=('cost' | 'priority') CR;
+
+//------IP NAT INSIDE/OUTSIDE-------
+Ip_cmd_option_nat:
+    'nat' direction=Nat_direction CR
+    ;
+
+Nat_direction:
+      Nat_inside
+    | Nat_outside
+    ;
+
+Nat_inside:
+    direction='inside'
+    ;
+
+Nat_outside:
+    direction='outside'
+    ;
+
+//------IP ACCESS-GROUP-------
+Ip_cmd_option_access_group:
+    'access-group' name=ACL_NAME direction=Access_group_direction CR
+    ;
+
+Access_group_direction:
+      Access_group_in
+    | Access_group_out
+    ;
+
+Access_group_in:
+    direction='in'
+    ;
+
+Access_group_out:
+    direction='out'
+    ;
 
 Shutdown_cmd:
     'shutdown' CR;

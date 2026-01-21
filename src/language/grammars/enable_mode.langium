@@ -24,9 +24,16 @@ Show_cmd:
     ;
 
 Show_cmd_options:
-    option=
-        'run' CR
-        | 'interface' CR
+      Show_run_option
+    | Show_interface_option
+    ;
+
+Show_run_option:
+    option='run' CR
+    ;
+
+Show_interface_option:
+    option='interface' CR
     ;
 
 Configure_cmd: 
