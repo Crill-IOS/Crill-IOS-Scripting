@@ -14,6 +14,7 @@ buildNpmPackage {
 
   npmDeps = importNpmLock { npmRoot = ./..; };
   inherit (importNpmLock) npmConfigHook;
+  dontNpmPrune = true;
 
   preBuild = ''
     npm run langium:generate

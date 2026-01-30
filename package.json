@@ -67,9 +67,13 @@
         "vscode": "npm:@codingame/monaco-vscode-api@3.2.3"
     },
     "overrides": {
-        "vscode": "npm:@codingame/monaco-vscode-api@3.2.3",
-        "@codingame/monaco-vscode-editor-api": "3.2.3",
-        "@codingame/monaco-vscode-keybindings-api": "3.2.3"
+        "monaco-editor-wrapper": {
+            "vscode": "$vscode",
+            "@codingame/monaco-vscode-api": "$vscode",
+            "@codingame/monaco-vscode-editor-api": "$monaco-editor",
+            "@codingame/monaco-vscode-editor-service-override": "$@codingame/monaco-vscode-editor-service-override",
+            "@codingame/monaco-vscode-keybindings-service-override": "$@codingame/monaco-vscode-keybindings-service-override"
+        }
     },
     "volta": {
         "node": "20.19.6",
