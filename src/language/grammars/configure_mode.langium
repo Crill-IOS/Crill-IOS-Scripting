@@ -15,6 +15,7 @@ import 'interface_vlan_mode'
 import 'ospf_mode'
 import 'rip_mode'
 import 'bgp_mode'
+import 'acl_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure infers Exit:
@@ -33,6 +34,8 @@ Configure_cmds:
         | Crypto_cmd
         | Line_cmd
         | Router_cmd
+        | Ip_access_list_cmd
+        | Ip_nat_cmd
         | Exit_configure
         | No_cmd
     )
@@ -267,5 +270,69 @@ Interface_number:
     ;
 
 Sub_Interface_number :
+    sub = '.'INT
+    ;
+
+//------IP ACCESS-LIST-------
+Ip_access_list_cmd:
+    'ip' option=Ip_access_list_cmd_option
+    ;
+
+Ip_access_list_cmd_option:
+    'access-list' option=Ip_access_list_option
+    ;
+
+Ip_access_list_option:
+      Acl_standard_cmd
+    | Acl_extended_cmd
+    ;
+
+//------IP NAT INSIDE SOURCE LIST-------
+Ip_nat_cmd:
+    'ip' option=Ip_nat_cmd_option
+    ;
+
+Ip_nat_cmd_option:
+    'nat' option=Ip_nat_inside_cmd
+    ;
+
+Ip_nat_inside_cmd:
+    'inside' option=Ip_nat_inside_source_cmd
+    ;
+
+Ip_nat_inside_source_cmd:
+    'source' option=Ip_nat_inside_source_list_cmd
+    ;
+
+Ip_nat_inside_source_list_cmd:
+    'list' listName=ACL_NAME option=Ip_nat_inside_source_list_interface_cmd
+    ;
+
+Ip_nat_inside_source_list_interface_cmd:
+    'interface' interface=Nat_interface_types option=Ip_nat_overload_cmd
+    ;
+
+Ip_nat_overload_cmd:
+    'overload' CR
+    ;
+
+Nat_interface_types:
+      Nat_interface_gigabitethernet
+    | Nat_interface_fastethernet
+    ;
+
+Nat_interface_gigabitethernet:
+    'gigabitethernet' types=Nat_interface_number
+    ;
+
+Nat_interface_fastethernet:
+    'fastethernet' types=Nat_interface_number
+    ;
+
+Nat_interface_number:
+     number= INT '/' INT Nat_Sub_Interface_number?
+    ;
+
+Nat_Sub_Interface_number :
     sub = '.'INT
     ;
