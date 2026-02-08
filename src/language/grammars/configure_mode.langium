@@ -7,7 +7,7 @@ import 'enable_mode'
 //child Modes
 import 'interface_mode'
 import 'line_mode'
-import 'con_mode'
+import 'console_mode'
 import 'vty_mode'
 import 'interface_fastethernet_mode'
 import 'interface_gigabitethernet_mode'
@@ -18,27 +18,25 @@ import 'bgp_mode'
 import 'acl_mode'
 
 //------EXIT: CONFIGURE → ENABLE-------
-Exit_configure infers Exit:
-    Exit lines+=Enable_cmds+
+Exit_configure:
+    command='exit' CR continuation+=Enable_cmds
     ;
 
 //------CONFIGURE MODE: ENTRY-------
 Configure_cmds:
-    (
+    lines+=(
         COMMON
         | Hostname_cmd
         | Interface_cmd
         | Username_cmd
         | Banner_cmd
+        | Ip_nat_cmd
         | IP_cmd
         | Crypto_cmd
         | Line_cmd
         | Router_cmd
-        | Ip_access_list_cmd
-        | Ip_nat_cmd
-        | Exit_configure
         | No_cmd
-    )
+    )* Exit_configure
     ;
 
 //------USERNAME-------
@@ -114,6 +112,7 @@ IP_cmd:
 IP_cmd_option:
     Domainname_cmd
     | SSH_cmd
+    | Ip_access_list_cmd_option
     ;
 
 Domainname_cmd:
@@ -221,9 +220,9 @@ Router_cmd:
     ;
 
 Router_cmd_option:
-    Ospf_cmd
-    | Rip_cmd
-    | Bgp_cmd
+    'ospf' process=OSPF_PROCESS_NUMBER CR Ospf_cmds
+    | 'rip' CR Rip_cmds
+    | 'bgp' asn=INT CR Bgp_cmds
     ;
 
 
@@ -238,11 +237,11 @@ Line_types:
     ;
 
 Line_type_console:
-    type='console' number=INT CR lines+=Line_console_cmds+
+    type='console' number=INT CR Line_console_cmds
     ;
 
 Line_type_vty:
-    type='vty' start=INT end=INT CR lines+=Line_vty_cmds+
+    type='vty' start=INT end=INT CR Line_vty_cmds
     ;
 
 //------INTERFACE MODE-------
@@ -256,27 +255,13 @@ Interface_types:
     ;
 
 Interface_type_gigabitethernet:
-    type='gigabitethernet' number=Interface_number CR lines+=Interface_gigabitethernet_cmds+;
+    type='gigabitethernet' number=INTERFACE_NUMBER_INPUT CR Interface_gigabitethernet_cmds;
 
 Interface_type_fastethernet:
-    type='fastethernet' number=Interface_number CR lines+=Interface_fastethernet_cmds+;
+    type='fastethernet' number=INTERFACE_NUMBER_INPUT CR Interface_fastethernet_cmds;
 
 Interface_type_vlan:
-    type='vlan' number=INT CR lines+=Interface_vlan_cmds+;
-
-
-Interface_number:
-     number= INT '/' INT Sub_Interface_number?
-    ;
-
-Sub_Interface_number :
-    sub = '.'INT
-    ;
-
-//------IP ACCESS-LIST-------
-Ip_access_list_cmd:
-    'ip' option=Ip_access_list_cmd_option
-    ;
+    type='vlan' number=INT CR Interface_vlan_cmds;
 
 Ip_access_list_cmd_option:
     'access-list' option=Ip_access_list_option
