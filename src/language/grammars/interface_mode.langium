@@ -19,7 +19,18 @@ Ip_cmd_option_address:
     'address' ip=IP mask=SUBNETMASK ('secondary')? CR;
 
 Ip_cmd_option_ospf:
-    'ospf' option=('cost' | 'priority') CR;
+    'ospf' option=Ip_cmd_option_ospf_options CR;
+
+Ip_cmd_option_ospf_options:
+    Ip_cmd_option_ospf_option_cost
+    | Ip_cmd_option_ospf_option_priority
+    ;
+
+Ip_cmd_option_ospf_option_cost:
+    'cost' cost=OSPF_COST_NUMBER;
+
+Ip_cmd_option_ospf_option_priority:
+    'priority' priority=OSPF_PRIORITY_NUMBER;
 
 //------IP NAT INSIDE/OUTSIDE-------
 Ip_cmd_option_nat:
