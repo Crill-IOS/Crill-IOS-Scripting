@@ -3,17 +3,14 @@ import 'common'
 //child Modes
 import 'configure_mode'
 
-
 //Start--------------------------------
 Enable_cmds :
-    (
+    lines+=(
         COMMON
         |Configure_cmd
         |Show_cmd
         |Ping_cmd
-    );
-
-
+    )+;
 
 Ping_cmd:
     'ping' (ip=IP) CR
@@ -41,6 +38,6 @@ Configure_cmd:
     ;
 
 Configure_cmd_options:
-        'terminal' CR lines+=Configure_cmds+ 
+        'terminal' CR Configure_cmds
         |'memory' CR
     ;
