@@ -12,6 +12,7 @@ import {
     NAT_INTERFACE_NUMBER_INPUT,
     OSPF_COST_NUMBER,
     OSPF_PRIORITY_NUMBER,
+    OSPF_PASSIVE_INTERFACE_NUMBER,
     isLine_vty_cmds,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
@@ -39,6 +40,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         NAT_INTERFACE_NUMBER_INPUT: validator.checkNAT_INTERFACE_NUMBER,
         OSPF_COST_NUMBER: validator.checkOSPF_COST_NUMBER,
         OSPF_PRIORITY_NUMBER: validator.checkOSPF_PRIORITY_NUMBER,
+        OSPF_PASSIVE_INTERFACE_NUMBER: validator.checkOSPF_PASSIVE_INTERFACE_NUMBER,
     };
     registry.register(checks, validator);
 }
@@ -224,6 +226,20 @@ export class CiscoIosValidator {
         const num = parseInt(node.value, 10);
         if (Number.isNaN(num) || num < 0 || num > 255) {
             accept("error", "OSPF priority must be between 0 and 255!", { node, property: 'value' });
+        }
+    }
+
+    /**
+     * @description
+     * checks if OSPF passive-interface number is valid (X/Y or X/Y.Vlan)
+     *
+     * @param node OSPF_PASSIVE_INTERFACE_NUMBER from passive-interface gigabitethernet|fastethernet
+     * @param accept the acceptor
+     */
+    checkOSPF_PASSIVE_INTERFACE_NUMBER(node: OSPF_PASSIVE_INTERFACE_NUMBER, accept: ValidationAcceptor): void {
+        const valid = /^[0-9]+\/[0-9]+(\.[0-9]+)?$/.test(node.value);
+        if (!valid) {
+            accept("error", "This is not a valid OSPF passive-interface number (use X/Y or X/Y.Vlan)!", { node, property: 'value' });
         }
     }
 

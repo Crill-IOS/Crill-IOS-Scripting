@@ -114,6 +114,12 @@
         "insert": "1",
         "kind": 12
     },
+     "OSPF_PASSIVE_INTERFACE_NUMBER":{
+        "label":"OSPF Passive Interface Number",
+        "description": "Passive-Interface X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
+    },
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
