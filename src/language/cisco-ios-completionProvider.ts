@@ -4,6 +4,7 @@ import { CompletionParams, CancellationToken, CompletionList, CompletionItem } f
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
 import details from "./details/Command_Details.json";
+import { CompletionItemKind } from "vscode-languageserver-types";
 
 
 /**
@@ -14,6 +15,7 @@ interface CompletionInfo {
     label: string;
     description: string;
     insert: string;
+    kind: number;
 }
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
@@ -85,9 +87,9 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         if (detail) {
             acceptor(context, {
                 label: detail.label,
+                kind: detail.kind as CompletionItemKind,
                 detail: detail.description,
                 sortText: "1",
-                kind: 1,  //kind in detail noch hinzufügen!!!
                 insertTextFormat: 2,
                 insertText: detail.insert
             })
@@ -116,7 +118,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         acceptor(context, {
             label: keyword.value,
             kind: this.getKeywordCompletionItemKind(keyword),
-            detail: 'From OLD logic',
+            detail: '',
             sortText: '1',
         });
     }

@@ -1,77 +1,105 @@
 {
+    "Ping_cmd": {
+        "label": "ping",
+        "description": "Sendet ICMP Echo-Anfragen an eine Ziel-IP-Adresse um die Erreichbarkeit zu testen.",
+        "insert": "ping",
+        "kind": 10
+    },
     "IP": {
-        "label":"IP-Address lol",
-        "description": "ip....",
-        "insert": "1.2.3.4"
+        "label":"IP-Address",
+        "description": "A.B.C.D",
+        "insert": "1.2.3.4",
+        "kind": 12
     },
     "SUBNETMASK": {
         "label": "Subnetmask",
-        "description": "subnetmask...",
-        "insert": "255.255.255.0"
+        "description": "A.B.C.D",
+        "insert": "255.255.255.0",
+        "kind": 12
     },
     "WILDCARDMASK": {
         "label": "Wildcardmask",
-        "description": "wildcardmask...",
-        "insert": "0.0.0.255"
+        "description": "A.B.C.D",
+        "insert": "0.0.0.255",
+        "kind": 12
     },
+    
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
-        "description": "This Systems Network Name",
-        "insert": "R1"
+        "description": "Set the hostname for this device",
+        "insert": "R1",
+        "kind": 1
     },
     "Ip_cmd_option_address": {
         "label":"address",
-        "description": "set an address to this interface",
-        "insert": "address"
+        "description": "Specify an address for this interface",
+        "insert": "address",
+        "kind": 10
     },
     "DOMAINNAME_INPUT": {
-        "label":"<Domain Name>",
-        "description": "The Domain Name of the Device",
-        "insert": "4CN.at"
+        "label":"<domain-name>",
+        "description": "Set the domain-name for this device",
+        "insert": "htl3r.com",
+        "kind": 1
     },
     "VERSION_INPUT": {
         "label":"2",
         "description": "Protocol to be supported",
-        "insert": "2"
+        "insert": "2",
+        "kind": 12
     },
-    "Sub_Interface_number": {
-        "label":".xx",
-        "description": "",
-        "insert": ".10"
+    "INTERFACE_NUMBER_INPUT": {
+        "label": "Interface Number",
+        "description": "X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0",
+        "kind": 15
     },
-    "Interface_number": {
-        "label":"x/x",
-        "description": "number of the interface to be entered",
-        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0"
+    "UPDATE_SOURCE_INTERFACE_NUMBER_INPUT": {
+        "label": "Interface Number (slot/port)",
+        "description": "Physical interface for BGP update-source (slot/port only, no subinterface).",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
     },
     "No_ip_cmd_option_domain_lookup":{
         "label":"domain-lookup",
         "description": "stops ip domain lookup",
-        "insert": "domain-lookup"
+        "insert": "domain-lookup",
+        "kind": 10
     },
     "Description_cmd":{
         "label":"description",
         "description": "describes the interface",
-        "insert": "description"
+        "insert": "description",
+        "kind": 10
+    },
+    "DESCRIPTION_INPUT":{
+        "label":"<description>",
+        "description": "Set the description for this interface",
+        "insert": "To_R2",
+        "kind": 1
     },
     "COMMENT":{
         "label":"<CR>",
         "description": "possible end of a command",
-        "insert": "\n"
+        "insert": "\n",
+        "kind": 1
     },
      "BANNER_MESSAGE":{
         "label":"<message>",
         "description": "The Banner message",
-        "insert": "#Authorized acces only!#"
+        "insert": "#Authorized acces only!#",
+        "kind": 1
     },
      "OSPF_AREA_NUMBER":{
         "label":"OSPF Area Number",
         "description": "Area number",
-        "insert": "10"
+        "insert": "10",
+        "kind": 12
     },
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
-        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0"
+        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0",
+        "kind": 15
     }
 }
