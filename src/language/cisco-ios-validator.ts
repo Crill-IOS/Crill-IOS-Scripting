@@ -3,10 +3,16 @@ import {
     BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, Ip_cmd_option_address,
     isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd, Line_types,
     isLine_ExecTimeoutValue,
-    isExit,
+    isLine_console_cmds,
+    isExit_line_console,
+    isExit_line_vty,
     isKEYWORDS,
+    INTERFACE_NUMBER_INPUT,
+    UPDATE_SOURCE_INTERFACE_NUMBER_INPUT,
+    isLine_vty_cmds,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
+import type { AstNode } from 'langium';
 import { AstUtils } from 'langium';
 import * as ipaddr from "ipaddr.js";
 
@@ -25,6 +31,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
         Stat: validator.check_Stat,
         Generate_cmd: validator.checkGenerate_cmd,
         Line_types: validator.checkLine_types,
+        INTERFACE_NUMBER_INPUT: validator.checkINTERFACE_NUMBER,
+        UPDATE_SOURCE_INTERFACE_NUMBER_INPUT: validator.checkUPDATE_SOURCE_INTERFACE_NUMBER,
     };
     registry.register(checks, validator);
 }
@@ -160,6 +168,24 @@ export class CiscoIosValidator {
         }
     }
 
+    checkINTERFACE_NUMBER(interface_number: INTERFACE_NUMBER_INPUT, accept: ValidationAcceptor): void {
+        const valid = /^[0-9]+\/[0-9]+(\.[0-9]+)?$/.test(interface_number.value);
+        if (!valid) {
+            accept("error", "This is not a valid Interface Number!", { node: interface_number, property: 'value' });
+        }
+    }
+
+    checkUPDATE_SOURCE_INTERFACE_NUMBER(node: UPDATE_SOURCE_INTERFACE_NUMBER_INPUT, accept: ValidationAcceptor): void {
+        const validFormat = /^[0-9]+\/[0-9]+$/.test(node.value);
+        if (!validFormat) {
+            if (/^[0-9]+\/[0-9]+\.[0-9]+$/.test(node.value)) {
+                accept("error", "BGP update-source does not allow Subinterfaces!", { node, property: 'value' });
+            } else {
+                accept("error", "This is not a valid Interface Number!", { node, property: 'value' });
+            }
+        }
+    }
+
     /**
      * @description
      * checks if a domain-name and hostname is set,
@@ -195,22 +221,30 @@ export class CiscoIosValidator {
 
     /**
      * @description
-     * check if a  line_types instance contains the <exec-timeout> command 
-     * 
+     * check if a  line_types instance contains the <exec-timeout> command
+     *
      * @param linecmd a line_types instance in a script
      * @param accept the acceptor
      */
     checkLine_types(linecmd: Line_types, accept: ValidationAcceptor): void {
-        let cmds = []
-        for (let cmd of linecmd.lines){
-            if (!isExit(cmd)) {
-                cmds.push(cmd)
-            } else {
-                break
+        let cmds = [];
+
+        if (isLine_console_cmds(linecmd)) {
+            for (const cmd of linecmd.lines) {
+                if (!isExit_line_console(cmd)) cmds.push(cmd);
+                else break;
             }
+        } else if (isLine_vty_cmds(linecmd)) {
+            for (const cmd of linecmd.lines) {
+                if (!isExit_line_vty(cmd)) cmds.push(cmd);
+                else break;
+            }
+        } else {
+            return;
         }
+
         if (cmds.findIndex(e => isLine_ExecTimeoutValue(e)) < 0) {
-            accept("info", `Line mode has no exec-timeout command!`, { node: linecmd.$container, property: "command" });
+            accept("info", `Line mode has no exec-timeout command!`, { node: linecmd.$container as AstNode, property: "command" });
         }
     }
 
