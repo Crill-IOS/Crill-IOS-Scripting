@@ -9,6 +9,7 @@ import {
     isKEYWORDS,
     INTERFACE_NUMBER_INPUT,
     UPDATE_SOURCE_INTERFACE_NUMBER_INPUT,
+    NAT_INTERFACE_NUMBER_INPUT,
     isLine_vty_cmds,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
@@ -33,6 +34,7 @@ export function registerValidationChecks(services: CiscoIosServices) {
         Line_types: validator.checkLine_types,
         INTERFACE_NUMBER_INPUT: validator.checkINTERFACE_NUMBER,
         UPDATE_SOURCE_INTERFACE_NUMBER_INPUT: validator.checkUPDATE_SOURCE_INTERFACE_NUMBER,
+        NAT_INTERFACE_NUMBER_INPUT: validator.checkNAT_INTERFACE_NUMBER,
     };
     registry.register(checks, validator);
 }
@@ -183,6 +185,13 @@ export class CiscoIosValidator {
             } else {
                 accept("error", "This is not a valid Interface Number!", { node, property: 'value' });
             }
+        }
+    }
+
+    checkNAT_INTERFACE_NUMBER(node: NAT_INTERFACE_NUMBER_INPUT, accept: ValidationAcceptor): void {
+        const validFormat = /^[0-9]+\/[0-9]+(\.[0-9]+)?$/.test(node.value);
+        if (!validFormat) {
+            accept("error", "This is not a valid NAT Interface Number!", { node, property: 'value' });
         }
     }
 

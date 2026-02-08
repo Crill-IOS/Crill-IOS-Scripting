@@ -307,17 +307,9 @@ Nat_interface_types:
     ;
 
 Nat_interface_gigabitethernet:
-    'gigabitethernet' types=Nat_interface_number
+    'gigabitethernet' types=NAT_INTERFACE_NUMBER_INPUT
     ;
 
 Nat_interface_fastethernet:
-    'fastethernet' types=Nat_interface_number
-    ;
-
-Nat_interface_number:
-     number= INT '/' INT Nat_Sub_Interface_number?
-    ;
-
-Nat_Sub_Interface_number :
-    sub = '.'INT
+    'fastethernet' types=NAT_INTERFACE_NUMBER_INPUT
     ;
