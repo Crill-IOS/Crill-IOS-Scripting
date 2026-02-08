@@ -1,11 +1,6 @@
 import 'common'
 import 'configure_mode'
 
-// Exit zurück in Configure-Mode
-Exit_line infers Exit:
-    Exit lines+=Configure_cmds+
-    ;
-
 // ---- Gemeinsame Subcommands (Console & VTY) ----
 
 // login
