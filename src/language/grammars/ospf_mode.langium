@@ -1,45 +1,35 @@
 import 'configure_mode'
 import 'common'
 
-Ospf_cmd:
-    'ospf' process=INT CR lines+=Ospf_cmds+
-    ;
-
-
 //Exit zurück in den Configure terminal Mode
-Exit_ospf infers Exit:
-    Exit lines+=Configure_cmds+
+Exit_ospf:
+    command='exit' CR continuation+=Configure_cmds
     ;
 
 //Optionen für den OSPF Modus
 Ospf_cmds:
-    (
+    lines+=(
         COMMON
-      | Ospf_router_id_cmd
-      | Ospf_network_cmd
-      | Ospf_passive_interface_cmd
-      | Ospf_priority_cmd
-      | Ospf_default_information_cmd
-      | Ospf_redistribute_cmd
-      | Exit_ospf
-    )
+        | Ospf_router_id_cmd
+        | Ospf_network_cmd
+        | Ospf_passive_interface_cmd
+        | Ospf_priority_cmd
+        | Ospf_default_information_cmd
+        | Ospf_redistribute_cmd
+    )* Exit_ospf
     ;
 
-
 //-------Router-id--------
-
 Ospf_router_id_cmd:
     'router-id' id=IP CR
     ;
 
 //-------Network--------
-
 Ospf_network_cmd:
     'network' ip=IP mask=WILDCARDMASK 'area' area=OSPF_AREA_NUMBER CR
     ;
 
 //--------Passive-interface--------
-
 Ospf_passive_interface_cmd:
     'passive-interface' types=Ospf_interface_types
     ;
@@ -65,7 +55,6 @@ Ospf_passive_Sub_Interface_number :
     sub = '.'INT
     ;
 
-
 //------default-information----------
 Ospf_default_information_cmd:
     'default-information' option=Ospf_default_information_cmd_options CR
@@ -84,8 +73,6 @@ Ospf_redistribute_cmd_options:
     option='static'
     ;
 
-
 //------Priority--------
 Ospf_priority_cmd:
     'priority' value=INT CR;
-
