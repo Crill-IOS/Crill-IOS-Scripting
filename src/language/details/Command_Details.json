@@ -60,6 +60,12 @@
         "insert": "${1:0}/${2:0}",
         "kind": 15
     },
+    "NAT_INTERFACE_NUMBER_INPUT": {
+        "label": "NAT Interface Number",
+        "description": "X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
+    },
     "No_ip_cmd_option_domain_lookup":{
         "label":"domain-lookup",
         "description": "stops ip domain lookup",
