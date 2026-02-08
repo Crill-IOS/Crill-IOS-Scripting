@@ -12,18 +12,17 @@ Acl_extended_cmd:
     ;
 
 // ---- Exit zurück in Configure Mode ----
-Exit_acl infers Exit:
-    Exit lines+=Configure_cmds+
+Exit_acl:
+    command='exit' CR continuation+=Configure_cmds
     ;
 
 // ---- Standard ACL Subcommands ----
 Acl_standard_cmds:
-    (
+    lines+=(
         COMMON
       | Acl_standard_permit_cmd
       | Acl_standard_deny_cmd
-      | Exit_acl
-    )
+    )* Exit_acl
     ;
 
 Acl_standard_permit_cmd:
