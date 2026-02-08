@@ -1,33 +1,27 @@
 import 'common'
 
 import 'configure_mode'
-Bgp_cmd:
-    'bgp' asn=INT CR lines+=Bgp_cmds+
-    ;
 
-//------Exit--------
-Exit_bgp infers Exit:
-    Exit lines+= Configure_cmds+
+//------Exit zurück in Configure Mode--------
+Exit_bgp:
+    command='exit' CR continuation+=Configure_cmds+
     ;
 
 //------BGP SUBCOMMANDS (minimal)----------------------------
 Bgp_cmds:
-    (
+    lines+=(
         COMMON
-      | Bgp_router_id_cmd
-      | Bgp_neighbor_cmd
-      | Bgp_network_cmd
-      | Exit_bgp
-    )
+        | Bgp_router_id_cmd
+        | Bgp_neighbor_cmd
+        | Bgp_network_cmd
+    )* Exit_bgp
     ;
 
 Bgp_router_id_cmd:
     'bgp' 'router-id' id=IP CR
     ;
 
-
 //--------------------------Neighbour------------------
-
 Bgp_neighbor_cmd:
     'neighbor' neighbour=IP option=Bgp_neighbour_options CR
     ;
@@ -57,26 +51,17 @@ Bgp_update_source_interface_types:
     ;
 
 Bgp_update_source_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Bgp_update_source_interface_number CR
+    type='gigabitethernet' number=UPDATE_SOURCE_INTERFACE_NUMBER_INPUT
     ;
 
 Bgp_update_source_interface_type_fastethernet:
-    type='fastethernet' number=Bgp_update_source_interface_number CR
-    ;
-
-Bgp_update_source_interface_number:
-     number= INT '/' INT Bgp_update_source_Sub_Interface_number?
-    ;
-
-Bgp_update_source_Sub_Interface_number :
-    sub = '.'INT
+    type='fastethernet' number=UPDATE_SOURCE_INTERFACE_NUMBER_INPUT
     ;
 
 //-------ebgp-multihop------
 Bgp_neigbour_ebgp_multihop_option:
     'ebgp-multihop' multihop=INT
     ;
-
 
 //-------next-hop-self--------
 Bgp_neighbour_next_hop_self_option returns string:
@@ -88,8 +73,7 @@ Bgp_neighbour_route_reflector_option returns string:
     'route-reflector-client'
     ;
 
-
-
+//------network-------
 Bgp_network_cmd:
     'network' ip=IP 'mask' mask=IP CR
     ;
