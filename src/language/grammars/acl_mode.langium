@@ -3,7 +3,7 @@ import 'configure_mode'
 
 // ---- ACL Mode Entry (Standard Numbered 0-99) ----
 Acl_standard_cmd:
-    value=INT CR lines+=Acl_standard_cmds+
+    'standard' value=INT CR lines+=Acl_standard_cmds+
     ;
 
 // ---- ACL Mode Entry (Extended Named) ----
@@ -20,8 +20,8 @@ Exit_acl:
 Acl_standard_cmds:
     lines+=(
         COMMON
-      | Acl_standard_permit_cmd
-      | Acl_standard_deny_cmd
+        | Acl_standard_permit_cmd
+        | Acl_standard_deny_cmd
     )* Exit_acl
     ;
 
