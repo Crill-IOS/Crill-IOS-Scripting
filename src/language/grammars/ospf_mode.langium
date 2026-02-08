@@ -31,7 +31,7 @@ Ospf_network_cmd:
 
 //--------Passive-interface--------
 Ospf_passive_interface_cmd:
-    'passive-interface' types=Ospf_interface_types
+    'passive-interface' types=Ospf_interface_types CR
     ;
 
 Ospf_interface_types:
@@ -40,19 +40,11 @@ Ospf_interface_types:
     ;
 
 Ospf_passive_interface_type_gigabitethernet:
-    type='gigabitethernet' number=Ospf_passive_interface_number CR 
+    type='gigabitethernet' number=OSPF_PASSIVE_INTERFACE_NUMBER
     ;
 
 Ospf_passive_interface_type_fastethernet:
-    type='fastethernet' number=Ospf_passive_interface_number CR
-    ;
-
-Ospf_passive_interface_number:
-     number= INT '/' INT Ospf_passive_Sub_Interface_number?
-    ;
-
-Ospf_passive_Sub_Interface_number :
-    sub = '.'INT
+    type='fastethernet' number=OSPF_PASSIVE_INTERFACE_NUMBER
     ;
 
 //------default-information----------
