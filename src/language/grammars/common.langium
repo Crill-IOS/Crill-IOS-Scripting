@@ -7,7 +7,7 @@ SUBNETMASK: value = IPv4_DDC;
 
 //end of line comments
 COMMENT:
-    delim=('#'|'!') text+=(INPUT_lexer|KEYWORDS)+
+    value=COMMENT_TOKEN
     ;
 
 COMMON :
@@ -17,7 +17,7 @@ COMMON :
 
 // start of line comments
 COMMENTLINE:
-    delim=('#'|'!') text+=(INPUT_lexer|KEYWORDS)+
+    value=COMMENT_TOKEN
     ;
 
 fragment CR :
@@ -45,6 +45,7 @@ Star returns string:
     ;
 
 hidden terminal WS: /[ \t]+/;
+terminal COMMENT_TOKEN: /[#!][^\r\n]*/;
 terminal INTERFACE_NUMBER: /[0-9]+\/[0-9]+(\.[0-9]+)?/;
 terminal NL: '\r'? '\n';
 terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
