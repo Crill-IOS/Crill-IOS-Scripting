@@ -4,13 +4,7 @@ import 'common'
 import 'configure_mode'
 import 'acl_mode'
 
-// Exit zurück in Configure-Mode
-Exit_interface infers Exit:
-    Exit lines+=Configure_cmds+
-    ;
-
 // ---- Gemeinsame Subcommands für alle Interfaces ----
-
 IP_cmd_interface:
     'ip' option=Ip_cmd_options;
 
@@ -73,4 +67,4 @@ No_cmd_interface_option:
     'shutdown' CR;
 
 Description_cmd:
-    'description' value=INPUT CR;
+    'description' value=DESCRIPTION_INPUT CR;
