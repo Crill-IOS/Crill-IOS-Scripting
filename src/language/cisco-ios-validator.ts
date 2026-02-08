@@ -10,6 +10,8 @@ import {
     INTERFACE_NUMBER_INPUT,
     UPDATE_SOURCE_INTERFACE_NUMBER_INPUT,
     NAT_INTERFACE_NUMBER_INPUT,
+    OSPF_COST_NUMBER,
+    OSPF_PRIORITY_NUMBER,
     isLine_vty_cmds,
 } from './generated/ast.js';
 import type { CiscoIosServices } from './cisco-ios-module.js';
@@ -35,6 +37,8 @@ export function registerValidationChecks(services: CiscoIosServices) {
         INTERFACE_NUMBER_INPUT: validator.checkINTERFACE_NUMBER,
         UPDATE_SOURCE_INTERFACE_NUMBER_INPUT: validator.checkUPDATE_SOURCE_INTERFACE_NUMBER,
         NAT_INTERFACE_NUMBER_INPUT: validator.checkNAT_INTERFACE_NUMBER,
+        OSPF_COST_NUMBER: validator.checkOSPF_COST_NUMBER,
+        OSPF_PRIORITY_NUMBER: validator.checkOSPF_PRIORITY_NUMBER,
     };
     registry.register(checks, validator);
 }
@@ -192,6 +196,34 @@ export class CiscoIosValidator {
         const validFormat = /^[0-9]+\/[0-9]+(\.[0-9]+)?$/.test(node.value);
         if (!validFormat) {
             accept("error", "This is not a valid NAT Interface Number!", { node, property: 'value' });
+        }
+    }
+
+    /**
+     * @description
+     * checks if OSPF cost is in valid range (1-65535)
+     *
+     * @param node OSPF_COST_NUMBER from ip ospf cost
+     * @param accept the acceptor
+     */
+    checkOSPF_COST_NUMBER(node: OSPF_COST_NUMBER, accept: ValidationAcceptor): void {
+        const num = parseInt(node.value, 10);
+        if (Number.isNaN(num) || num < 1 || num > 65535) {
+            accept("error", "OSPF cost must be between 1 and 65535!", { node, property: 'value' });
+        }
+    }
+
+    /**
+     * @description
+     * checks if OSPF priority is in valid range (0-255)
+     *
+     * @param node OSPF_PRIORITY_NUMBER from ip ospf priority
+     * @param accept the acceptor
+     */
+    checkOSPF_PRIORITY_NUMBER(node: OSPF_PRIORITY_NUMBER, accept: ValidationAcceptor): void {
+        const num = parseInt(node.value, 10);
+        if (Number.isNaN(num) || num < 0 || num > 255) {
+            accept("error", "OSPF priority must be between 0 and 255!", { node, property: 'value' });
         }
     }
 

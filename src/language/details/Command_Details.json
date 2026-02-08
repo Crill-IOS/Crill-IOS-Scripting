@@ -102,6 +102,18 @@
         "insert": "10",
         "kind": 12
     },
+     "OSPF_COST_NUMBER":{
+        "label":"OSPF Cost",
+        "description": "Interface OSPF cost (1-65535)",
+        "insert": "10",
+        "kind": 12
+    },
+     "OSPF_PRIORITY_NUMBER":{
+        "label":"OSPF Priority",
+        "description": "Router priority (0-255)",
+        "insert": "1",
+        "kind": 12
+    },
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
