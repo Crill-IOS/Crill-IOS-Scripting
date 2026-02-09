@@ -48,11 +48,11 @@ Rip_interface_types:
     ;
 
 Rip_passive_interface_type_gigabitethernet:
-    type='gigabitethernet' number=INTERFACE_NUMBER CR 
+    type='gigabitethernet' number=RIP_PASSIVE_INTERFACE_NUMBER CR 
     ;
 
 Rip_passive_interface_type_fastethernet:
-    type='fastethernet' number=INTERFACE_NUMBER CR
+    type='fastethernet' number=RIP_PASSIVE_INTERFACE_NUMBER CR
     ;
 
 //------default-information----------

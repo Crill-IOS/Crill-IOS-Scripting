@@ -125,5 +125,11 @@
         "description": "Area number",
         "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0",
         "kind": 15
+    },
+    "RIP_PASSIVE_INTERFACE_NUMBER":{
+        "label":"RIP Passive Interface Number",
+        "description": "Passive-Interface X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
     }
 }
