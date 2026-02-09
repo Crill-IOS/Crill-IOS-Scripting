@@ -36,7 +36,7 @@ Bgp_neighbour_options:
 
 //--------Remote-as---------
 Bgp_neighbour_Remote_as_option:
-    'remote-as' remoteASnumber=INT
+    'remote-as' remoteASnumber=BGP_AS_NUMBER
     ;
 
 
@@ -60,7 +60,7 @@ Bgp_update_source_interface_type_fastethernet:
 
 //-------ebgp-multihop------
 Bgp_neigbour_ebgp_multihop_option:
-    'ebgp-multihop' multihop=INT
+    'ebgp-multihop' multihop=BGP_EBGP_MULTIHOP_NUMBER
     ;
 
 //-------next-hop-self--------
