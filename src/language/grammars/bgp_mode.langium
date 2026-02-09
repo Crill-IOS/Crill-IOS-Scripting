@@ -4,7 +4,7 @@ import 'configure_mode'
 
 //------Exit zurück in Configure Mode--------
 Exit_bgp:
-    command='exit' CR continuation+=Configure_cmds+
+    command='exit' CR continuation+=Configure_cmds
     ;
 
 //------BGP SUBCOMMANDS (minimal)----------------------------

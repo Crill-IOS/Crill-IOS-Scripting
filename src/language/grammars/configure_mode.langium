@@ -222,7 +222,7 @@ Router_cmd:
 Router_cmd_option:
     'ospf' process=OSPF_PROCESS_NUMBER CR Ospf_cmds
     | 'rip' CR Rip_cmds
-    | 'bgp' asn=INT CR Bgp_cmds
+    | 'bgp' asn=BGP_AS_NUMBER CR Bgp_cmds
     ;
 
 
