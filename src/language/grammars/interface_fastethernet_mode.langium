@@ -24,4 +24,4 @@ Speed_cmd_fe:
     'speed' value=INTERFACE_SPEED_NUMBER CR;
 
 CarrierDelay_cmd:
-    'carrier-delay' seconds=INT CR;
+    'carrier-delay' seconds=INTERFACE_CARRIER_DELAY_NUMBER CR;
