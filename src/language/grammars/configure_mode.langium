@@ -261,7 +261,7 @@ Interface_type_fastethernet:
     type='fastethernet' number=INTERFACE_NUMBER_INPUT CR Interface_fastethernet_cmds;
 
 Interface_type_vlan:
-    type='vlan' number=INT CR Interface_vlan_cmds;
+    type='vlan' number=INTERFACE_VLAN_NUMBER CR Interface_vlan_cmds;
 
 Ip_access_list_cmd_option:
     'access-list' option=Ip_access_list_option
