@@ -237,11 +237,11 @@ Line_types:
     ;
 
 Line_type_console:
-    type='console' number=INT CR Line_console_cmds
+    type='console' number=CONSOLE_NUMBER CR Line_console_cmds
     ;
 
 Line_type_vty:
-    type='vty' start=INT end=INT CR Line_vty_cmds
+    type='vty' start=VTY_NUMBER end=VTY_NUMBER CR Line_vty_cmds
     ;
 
 //------INTERFACE MODE-------
