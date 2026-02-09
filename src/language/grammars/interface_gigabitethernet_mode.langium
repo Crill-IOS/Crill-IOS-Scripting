@@ -40,4 +40,4 @@ Duplex_half returns string:
 
 
 Speed_cmd:
-    'speed' value=INT CR;
+    'speed' value=INTERFACE_SPEED_NUMBER CR;

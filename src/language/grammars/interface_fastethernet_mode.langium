@@ -21,7 +21,7 @@ Interface_fastethernet_cmds:
     ;
 
 Speed_cmd_fe:
-    'speed' value=INT CR;
+    'speed' value=INTERFACE_SPEED_NUMBER CR;
 
 CarrierDelay_cmd:
     'carrier-delay' seconds=INT CR;
