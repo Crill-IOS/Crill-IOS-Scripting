@@ -2,7 +2,7 @@ import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import {
     BANNER_MESSAGE, CiscoIosAstType, IP, IP_cmd_interface, isIP_cmd_interface, Ip_cmd_option_address,
     isIp_cmd_option_address, Stat, SUBNETMASK, Username_cmd, Generate_cmd, Line_types,
-    isLine_ExecTimeoutValue,
+    isExecTimeout_cmd,
     isLine_console_cmds,
     isExit_line_console,
     isExit_line_vty,
@@ -300,7 +300,7 @@ export class CiscoIosValidator {
             return;
         }
 
-        if (cmds.findIndex(e => isLine_ExecTimeoutValue(e)) < 0) {
+        if (cmds.findIndex(e => isExecTimeout_cmd(e)) < 0) {
             accept("info", `Line mode has no exec-timeout command!`, { node: linecmd.$container as AstNode, property: "command" });
         }
     }
