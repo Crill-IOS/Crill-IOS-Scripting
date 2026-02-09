@@ -67,4 +67,4 @@ Ospf_redistribute_cmd_options:
 
 //------Priority--------
 Ospf_priority_cmd:
-    'priority' value=INT CR;
+    'priority' value=OSPF_PRIORITY_NUMBER CR;
