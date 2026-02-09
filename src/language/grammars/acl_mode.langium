@@ -3,16 +3,21 @@ import 'configure_mode'
 
 // ---- ACL Mode Entry (Standard Numbered 0-99) ----
 Acl_standard_cmd:
-    'standard' value=INT CR lines+=Acl_standard_cmds+
+    'standard' value=ACL_NUMBER CR Acl_standard_cmds
     ;
 
 // ---- ACL Mode Entry (Extended Named) ----
 Acl_extended_cmd:
-    'extended' name=ACL_NAME CR lines+=Acl_extended_cmds+
+    'extended' name=ACL_NAME CR Acl_extended_cmds
     ;
 
 // ---- Exit zurück in Configure Mode ----
-Exit_acl:
+Exit_acl_standard:
+    command='exit' CR continuation+=Configure_cmds
+    ;
+
+// ---- Exit zurück in Configure Mode ----
+Exit_acl_extended:
     command='exit' CR continuation+=Configure_cmds
     ;
 
@@ -22,7 +27,7 @@ Acl_standard_cmds:
         COMMON
         | Acl_standard_permit_cmd
         | Acl_standard_deny_cmd
-    )* Exit_acl
+    )* Exit_acl_standard
     ;
 
 Acl_standard_permit_cmd:
@@ -53,12 +58,11 @@ Acl_network_match:
 
 // ---- Extended ACL Subcommands ----
 Acl_extended_cmds:
-    (
+    lines+=(
         COMMON
-      | Acl_extended_permit_cmd
-      | Acl_extended_deny_cmd
-      | Exit_acl
-    )
+        | Acl_extended_permit_cmd
+        | Acl_extended_deny_cmd
+    )* Exit_acl_extended
     ;
 
 Acl_extended_permit_cmd:
