@@ -23,7 +23,7 @@ Line_LoggingOption:
 
 // exec-timeout
 ExecTimeout_cmd:
-    'exec-timeout' Line_ExecTimeoutValue
+    'exec-timeout' exectimeoutvalue=Line_ExecTimeoutValue
     ;
 
 Line_ExecTimeoutValue:
