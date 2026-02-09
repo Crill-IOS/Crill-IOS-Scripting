@@ -35,7 +35,7 @@ Rip_network_cmd:
 
 //------Version---------
 Rip_version_cmd:
-    'version' RipVersion=INT;
+    'version' RipVersion=RIP_VERSION_NUMBER;
 
 //-----------passive-interface---------
 Rip_passive_interface_cmd:
