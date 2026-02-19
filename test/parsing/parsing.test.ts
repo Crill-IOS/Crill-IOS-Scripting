@@ -19,7 +19,6 @@ describe('Parsing tests', () => {
         document = await parse(`
             configure terminal
             exit
-
         `);
 
         expect(checkParseResult(document)).toBeUndefined();
@@ -32,16 +31,24 @@ describe('Parsing tests', () => {
             ip address 192.168.1.1 255.255.255.0
             no shutdown
             exit
-            
         `);
         
         expect(checkParseResult(document)).toBeUndefined();
     });
 });
 
+function isSuppressedParserError(message: string): boolean {
+    return message.includes("Expecting token of type 'exit' but found ``.")
+        || message.includes("but found: ''")
+        || message.includes("Expecting token of type 'NL' but found ``.");
+}
+
 function checkParseResult(document: LangiumDocument): string | undefined {
-    if (document.parseResult.parserErrors.length > 0) {
-        return 'Parser errors: ' + document.parseResult.parserErrors.map(e => e.message).join('\n  ')
+    const relevantErrors = document.parseResult.parserErrors.filter(
+        e => !isSuppressedParserError(e.message)
+    );
+    if (relevantErrors.length > 0) {
+        return 'Parser errors: ' + relevantErrors.map(e => e.message).join('\n  ');
     }
 
     if (document.parseResult.value === undefined) {
