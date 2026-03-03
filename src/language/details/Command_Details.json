@@ -690,13 +690,6 @@
         "insert": "carrier-delay",
         "kind": 10
     },
-    "Ip_Helper_cmd": {
-        "label": "ip helper-address",
-        "description": "Set helper address for DHCP relay",
-        "insert": "ip helper-address",
-        "kind": 10
-    },
-    
     "Ip_access_list_cmd_option": {
         "label": "access-list",
         "description": "Configure access list",
@@ -715,7 +708,6 @@
         "insert": "extended",
         "kind": 10
     },
-    
     "Ip_nat_cmd": {
         "label": "ip nat",
         "description": "NAT configuration",
@@ -757,25 +749,6 @@
         "label": "no",
         "description": "Negate a command",
         "insert": "no",
-        "kind": 10
-    },
-    "No_banner_cmd": {
-        "label": "no banner",
-        "description": "Remove banner",
-        "insert": "no banner",
-        "kind": 10
-    },
-    "No_ip_cmd": {
-        "label": "no ip",
-        "description": "Remove IP configuration",
-        "insert": "no ip",
-        "kind": 10
-    },
-    
-    "Bgp_router_id_cmd": {
-        "label": "bgp router-id",
-        "description": "Set BGP router ID",
-        "insert": "bgp router-id",
         "kind": 10
     },
     "Bgp_neighbor_cmd": {
@@ -873,13 +846,6 @@
         "label": "static",
         "description": "Redistribute static routes",
         "insert": "static",
-        "kind": 10
-    },
-    
-    "Rip_no_cmds": {
-        "label": "no auto-summary",
-        "description": "Disable automatic summarization",
-        "insert": "no auto-summary",
         "kind": 10
     },
     "Rip_network_cmd": {
