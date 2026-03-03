@@ -1,6 +1,5 @@
 
 import 'common'
-import 'configure_mode'
 import 'interface_mode'
 
 // Exit zurück in Configure-Mode
