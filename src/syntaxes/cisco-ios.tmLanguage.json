@@ -1,17 +1,35 @@
 {
   "name": "cisco-ios",
   "scopeName": "source.cisco-ios",
-  "fileTypes": [
-    ".ios"
-  ],
+  "fileTypes": ["ios"],
   "patterns": [
     {
-      "name": "keyword",
-      "match": "\\b(configure|interface|line|exit|router)\\b"
+      "name": "keyword.control",
+      "match": "^\\b(configure|interface|router|line|ip access-list|exit|no)\\b"
     },
     {
-      "name": "variable",
-      "match": "\\b(hostname|username|banner|ip|crypto|exec-timeout|login|logging|no)\\b"
+      "name": "keyword.operator",
+      "match": "\\b(eq)\\b"
+    },
+    {
+      "name": "keyword",
+      "match": "\\b(show|ping|hostname|ip|username|banner|crypto|ip|shutdown|description|speed|carrier-delay|ip|router-id|network|passive-interface|default-information|redistribute|auto-summary|version|bgp router-id|neighbor|permit|deny|logging|exec-timeout|transport|duplex)\\b"
+    },
+    {
+      "name": "entity.name.type",
+      "match": "\\b(access-group|extended|standard|gigabitethernet|fastethernet|vlan|console|vty|rsa|tcp|udp|icmp|gre)\\b"
+    },
+    {
+      "name": "entity.other.attribute-name",
+      "match": "\\b(terminal|auto|full|half|overload|any|host|static|originate|helper-address|priority|cost|address|input|synchronous|local|inside|outside|secondary|source|list|key|generate|motd|login|exec|incoming|prompt-timeout|slip-ppp|config-save|version|domain-lookup|domain-name|run|interface|usage-keys|modulus|privilege|password|secret|algorithm-type|in|out|area|remote-as|update-source|ebgp-multihop|next-hop-self|route-reflector-client|mask)\\b"
+    },
+    {
+      "name": "support.function",
+      "match": "\\b(md5|scrypt|sha256|ospf|rip|bgp|nat|ssh|telnet|http|https|ftp|domain|tftp|snmp|ntp|isakmp)\\b"
+    },
+    {
+      "name": "keyword",
+      "match": "^\\b(priority|login)\\b"
     }
   ],
   "repository": {}

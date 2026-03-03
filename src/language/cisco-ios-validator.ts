@@ -252,23 +252,18 @@ export class CiscoIosValidator {
      * @param accept the acceptor
      */
     checkGenerate_cmd(generate: Generate_cmd, accept: ValidationAcceptor): void {
-        // Get root node and collect relevant commands in script order
         const root = AstUtils.findRootNode(generate);
         const allCommands = Array.from(AstUtils.streamAllContents(root));
-
-        // indexes of commands 
         const generateIndex = allCommands.indexOf(generate);
         const hostnameIndex = allCommands.findIndex(e => e.$type === "Hostname_cmd");
         const domainIndex = allCommands.findIndex(e => e.$type === "Domainname_cmd");
 
-        // hostname must exist and come before generate
         if (hostnameIndex === -1) {
             accept("error", `Set a hostname before generating keys!`, { node: generate.$container.$container });
         } else if (hostnameIndex > generateIndex) {
             accept("error", `A hostname must be defined before generating keys!`, { node: generate.$container.$container });
         }
 
-        // domain-name must exist and come before generate
         if (domainIndex === -1) {
             accept("error", `Set a domain-name before generating keys!`, { node: generate.$container.$container });
         } else if (domainIndex > generateIndex) {

@@ -42,15 +42,14 @@ describe('Validating tests', () => {
         ).toHaveLength(0);
     });
 
-    test('check capital letter validation', async () => {
+    test('check valid IP address', async () => {
         document = await parse(`
             configure terminal
+            no ip domain-lookup
             interface GigabitEthernet 0/0
             ip address 192.168.1.256 255.255.255.0
             no shutdown
             exit
-            exit
-
         `);
 
         expect(
@@ -58,6 +57,25 @@ describe('Validating tests', () => {
         ).toContain(
             "This is not a valid IP-Address!"
         );
+    });
+
+    test('check same ips on different interfaces', async () => {
+        document = await parse(`
+            configure terminal
+            no ip domain-lookup
+            interface GigabitEthernet 0/0
+            ip address 192.168.1.1 255.255.255.0
+            exit
+            interface GigabitEthernet 0/1
+            ip address 192.168.1.1 255.255.255.0
+            exit
+        `);
+
+        expect(
+            checkParseResult(document) || document?.diagnostics?.map(diagnosticToString)?.join('\n')
+        ).toContain(
+            "Duplicate IP address: 192.168.1.1!"
+        )
     });
 });
 

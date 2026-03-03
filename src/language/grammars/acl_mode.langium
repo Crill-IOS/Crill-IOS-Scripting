@@ -66,11 +66,11 @@ Acl_extended_cmds:
     ;
 
 Acl_extended_permit_cmd:
-    (sequence=INT)? 'permit' protocol=Acl_protocol source=Acl_extended_match destination=Acl_extended_match_dest CR
+    (sequence=ACL_STATEMENT_NUMBER)? 'permit' protocol=Acl_protocol source=Acl_extended_match destination=Acl_extended_match_dest CR
     ;
 
 Acl_extended_deny_cmd:
-    (sequence=INT)? 'deny' protocol=Acl_protocol source=Acl_extended_match destination=Acl_extended_match_dest CR
+    (sequence=ACL_STATEMENT_NUMBER)? 'deny' protocol=Acl_protocol source=Acl_extended_match destination=Acl_extended_match_dest CR
     ;
 
 // ---- Protocols ----
@@ -139,7 +139,7 @@ Acl_port_value:
     ;
 
 Acl_port_number:
-    value=INT
+    value=ACL_PORT_NUMBER
     ;
 
 Acl_port_name:
