@@ -806,6 +806,12 @@
         "insert": "router-id",
         "kind": 10
     },
+    "ROUTER_ID": {
+        "label": "Router-ID",
+        "description": "A.B.C.D – eindeutige ID des Routers im OSPF-Prozess",
+        "insert": "1.1.1.1",
+        "kind": 12
+    },
     "Ospf_network_cmd": {
         "label": "network",
         "description": "Advertise network in OSPF",
