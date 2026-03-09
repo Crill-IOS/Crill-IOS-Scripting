@@ -957,5 +957,23 @@
         "description": "IP configuration",
         "insert": "ip",
         "kind": 10
+    },
+    "Template_ospf_cmd": {
+        "label": "/ospf",
+        "description": "Fügt eine OSPF-Konfigurationsvorlage ein",
+        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:192.168.1.0} ${4:0.0.0.255} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_rip_cmd": {
+        "label": "/rip",
+        "description": "Fügt eine RIP-Konfigurationsvorlage ein",
+        "insert": "router rip\n version 2\n network ${1:192.168.1.0}\n no auto-summary\n passive-interface gigabitethernet ${2:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_grundkonfig_cmd": {
+        "label": "/grundkonfig",
+        "description": "Fügt eine Grundkonfigurationsvorlage ein",
+        "insert": "configure terminal\nhostname ${1:Router}\nno ip domain-lookup\nip domain-name ${2:htl3r.com}\nusername ${3:admin} algorithm-type scrypt secret ${4:Cisco1234!}\nusername ${3:admin} privilege 15\ncrypto key generate rsa usage-keys modulus 1024\nip ssh version 2\nline console 0\n login local\n logging synchronous\n exec-timeout 0 0\nexit\nline vty 0 4\n login local\n logging synchronous\n exec-timeout 0 0\n transport input ssh\nexit\n$0",
+        "kind": 15
     }
 }
