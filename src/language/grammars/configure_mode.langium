@@ -39,6 +39,7 @@ Configure_cmds:
         | No_cmd
         | Template_ospf_cmd
         | Template_rip_cmd
+        | Template_interface_cmd
     )* Exit_configure
     ;
 

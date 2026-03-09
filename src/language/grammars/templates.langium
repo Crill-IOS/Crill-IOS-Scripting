@@ -12,5 +12,9 @@ Template_rip_cmd:
     ;
 
 Template_grundkonfig_cmd:
-    '/grundkonfig' CR
+    '/grundkonfiguration' CR
+    ;
+
+Template_interface_cmd:
+    '/interface' CR
     ;

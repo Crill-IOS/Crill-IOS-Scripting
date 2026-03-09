@@ -1,16 +1,9 @@
 import { Hover, HoverParams, MarkupContent } from "vscode-languageserver";
 import { CstUtils, LangiumDocument, MaybePromise } from "langium";
 import { HoverProvider } from "langium/lsp";
-import commandDetails from './details/Command_Details.json';
-
-interface CommandDetail {
-    label: string;
-    description: string;
-}
+import { commandDetails } from './details/commandDetails.js';
 
 export class CiscoIosHoverProvider implements HoverProvider {
-
-    private commandDetails: Record<string, CommandDetail> = commandDetails;
 
     constructor(protected services: unknown) {}
 
@@ -27,7 +20,7 @@ export class CiscoIosHoverProvider implements HoverProvider {
 
     private getHoverFromDetails(key: string | undefined): Hover | undefined {
         if (!key) return undefined;
-        const detail = this.commandDetails[key];
+        const detail = commandDetails[key];
         if (!detail) return undefined;
 
         const content: MarkupContent = {
