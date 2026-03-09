@@ -16,6 +16,7 @@ import 'ospf_mode'
 import 'rip_mode'
 import 'bgp_mode'
 import 'acl_mode'
+import 'templates'
 
 //------EXIT: CONFIGURE → ENABLE-------
 Exit_configure:
@@ -36,6 +37,8 @@ Configure_cmds:
         | Line_cmd
         | Router_cmd
         | No_cmd
+        | Template_ospf_cmd
+        | Template_rip_cmd
     )* Exit_configure
     ;
 
