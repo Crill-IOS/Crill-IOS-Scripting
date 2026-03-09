@@ -139,13 +139,13 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
     }
 
     /**
-     * Reads token overrides from VS Code (crill-ios.defaults) and merges them
+     * Reads token overrides from VS Code (Crill-IOS.defaults) and merges them
      * over the defaults declared in Command_Details.json.
      */
     private async getTokenDefaults(): Promise<TokenDefaults> {
         try {
             const cfg = await this.services.shared.workspace.ConfigurationProvider
-                .getConfiguration('crill-ios', 'defaults') as Record<string, unknown> | undefined;
+                .getConfiguration('Crill-IOS', 'defaults') as Record<string, unknown> | undefined;
             const defaults = { ...commandTokenDefaults };
             if (cfg) {
                 for (const [key, value] of Object.entries(cfg)) {
