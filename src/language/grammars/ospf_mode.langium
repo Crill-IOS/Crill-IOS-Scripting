@@ -21,7 +21,7 @@ Ospf_cmds:
 
 //-------Router-id--------
 Ospf_router_id_cmd:
-    'router-id' id=IP CR
+    'router-id' id=ROUTER_ID CR
     ;
 
 //-------Network--------
