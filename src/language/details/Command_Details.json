@@ -8,26 +8,26 @@
     "IP": {
         "label":"IP-Address",
         "description": "A.B.C.D",
-        "insert": "1.2.3.4",
+        "insert": "__IP__",
         "kind": 12
     },
     "SUBNETMASK": {
         "label": "Subnetmask",
         "description": "A.B.C.D",
-        "insert": "255.255.255.0",
+        "insert": "__MASK__",
         "kind": 12
     },
     "WILDCARDMASK": {
         "label": "Wildcardmask",
         "description": "A.B.C.D",
-        "insert": "0.0.0.255",
+        "insert": "__WILDCARD__",
         "kind": 12
     },
     
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
         "description": "Set the hostname for this device",
-        "insert": "R1",
+        "insert": "__HOSTNAME__",
         "kind": 1
     },
     "Ip_cmd_option_address": {
@@ -39,7 +39,7 @@
     "DOMAINNAME_INPUT": {
         "label":"<domain-name>",
         "description": "Set the domain-name for this device",
-        "insert": "htl3r.com",
+        "insert": "__DOMAIN__",
         "kind": 1
     },
     "VERSION_INPUT": {
@@ -51,7 +51,7 @@
     "INTERFACE_NUMBER_INPUT": {
         "label": "Interface Number",
         "description": "X/Y(.Vlan)",
-        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0",
+        "insert": "${1:0}/${2:0}\nip address __IP__ __MASK__\nno shutdown\nexit\n$0",
         "kind": 15
     },
     "UPDATE_SOURCE_INTERFACE_NUMBER_INPUT": {
@@ -123,7 +123,7 @@
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
-        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0",
+        "insert": "${1:10}\nnetwork __IP__ __WILDCARD__ area 10\nexit\n$0",
         "kind": 15
     },
     "RIP_PASSIVE_INTERFACE_NUMBER":{
@@ -298,13 +298,13 @@
     "USERNAME_INPUT": {
         "label": "<username>",
         "description": "Username for authentication",
-        "insert": "admin",
+        "insert": "__USERNAME__",
         "kind": 1
     },
     "USERNAME_PASSWORD_INPUT": {
         "label": "<password>",
         "description": "Password for username",
-        "insert": "password123",
+        "insert": "__PASSWORD__",
         "kind": 1
     },
     "PRIVILEGE_INPUT": {
@@ -961,19 +961,19 @@
     "Template_ospf_cmd": {
         "label": "/ospf",
         "description": "Fügt eine OSPF-Konfigurationsvorlage ein",
-        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:192.168.1.0} ${4:0.0.0.255} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
+        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:__IP__} ${4:__WILDCARD__} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
         "kind": 15
     },
     "Template_rip_cmd": {
         "label": "/rip",
         "description": "Fügt eine RIP-Konfigurationsvorlage ein",
-        "insert": "router rip\n version 2\n network ${1:192.168.1.0}\n no auto-summary\n passive-interface gigabitethernet ${2:0/0}\n default-information originate\nexit\n$0",
+        "insert": "router rip\n version 2\n network ${1:__IP__}\n no auto-summary\n passive-interface gigabitethernet ${2:0/0}\n default-information originate\nexit\n$0",
         "kind": 15
     },
     "Template_grundkonfig_cmd": {
         "label": "/grundkonfig",
         "description": "Fügt eine Grundkonfigurationsvorlage ein",
-        "insert": "configure terminal\nhostname ${1:Router}\nno ip domain-lookup\nip domain-name ${2:htl3r.com}\nusername ${3:admin} algorithm-type scrypt secret ${4:Cisco1234!}\nusername ${3:admin} privilege 15\ncrypto key generate rsa usage-keys modulus 1024\nip ssh version 2\nline console 0\n login local\n logging synchronous\n exec-timeout 0 0\nexit\nline vty 0 4\n login local\n logging synchronous\n exec-timeout 0 0\n transport input ssh\nexit\n$0",
+        "insert": "configure terminal\nhostname ${1:__HOSTNAME__}\nno ip domain-lookup\nip domain-name ${2:__DOMAIN__}\nusername ${3:__USERNAME__} algorithm-type scrypt secret ${4:__PASSWORD__}\nusername ${3:__USERNAME__} privilege 15\ncrypto key generate rsa usage-keys modulus 1024\nip ssh version 2\nline console 0\n login local\n logging synchronous\n exec-timeout 0 0\nexit\nline vty 0 4\n login local\n logging synchronous\n exec-timeout 0 0\n transport input ssh\nexit\n$0",
         "kind": 15
     }
 }
