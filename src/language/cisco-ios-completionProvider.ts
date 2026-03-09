@@ -18,6 +18,30 @@ interface CompletionInfo {
     kind: number;
 }
 
+/**
+ * User-configurable default values injected into completion insert texts.
+ * Placeholders in Command_Details.json (e.g. __IP__) are replaced at runtime.
+ */
+interface UserDefaults {
+    ipAddress: string;
+    subnetMask: string;
+    wildcardMask: string;
+    hostname: string;
+    domainName: string;
+    username: string;
+    password: string;
+}
+
+const FALLBACK_DEFAULTS: UserDefaults = {
+    ipAddress:   '192.168.1.0',
+    subnetMask:  '255.255.255.0',
+    wildcardMask:'0.0.0.255',
+    hostname:    'Router',
+    domainName:  'htl3r.com',
+    username:    'admin',
+    password:    'Cisco1234!'
+};
+
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
     constructor(private readonly services: CiscoIosServices) {
@@ -44,10 +68,16 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         // Handles giving no Completion for Comments
         if (this.isCursorInComment(document, params)) return CompletionList.create([], true)
 
+        // Read user settings once per request and apply default substitutions
+        const defaults = await this.getUserDefaults();
+
         // acceptor creates and saves completion items from a given context
         // and stores it in the "completions" array
         const acceptor: CompletionAcceptor = (context, value) => {
-            const completionItem = this.fillCompletionItem(context, value);
+            const resolved = value.insertText
+                ? Object.assign({}, value, { insertText: this.applyDefaults(value.insertText, defaults) })
+                : value;
+            const completionItem = this.fillCompletionItem(context, resolved as typeof value);
             if (completionItem) {
                 completions.push(completionItem);
             }
@@ -145,6 +175,43 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         }
 
         return false
+    }
+
+    /**
+     * Reads user settings from VS Code (crill-ios.defaults.*) and returns
+     * them as a UserDefaults object. Falls back to FALLBACK_DEFAULTS on error.
+     */
+    private async getUserDefaults(): Promise<UserDefaults> {
+        try {
+            const cfg = await this.services.shared.workspace.ConfigurationProvider
+                .getConfiguration('crill-ios', 'defaults') as Record<string, string> | undefined;
+            if (!cfg) return FALLBACK_DEFAULTS;
+            return {
+                ipAddress:    cfg['ipAddress']    ?? FALLBACK_DEFAULTS.ipAddress,
+                subnetMask:   cfg['subnetMask']   ?? FALLBACK_DEFAULTS.subnetMask,
+                wildcardMask: cfg['wildcardMask'] ?? FALLBACK_DEFAULTS.wildcardMask,
+                hostname:     cfg['hostname']     ?? FALLBACK_DEFAULTS.hostname,
+                domainName:   cfg['domainName']   ?? FALLBACK_DEFAULTS.domainName,
+                username:     cfg['username']     ?? FALLBACK_DEFAULTS.username,
+                password:     cfg['password']     ?? FALLBACK_DEFAULTS.password,
+            };
+        } catch {
+            return FALLBACK_DEFAULTS;
+        }
+    }
+
+    /**
+     * Replaces placeholder tokens in an insert text with the user's configured defaults.
+     */
+    private applyDefaults(insertText: string, defaults: UserDefaults): string {
+        return insertText
+            .replaceAll('__IP__',       defaults.ipAddress)
+            .replaceAll('__MASK__',     defaults.subnetMask)
+            .replaceAll('__WILDCARD__', defaults.wildcardMask)
+            .replaceAll('__HOSTNAME__', defaults.hostname)
+            .replaceAll('__DOMAIN__',   defaults.domainName)
+            .replaceAll('__USERNAME__', defaults.username)
+            .replaceAll('__PASSWORD__', defaults.password);
     }
 
     /**

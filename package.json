@@ -103,7 +103,47 @@
                 "scopeName": "source.cisco-ios",
                 "path": "src/syntaxes/cisco-ios.tmLanguage.json"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Crill IOS",
+            "properties": {
+                "crill-ios.defaults.ipAddress": {
+                    "type": "string",
+                    "default": "192.168.1.0",
+                    "description": "Standard-IP-Adresse für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.subnetMask": {
+                    "type": "string",
+                    "default": "255.255.255.0",
+                    "description": "Standard-Subnetzmaske für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.wildcardMask": {
+                    "type": "string",
+                    "default": "0.0.0.255",
+                    "description": "Standard-Wildcard-Maske für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.hostname": {
+                    "type": "string",
+                    "default": "Router",
+                    "description": "Standard-Hostname für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.domainName": {
+                    "type": "string",
+                    "default": "htl3r.com",
+                    "description": "Standard-Domainname für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.username": {
+                    "type": "string",
+                    "default": "admin",
+                    "description": "Standard-Benutzername für Completion-Vorschläge"
+                },
+                "crill-ios.defaults.password": {
+                    "type": "string",
+                    "default": "Cisco1234!",
+                    "description": "Standard-Passwort für Completion-Vorschläge"
+                }
+            }
+        }
     },
     "activationEvents": [
         "onLanguage:cisco-ios"
