@@ -966,7 +966,7 @@
     "Template_ospf_cmd": {
         "label": "/ospf",
         "description": "Fügt eine OSPF-Konfigurationsvorlage ein",
-        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:__IP__} ${4:__WILDCARDMASK__} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
+        "insert": "router ospf ${1:1}\n router-id ${2:__ROUTER_ID__}\n network ${3:__IP__} ${4:__WILDCARDMASK__} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
         "kind": 15
     },
     "Template_rip_cmd": {
@@ -984,7 +984,7 @@
     "Template_interface_cmd": {
         "label": "/interface",
         "description": "Fügt eine Interface-Konfigurationsvorlage ein",
-        "insert": "interface gigabitethernet ${1:0/0}\n description ${2:Uplink}\n ip address ${3:__IP__} ${4:__SUBNETMASK__}\n no shutdown\nexit\n$0",
+        "insert": "interface gigabitethernet ${1:0/0}\n description ${2:__DESCRIPTION_INPUT__}\n ip address ${3:__IP__} ${4:__SUBNETMASK__}\n no shutdown\nexit\n$0",
         "kind": 15
     }
 }
