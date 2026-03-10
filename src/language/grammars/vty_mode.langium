@@ -2,10 +2,6 @@ import 'common'
 import 'configure_mode'
 import 'line_mode'
 
-//Exit zurück in den Configure terminal Mode
-Exit_line_vty:
-    command='exit' CR continuation+=Configure_cmds
-    ;
 
 // ---- VTY-Subcommand-Aggregation ----
 Line_vty_cmds:
@@ -15,7 +11,7 @@ Line_vty_cmds:
         | Logging_cmd
         | ExecTimeout_cmd
         | Transport_cmd
-    )* Exit_line_vty
+    )* Exit_line
     ;
 
 // transport input ssh|telnet(+)

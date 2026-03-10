@@ -3,6 +3,11 @@ import 'configure_mode'
 
 // ---- Gemeinsame Subcommands (Console & VTY) ----
 
+//Exit zurück in den Configure terminal Mode
+Exit_line:
+    command='exit' CR continuation+=Configure_cmds
+    ;
+
 // login
 Login_cmd:
     'login' Line_LoginOption
