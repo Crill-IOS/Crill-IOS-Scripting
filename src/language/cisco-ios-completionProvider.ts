@@ -11,6 +11,8 @@ type TokenDefaults = Record<string, string>;
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
+    private currentDefaults: TokenDefaults = {};
+
     constructor(private readonly services: CiscoIosServices) {
         super(services);
     }
@@ -37,6 +39,7 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
 
         // Read user settings once per request and apply default substitutions
         const defaults = await this.getTokenDefaults();
+        this.currentDefaults = defaults;
 
         // acceptor creates and saves completion items from a given context
         // and stores it in the "completions" array
@@ -76,13 +79,16 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         //if details exist for "next.type" create 
         // a completion item with the details
         if (detail) {
+            const insertText = (next.type && this.currentDefaults[next.type] !== undefined)
+                ? this.currentDefaults[next.type]
+                : detail.insert;
             acceptor(context, {
                 label: detail.label,
                 kind: detail.kind as CompletionItemKind,
                 detail: detail.description,
                 sortText: "1",
                 insertTextFormat: 2,
-                insertText: detail.insert
+                insertText
             })
             //if no details were found use fallback instead
         } else if (ast.isKeyword(next.feature) && next.type!= "KEYWORDS" ) {
