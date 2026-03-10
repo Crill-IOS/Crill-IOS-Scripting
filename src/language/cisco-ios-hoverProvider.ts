@@ -25,7 +25,7 @@ export class CiscoIosHoverProvider implements HoverProvider {
 
         const content: MarkupContent = {
             kind: 'markdown',
-            value: `**${detail.label.replaceAll("<", "").replaceAll(">", "")}**\n\n${detail.description}`
+            value: `**${detail.label.replaceAll("<", "").replaceAll(">", "")}**\n\n${detail.description}\n\nKey: ${key}\n\nDefault-Value: ${detail.insert}`
         };
         return { contents: content };
     }
