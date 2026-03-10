@@ -23,11 +23,10 @@
         "insert": "0.0.0.255",
         "kind": 12
     },
-    
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
         "description": "Set the hostname for this device",
-        "insert": "Router",
+        "insert": "R1",
         "kind": 1
     },
     "Ip_cmd_option_address": {
