@@ -5,11 +5,6 @@ IP: value = IPv4_DDC;
 WILDCARDMASK: value = IPv4_DDC;
 SUBNETMASK: value = IPv4_DDC;
 
-//end of line comments
-COMMENT:
-    value=COMMENT_TOKEN
-    ;
-
 COMMON :
     NL|
     COMMENTLINE
@@ -21,7 +16,7 @@ COMMENTLINE:
     ;
 
 fragment CR :
-    comment=COMMENT? NL
+    nl=NL
     ;
 
 HOSTNAME_INPUT :  value=(INPUT_lexer | KEYWORDS); 
@@ -73,5 +68,5 @@ terminal COMMENT_TOKEN: /[#!][^\r\n]*/;
 terminal INTERFACE_NUMBER: /[0-9]+\/[0-9]+(\.[0-9]+)?/;
 terminal NL: '\r'? '\n';
 terminal IPv4_DDC: (INT'.'INT'.'INT'.'INT);
-terminal INPUT_lexer: /[A-Za-z0-9\-_.,]*[A-Za-z][A-Za-z0-9\-_.,]*/;
+terminal INPUT_lexer: /[A-Za-z0-9\-_.,!]*[A-Za-z][A-Za-z0-9\-_.,!]*/;
 terminal INT: /[0-9]+/;
