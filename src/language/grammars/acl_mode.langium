@@ -12,12 +12,7 @@ Acl_extended_cmd:
     ;
 
 // ---- Exit zurück in Configure Mode ----
-Exit_acl_standard:
-    command='exit' CR continuation+=Configure_cmds
-    ;
-
-// ---- Exit zurück in Configure Mode ----
-Exit_acl_extended:
+Exit_acl:
     command='exit' CR continuation+=Configure_cmds
     ;
 
@@ -27,7 +22,7 @@ Acl_standard_cmds:
         COMMON
         | Acl_standard_permit_cmd
         | Acl_standard_deny_cmd
-    )* Exit_acl_standard
+    )* Exit_acl
     ;
 
 Acl_standard_permit_cmd:
@@ -62,7 +57,7 @@ Acl_extended_cmds:
         COMMON
         | Acl_extended_permit_cmd
         | Acl_extended_deny_cmd
-    )* Exit_acl_extended
+    )* Exit_acl
     ;
 
 Acl_extended_permit_cmd:

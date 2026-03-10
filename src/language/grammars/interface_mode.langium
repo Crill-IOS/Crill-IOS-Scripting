@@ -4,6 +4,10 @@ import 'common'
 import 'configure_mode'
 import 'acl_mode'
 
+Exit_interface:
+    command='exit' CR continuation+=Configure_cmds
+    ;
+
 // ---- Gemeinsame Subcommands für alle Interfaces ----
 IP_cmd_interface:
     'ip' option=Ip_cmd_options;

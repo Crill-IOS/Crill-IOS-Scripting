@@ -2,10 +2,6 @@ import 'common'
 import 'configure_mode'
 import 'interface_mode'
 
-// Exit zurück in Configure-Mode
-Exit_interface_gigabitethernet:
-    command='exit' CR continuation+=Configure_cmds
-    ;
 
 // ---- GigabitEthernet-cmds ----
 Interface_gigabitethernet_cmds:
@@ -17,7 +13,7 @@ Interface_gigabitethernet_cmds:
         | Description_cmd
         | Duplex_cmd
         | Speed_cmd
-    )* Exit_interface_gigabitethernet
+    )* Exit_interface
     ;
 
 Duplex_cmd:
