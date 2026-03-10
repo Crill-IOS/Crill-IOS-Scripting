@@ -1,0 +1,32 @@
+import { Hover, HoverParams, MarkupContent } from "vscode-languageserver";
+import { CstUtils, LangiumDocument, MaybePromise } from "langium";
+import { HoverProvider } from "langium/lsp";
+import { commandDetails } from './details/commandDetails.js';
+
+export class CiscoIosHoverProvider implements HoverProvider {
+
+    constructor(protected services: unknown) {}
+
+    getHoverContent(document: LangiumDocument, params: HoverParams): MaybePromise<Hover | undefined> {
+        const rootNode = document.parseResult?.value?.$cstNode;
+        if (!rootNode) return undefined;
+
+        const offset = document.textDocument.offsetAt(params.position);
+        const leafNode = CstUtils.findLeafNodeAtOffset(rootNode, offset);
+        if (!leafNode || leafNode.offset + leafNode.length <= offset) return undefined;
+
+        return this.getHoverFromDetails(leafNode.astNode?.$type);
+    }
+
+    private getHoverFromDetails(key: string | undefined): Hover | undefined {
+        if (!key) return undefined;
+        const detail = commandDetails[key];
+        if (!detail) return undefined;
+
+        const content: MarkupContent = {
+            kind: 'markdown',
+            value: `**${detail.label.replaceAll("<", "").replaceAll(">", "")}**\n\n${detail.description}\n\nKey: ${key}\n\nDefault-Value: ${detail.insert}`
+        };
+        return { contents: content };
+    }
+}

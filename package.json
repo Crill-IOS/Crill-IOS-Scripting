@@ -107,7 +107,20 @@
                 "scopeName": "source.cisco-ios",
                 "path": "src/syntaxes/cisco-ios.tmLanguage.json"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Crill-IOS",
+            "properties": {
+                "Crill-IOS.defaults": {
+                    "type": "object",
+                    "default": {},
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Erlaubt es Defaultwerte für IP-Adressen, Hostnamen, etc. zu überschreiben.\nMögliche Key-Werte:\n - USERNAME_INPUT\n - USERNAME_PASSWORD_INPUT\n - IP\n - SUBNETMASK\n - WILDCARDMASK\n - HOSTNAME_INPUT\n - DOMAINNAME_INPUT\n - INTERFACE_NUMBER_INPUT\n - DESCRIPTION_INPUT\n - BANNER_MESSAGE\n - ACL_NAME"
+                }
+            }
+        }
     },
     "activationEvents": [
         "onLanguage:cisco-ios"

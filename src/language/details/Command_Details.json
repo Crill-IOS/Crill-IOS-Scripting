@@ -1,77 +1,990 @@
 {
+    "Ping_cmd": {
+        "label": "ping",
+        "description": "Sendet ICMP Echo-Anfragen an eine Ziel-IP-Adresse um die Erreichbarkeit zu testen.",
+        "insert": "ping",
+        "kind": 10
+    },
     "IP": {
-        "label":"IP-Address lol",
-        "description": "ip....",
-        "insert": "1.2.3.4"
+        "label":"IP-Address",
+        "description": "A.B.C.D",
+        "insert": "192.168.1.1",
+        "kind": 12
     },
     "SUBNETMASK": {
         "label": "Subnetmask",
-        "description": "subnetmask...",
-        "insert": "255.255.255.0"
+        "description": "A.B.C.D",
+        "insert": "255.255.255.0",
+        "kind": 12
     },
     "WILDCARDMASK": {
         "label": "Wildcardmask",
-        "description": "wildcardmask...",
-        "insert": "0.0.0.255"
+        "description": "A.B.C.D",
+        "insert": "0.0.0.255",
+        "kind": 12
     },
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
-        "description": "This Systems Network Name",
-        "insert": "R1"
+        "description": "Set the hostname for this device",
+        "insert": "R1",
+        "kind": 1
     },
     "Ip_cmd_option_address": {
         "label":"address",
-        "description": "set an address to this interface",
-        "insert": "address"
+        "description": "Specify an address for this interface",
+        "insert": "address",
+        "kind": 10
     },
     "DOMAINNAME_INPUT": {
-        "label":"<Domain Name>",
-        "description": "The Domain Name of the Device",
-        "insert": "4CN.at"
+        "label":"<domain-name>",
+        "description": "Set the domain-name for this device",
+        "insert": "htl3r.com",
+        "kind": 1
     },
     "VERSION_INPUT": {
         "label":"2",
         "description": "Protocol to be supported",
-        "insert": "2"
+        "insert": "2",
+        "kind": 12
     },
-    "Sub_Interface_number": {
-        "label":".xx",
-        "description": "",
-        "insert": ".10"
+    "INTERFACE_NUMBER_INPUT": {
+        "label": "Interface Number",
+        "description": "X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
     },
-    "Interface_number": {
-        "label":"x/x",
-        "description": "number of the interface to be entered",
-        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0"
+    "UPDATE_SOURCE_INTERFACE_NUMBER_INPUT": {
+        "label": "Interface Number (slot/port)",
+        "description": "Physical interface for BGP update-source (slot/port only, no subinterface).",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
+    },
+    "NAT_INTERFACE_NUMBER_INPUT": {
+        "label": "NAT Interface Number",
+        "description": "X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
     },
     "No_ip_cmd_option_domain_lookup":{
         "label":"domain-lookup",
         "description": "stops ip domain lookup",
-        "insert": "domain-lookup"
+        "insert": "domain-lookup",
+        "kind": 10
     },
     "Description_cmd":{
         "label":"description",
         "description": "describes the interface",
-        "insert": "description"
+        "insert": "description",
+        "kind": 10
+    },
+    "DESCRIPTION_INPUT":{
+        "label":"<description>",
+        "description": "Set the description for this interface",
+        "insert": "To_R2",
+        "kind": 1
     },
     "COMMENT":{
         "label":"<CR>",
         "description": "possible end of a command",
-        "insert": "\n"
+        "insert": "\n",
+        "kind": 1
     },
      "BANNER_MESSAGE":{
         "label":"<message>",
         "description": "The Banner message",
-        "insert": "#Authorized acces only!#"
+        "insert": "#Authorized acces only!#",
+        "kind": 1
     },
      "OSPF_AREA_NUMBER":{
         "label":"OSPF Area Number",
         "description": "Area number",
-        "insert": "10"
+        "insert": "10",
+        "kind": 12
+    },
+     "OSPF_COST_NUMBER":{
+        "label":"OSPF Cost",
+        "description": "Interface OSPF cost (1-65535)",
+        "insert": "10",
+        "kind": 12
+    },
+     "OSPF_PRIORITY_NUMBER":{
+        "label":"OSPF Priority",
+        "description": "Router priority (0-255)",
+        "insert": "1",
+        "kind": 12
+    },
+     "OSPF_PASSIVE_INTERFACE_NUMBER":{
+        "label":"OSPF Passive Interface Number",
+        "description": "Passive-Interface X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
     },
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
-        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0"
+        "insert": "${1:10}",
+        "kind": 15
+    },
+    "RIP_PASSIVE_INTERFACE_NUMBER":{
+        "label":"RIP Passive Interface Number",
+        "description": "Passive-Interface X/Y(.Vlan)",
+        "insert": "${1:0}/${2:0}",
+        "kind": 15
+    },
+    "ACL_NUMBER": {
+        "label": "ACL Number",
+        "description": "Standard ACL number (0-99)",
+        "insert": "10",
+        "kind": 12
+    },
+    "ACL_NAME": {
+        "label": "ACL Name",
+        "description": "Extended ACL name",
+        "insert": "MY_ACL",
+        "kind": 1
+    },
+    "ACL_STATEMENT_NUMBER": {
+        "label": "ACL Statement Number",
+        "description": "Sequence number for ACL statement",
+        "insert": "10",
+        "kind": 12
+    },
+    "ACL_PORT_NUMBER": {
+        "label": "ACL Port Number",
+        "description": "Port number (0-65535)",
+        "insert": "80",
+        "kind": 12
+    },
+    "Acl_standard_permit_cmd": {
+        "label": "permit",
+        "description": "Permit packets matching the criteria",
+        "insert": "permit",
+        "kind": 10
+    },
+    "Acl_standard_deny_cmd": {
+        "label": "deny",
+        "description": "Deny packets matching the criteria",
+        "insert": "deny",
+        "kind": 10
+    },
+    "Acl_extended_permit_cmd": {
+        "label": "permit",
+        "description": "Permit packets matching the extended criteria",
+        "insert": "permit",
+        "kind": 10
+    },
+    "Acl_extended_deny_cmd": {
+        "label": "deny",
+        "description": "Deny packets matching the extended criteria",
+        "insert": "deny",
+        "kind": 10
+    },
+    "Acl_any_match": {
+        "label": "any",
+        "description": "Match any source or destination",
+        "insert": "any",
+        "kind": 10
+    },
+    "Acl_host_match": {
+        "label": "host",
+        "description": "Match a specific host",
+        "insert": "host",
+        "kind": 10
+    },
+    "Acl_protocol_ip": {
+        "label": "ip",
+        "description": "IP protocol",
+        "insert": "ip",
+        "kind": 10
+    },
+    "Acl_protocol_icmp": {
+        "label": "icmp",
+        "description": "ICMP protocol",
+        "insert": "icmp",
+        "kind": 10
+    },
+    "Acl_protocol_tcp": {
+        "label": "tcp",
+        "description": "TCP protocol",
+        "insert": "tcp",
+        "kind": 10
+    },
+    "Acl_protocol_udp": {
+        "label": "udp",
+        "description": "UDP protocol",
+        "insert": "udp",
+        "kind": 10
+    },
+    "Acl_protocol_gre": {
+        "label": "gre",
+        "description": "GRE protocol",
+        "insert": "gre",
+        "kind": 10
+    },
+    "Acl_port_match": {
+        "label": "eq",
+        "description": "Equal to port",
+        "insert": "eq",
+        "kind": 10
+    },
+    "Acl_port_isakmp": {
+        "label": "isakmp",
+        "description": "ISAKMP port (500)",
+        "insert": "isakmp",
+        "kind": 10
+    },
+    "Acl_port_https": {
+        "label": "https",
+        "description": "HTTPS port (443)",
+        "insert": "https",
+        "kind": 10
+    },
+    "Acl_port_http": {
+        "label": "http",
+        "description": "HTTP port (80)",
+        "insert": "http",
+        "kind": 10
+    },
+    "Acl_port_ftp": {
+        "label": "ftp",
+        "description": "FTP port (21)",
+        "insert": "ftp",
+        "kind": 10
+    },
+    "Acl_port_ssh": {
+        "label": "ssh",
+        "description": "SSH port (22)",
+        "insert": "ssh",
+        "kind": 10
+    },
+    "Acl_port_telnet": {
+        "label": "telnet",
+        "description": "Telnet port (23)",
+        "insert": "telnet",
+        "kind": 10
+    },
+    "Acl_port_domain": {
+        "label": "domain",
+        "description": "DNS port (53)",
+        "insert": "domain",
+        "kind": 10
+    },
+    "Acl_port_tftp": {
+        "label": "tftp",
+        "description": "TFTP port (69)",
+        "insert": "tftp",
+        "kind": 10
+    },
+    "Acl_port_snmp": {
+        "label": "snmp",
+        "description": "SNMP port (161)",
+        "insert": "snmp",
+        "kind": 10
+    },
+    "Acl_port_ntp": {
+        "label": "ntp",
+        "description": "NTP port (123)",
+        "insert": "ntp",
+        "kind": 10
+    },
+    "Acl_port_bgp": {
+        "label": "bgp",
+        "description": "BGP port (179)",
+        "insert": "bgp",
+        "kind": 10
+    },
+    
+    "USERNAME_INPUT": {
+        "label": "<username>",
+        "description": "Username for authentication",
+        "insert": "admin",
+        "kind": 1
+    },
+    "USERNAME_PASSWORD_INPUT": {
+        "label": "<password>",
+        "description": "Password for username",
+        "insert": "Cisco123!",
+        "kind": 1
+    },
+    "PRIVILEGE_INPUT": {
+        "label": "<privilege-level>",
+        "description": "Privilege level (0-15)",
+        "insert": "15",
+        "kind": 12
+    },
+    "MODULUS_INPUT": {
+        "label": "<modulus>",
+        "description": "RSA key modulus size (512-4096)",
+        "insert": "2048",
+        "kind": 12
+    },
+    "Username_cmd": {
+        "label": "username",
+        "description": "Create or modify user account",
+        "insert": "username",
+        "kind": 10
+    },
+    "PrivilegeOption": {
+        "label": "privilege",
+        "description": "Set privilege level for user",
+        "insert": "privilege",
+        "kind": 10
+    },
+    "PasswordOption": {
+        "label": "password",
+        "description": "Set password for user",
+        "insert": "password",
+        "kind": 10
+    },
+    "SecretOption": {
+        "label": "secret",
+        "description": "Set encrypted password for user",
+        "insert": "secret",
+        "kind": 10
+    },
+    "AlgorithmTypeOption": {
+        "label": "algorithm-type",
+        "description": "Specify encryption algorithm",
+        "insert": "algorithm-type",
+        "kind": 10
+    },
+    "MD5Option": {
+        "label": "md5",
+        "description": "MD5 encryption algorithm",
+        "insert": "md5",
+        "kind": 10
+    },
+    "ScryptOption": {
+        "label": "scrypt",
+        "description": "Scrypt encryption algorithm",
+        "insert": "scrypt",
+        "kind": 10
+    },
+    "Sha256Option": {
+        "label": "sha256",
+        "description": "SHA256 encryption algorithm",
+        "insert": "sha256",
+        "kind": 10
+    },
+    
+    "Banner_cmd": {
+        "label": "banner",
+        "description": "Define a banner message",
+        "insert": "banner",
+        "kind": 10
+    },
+    "ConfigSaveOption": {
+        "label": "config-save",
+        "description": "Banner displayed when saving config",
+        "insert": "config-save",
+        "kind": 10
+    },
+    "ExecOption": {
+        "label": "exec",
+        "description": "Banner displayed at EXEC mode",
+        "insert": "exec",
+        "kind": 10
+    },
+    "IncomingOption": {
+        "label": "incoming",
+        "description": "Banner for incoming connections",
+        "insert": "incoming",
+        "kind": 10
+    },
+    "LoginOption": {
+        "label": "login",
+        "description": "Banner displayed at login",
+        "insert": "login",
+        "kind": 10
+    },
+    "MOTDOption": {
+        "label": "motd",
+        "description": "Message of the day banner",
+        "insert": "motd",
+        "kind": 10
+    },
+    "PromptTimeoutOption": {
+        "label": "prompt-timeout",
+        "description": "Banner displayed on timeout",
+        "insert": "prompt-timeout",
+        "kind": 10
+    },
+    "SlipPPPOption": {
+        "label": "slip-ppp",
+        "description": "Banner for SLIP/PPP connections",
+        "insert": "slip-ppp",
+        "kind": 10
+    },
+    
+    "Crypto_cmd": {
+        "label": "crypto",
+        "description": "Cryptographic configuration",
+        "insert": "crypto",
+        "kind": 10
+    },
+    "Key_cmd": {
+        "label": "key",
+        "description": "Key management",
+        "insert": "key",
+        "kind": 10
+    },
+    "Generate_cmd": {
+        "label": "generate",
+        "description": "Generate cryptographic keys",
+        "insert": "generate",
+        "kind": 10
+    },
+    "Rsa_cmd": {
+        "label": "rsa",
+        "description": "RSA key configuration",
+        "insert": "rsa",
+        "kind": 10
+    },
+    "UsageKeys_cmd": {
+        "label": "usage-keys",
+        "description": "Specify key usage",
+        "insert": "usage-keys",
+        "kind": 10
+    },
+    "Modulus_cmd": {
+        "label": "modulus",
+        "description": "RSA key modulus size",
+        "insert": "modulus",
+        "kind": 10
+    },
+    
+    "Router_cmd": {
+        "label": "router",
+        "description": "Enable a routing process",
+        "insert": "router",
+        "kind": 10
+    },
+    "BGP_AS_NUMBER": {
+        "label": "BGP AS Number",
+        "description": "Autonomous System number",
+        "insert": "65000",
+        "kind": 12
+    },
+    "BGP_EBGP_MULTIHOP_NUMBER": {
+        "label": "eBGP Multihop",
+        "description": "Maximum hops for eBGP (1-255)",
+        "insert": "255",
+        "kind": 12
+    },
+    "RIP_VERSION_NUMBER": {
+        "label": "RIP Version",
+        "description": "RIP version (1 or 2)",
+        "insert": "2",
+        "kind": 12
+    },
+    
+    "Line_cmd": {
+        "label": "line",
+        "description": "Configure a terminal line",
+        "insert": "line",
+        "kind": 10
+    },
+    "CONSOLE_NUMBER": {
+        "label": "Console Number",
+        "description": "Console line number (usually 0)",
+        "insert": "0",
+        "kind": 12
+    },
+    "VTY_NUMBER": {
+        "label": "VTY Number",
+        "description": "VTY line number range",
+        "insert": "0",
+        "kind": 12
+    },
+    "Login_cmd": {
+        "label": "login",
+        "description": "Enable password checking",
+        "insert": "login",
+        "kind": 10
+    },
+    "Line_LoginOption": {
+        "label": "local",
+        "description": "Use local username authentication",
+        "insert": "local",
+        "kind": 10
+    },
+    "Logging_cmd": {
+        "label": "logging",
+        "description": "Configure logging options",
+        "insert": "logging",
+        "kind": 10
+    },
+    "Line_LoggingOption": {
+        "label": "synchronous",
+        "description": "Synchronous logging",
+        "insert": "synchronous",
+        "kind": 10
+    },
+    "ExecTimeout_cmd": {
+        "label": "exec-timeout",
+        "description": "Set EXEC timeout",
+        "insert": "exec-timeout",
+        "kind": 10
+    },
+    "Line_ExecTimeoutValue": {
+        "label": "<minutes> <seconds>",
+        "description": "Timeout in minutes and seconds",
+        "insert": "0 0",
+        "kind": 1
+    },
+    "Transport_cmd": {
+        "label": "transport",
+        "description": "Configure transport protocol",
+        "insert": "transport",
+        "kind": 10
+    },
+    "TransportInput_cmd": {
+        "label": "input",
+        "description": "Configure input protocols",
+        "insert": "input",
+        "kind": 10
+    },
+    "SshKeyword": {
+        "label": "ssh",
+        "description": "SSH protocol",
+        "insert": "ssh",
+        "kind": 10
+    },
+    "TelnetKeyword": {
+        "label": "telnet",
+        "description": "Telnet protocol",
+        "insert": "telnet",
+        "kind": 10
+    },
+    
+    "Interface_cmd": {
+        "label": "interface",
+        "description": "Configure an interface",
+        "insert": "interface",
+        "kind": 10
+    },
+    "INTERFACE_VLAN_NUMBER": {
+        "label": "VLAN Number",
+        "description": "VLAN interface number",
+        "insert": "10",
+        "kind": 12
+    },
+    "INTERFACE_SPEED_NUMBER": {
+        "label": "Interface Speed",
+        "description": "Interface speed in Mbps",
+        "insert": "100",
+        "kind": 12
+    },
+    "INTERFACE_CARRIER_DELAY_NUMBER": {
+        "label": "Carrier Delay",
+        "description": "Carrier delay in seconds",
+        "insert": "0",
+        "kind": 12
+    },
+    "Shutdown_cmd": {
+        "label": "shutdown",
+        "description": "Disable the interface",
+        "insert": "shutdown",
+        "kind": 10
+    },
+    "No_cmd_interface": {
+        "label": "no shutdown",
+        "description": "Enable the interface",
+        "insert": "no shutdown",
+        "kind": 10
+    },
+    "Ip_cmd_option_address_secondary": {
+        "label": "secondary",
+        "description": "Secondary IP address",
+        "insert": "secondary",
+        "kind": 10
+    },
+    "Ip_cmd_option_ospf": {
+        "label": "ospf",
+        "description": "OSPF interface configuration",
+        "insert": "ospf",
+        "kind": 10
+    },
+    "Ip_cmd_option_ospf_option_cost": {
+        "label": "cost",
+        "description": "OSPF interface cost",
+        "insert": "cost",
+        "kind": 10
+    },
+    "Ip_cmd_option_ospf_option_priority": {
+        "label": "priority",
+        "description": "OSPF router priority",
+        "insert": "priority",
+        "kind": 10
+    },
+    "Ip_cmd_option_nat": {
+        "label": "nat",
+        "description": "NAT configuration",
+        "insert": "nat",
+        "kind": 10
+    },
+    "Nat_inside": {
+        "label": "inside",
+        "description": "Inside NAT interface",
+        "insert": "inside",
+        "kind": 10
+    },
+    "Nat_outside": {
+        "label": "outside",
+        "description": "Outside NAT interface",
+        "insert": "outside",
+        "kind": 10
+    },
+    "Ip_cmd_option_access_group": {
+        "label": "access-group",
+        "description": "Apply ACL to interface",
+        "insert": "access-group",
+        "kind": 10
+    },
+    "Access_group_in": {
+        "label": "in",
+        "description": "Apply ACL to inbound traffic",
+        "insert": "in",
+        "kind": 10
+    },
+    "Access_group_out": {
+        "label": "out",
+        "description": "Apply ACL to outbound traffic",
+        "insert": "out",
+        "kind": 10
+    },
+    "Duplex_cmd": {
+        "label": "duplex",
+        "description": "Set duplex mode",
+        "insert": "duplex",
+        "kind": 10
+    },
+    "Duplex_auto": {
+        "label": "auto",
+        "description": "Auto-negotiate duplex",
+        "insert": "auto",
+        "kind": 10
+    },
+    "Duplex_full": {
+        "label": "full",
+        "description": "Full duplex",
+        "insert": "full",
+        "kind": 10
+    },
+    "Duplex_half": {
+        "label": "half",
+        "description": "Half duplex",
+        "insert": "half",
+        "kind": 10
+    },
+    "Speed_cmd": {
+        "label": "speed",
+        "description": "Set interface speed",
+        "insert": "speed",
+        "kind": 10
+    },
+    "CarrierDelay_cmd": {
+        "label": "carrier-delay",
+        "description": "Set carrier delay",
+        "insert": "carrier-delay",
+        "kind": 10
+    },
+    "Ip_access_list_cmd_option": {
+        "label": "access-list",
+        "description": "Configure access list",
+        "insert": "access-list",
+        "kind": 10
+    },
+    "Acl_standard_cmd": {
+        "label": "standard",
+        "description": "Standard numbered ACL",
+        "insert": "standard",
+        "kind": 10
+    },
+    "Acl_extended_cmd": {
+        "label": "extended",
+        "description": "Extended named ACL",
+        "insert": "extended",
+        "kind": 10
+    },
+    "Ip_nat_cmd": {
+        "label": "ip nat",
+        "description": "NAT configuration",
+        "insert": "ip nat",
+        "kind": 10
+    },
+    "Ip_nat_inside_cmd": {
+        "label": "inside",
+        "description": "Inside NAT",
+        "insert": "inside",
+        "kind": 10
+    },
+    "Ip_nat_inside_source_cmd": {
+        "label": "source",
+        "description": "Source NAT",
+        "insert": "source",
+        "kind": 10
+    },
+    "Ip_nat_inside_source_list_cmd": {
+        "label": "list",
+        "description": "Use ACL for NAT",
+        "insert": "list",
+        "kind": 10
+    },
+    "Ip_nat_inside_source_list_interface_cmd": {
+        "label": "interface",
+        "description": "Use interface for NAT",
+        "insert": "interface",
+        "kind": 10
+    },
+    "Ip_nat_overload_cmd": {
+        "label": "overload",
+        "description": "Enable PAT (Port Address Translation)",
+        "insert": "overload",
+        "kind": 10
+    },
+    
+    "No_cmd": {
+        "label": "no",
+        "description": "Negate a command",
+        "insert": "no",
+        "kind": 10
+    },
+    "Bgp_neighbor_cmd": {
+        "label": "neighbor",
+        "description": "Configure BGP neighbor",
+        "insert": "neighbor",
+        "kind": 10
+    },
+    "Bgp_neighbour_Remote_as_option": {
+        "label": "remote-as",
+        "description": "Set remote AS number",
+        "insert": "remote-as",
+        "kind": 10
+    },
+    "Bgp_neighbour_update_source_option": {
+        "label": "update-source",
+        "description": "Set source interface for BGP updates",
+        "insert": "update-source",
+        "kind": 10
+    },
+    "Bgp_neigbour_ebgp_multihop_option": {
+        "label": "ebgp-multihop",
+        "description": "Set eBGP multihop TTL",
+        "insert": "ebgp-multihop",
+        "kind": 10
+    },
+    "Bgp_neighbour_next_hop_self_option": {
+        "label": "next-hop-self",
+        "description": "Set next-hop-self for neighbor",
+        "insert": "next-hop-self",
+        "kind": 10
+    },
+    "Bgp_neighbour_route_reflector_option": {
+        "label": "route-reflector-client",
+        "description": "Configure as route reflector client",
+        "insert": "route-reflector-client",
+        "kind": 10
+    },
+    "Bgp_network_cmd": {
+        "label": "network",
+        "description": "Advertise network in BGP",
+        "insert": "network",
+        "kind": 10
+    },
+    "Bgp_network_mask": {
+        "label": "mask",
+        "description": "Network mask for BGP",
+        "insert": "mask",
+        "kind": 10
+    },
+    
+    "Ospf_router_id_cmd": {
+        "label": "router-id",
+        "description": "Set OSPF router ID",
+        "insert": "router-id",
+        "kind": 10
+    },
+    "ROUTER_ID": {
+        "label": "Router-ID",
+        "description": "A.B.C.D – eindeutige ID des Routers im OSPF-Prozess",
+        "insert": "1.1.1.1",
+        "kind": 12
+    },
+    "Ospf_network_cmd": {
+        "label": "network",
+        "description": "Advertise network in OSPF",
+        "insert": "network",
+        "kind": 10
+    },
+    "Ospf_passive_interface_cmd": {
+        "label": "passive-interface",
+        "description": "Configure passive interface",
+        "insert": "passive-interface",
+        "kind": 10
+    },
+    "Ospf_priority_cmd": {
+        "label": "priority",
+        "description": "Set OSPF router priority",
+        "insert": "priority",
+        "kind": 10
+    },
+    "Ospf_default_information_cmd": {
+        "label": "default-information",
+        "description": "Configure default route origination",
+        "insert": "default-information",
+        "kind": 10
+    },
+    "Ospf_default_information_cmd_options": {
+        "label": "originate",
+        "description": "Originate default route",
+        "insert": "originate",
+        "kind": 10
+    },
+    "Ospf_redistribute_cmd": {
+        "label": "redistribute",
+        "description": "Redistribute routes into OSPF",
+        "insert": "redistribute",
+        "kind": 10
+    },
+    "Ospf_redistribute_cmd_options": {
+        "label": "static",
+        "description": "Redistribute static routes",
+        "insert": "static",
+        "kind": 10
+    },
+    "Rip_network_cmd": {
+        "label": "network",
+        "description": "Advertise network in RIP",
+        "insert": "network",
+        "kind": 10
+    },
+    "Rip_version_cmd": {
+        "label": "version",
+        "description": "Set RIP version",
+        "insert": "version",
+        "kind": 10
+    },
+    "Rip_passive_interface_cmd": {
+        "label": "passive-interface",
+        "description": "Configure passive interface",
+        "insert": "passive-interface",
+        "kind": 10
+    },
+    "Rip_default_information_cmd": {
+        "label": "default-information",
+        "description": "Configure default route origination",
+        "insert": "default-information",
+        "kind": 10
+    },
+    "Rip_default_information_cmd_options": {
+        "label": "originate",
+        "description": "Originate default route",
+        "insert": "originate",
+        "kind": 10
+    },
+    "Rip_redistribute_cmd": {
+        "label": "redistribute",
+        "description": "Redistribute routes into RIP",
+        "insert": "redistribute",
+        "kind": 10
+    },
+    "Rip_redistribute_cmd_options": {
+        "label": "static",
+        "description": "Redistribute static routes",
+        "insert": "static",
+        "kind": 10
+    },
+    
+    "Configure_cmd": {
+        "label": "configure",
+        "description": "Enter configuration mode",
+        "insert": "configure",
+        "kind": 10
+    },
+    "Configure_cmd_options": {
+        "label": "terminal",
+        "description": "Configure from terminal",
+        "insert": "terminal",
+        "kind": 10
+    },
+    "Configure_cmd_options_memory": {
+        "label": "memory",
+        "description": "Configure from NVRAM",
+        "insert": "memory",
+        "kind": 10
+    },
+    "Show_cmd": {
+        "label": "show",
+        "description": "Display system information",
+        "insert": "show",
+        "kind": 10
+    },
+    "Show_run_option": {
+        "label": "run",
+        "description": "Show running configuration",
+        "insert": "run",
+        "kind": 10
+    },
+    "Show_interface_option": {
+        "label": "interface",
+        "description": "Show interface status",
+        "insert": "interface",
+        "kind": 10
+    },
+    
+    "Domainname_cmd": {
+        "label": "domain-name",
+        "description": "Set domain name",
+        "insert": "domain-name",
+        "kind": 10
+    },
+    "SSH_cmd": {
+        "label": "ssh",
+        "description": "SSH configuration",
+        "insert": "ssh",
+        "kind": 10
+    },
+    "SSHOptions": {
+        "label": "version",
+        "description": "SSH version",
+        "insert": "version",
+        "kind": 10
+    },
+    "Hostname_cmd": {
+        "label": "hostname",
+        "description": "Set system hostname",
+        "insert": "hostname",
+        "kind": 10
+    },
+    "IP_cmd": {
+        "label": "ip",
+        "description": "IP configuration",
+        "insert": "ip",
+        "kind": 10
+    },
+    "Template_ospf_cmd": {
+        "label": "/ospf",
+        "description": "Fügt eine OSPF-Konfigurationsvorlage ein",
+        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:__IP__} ${4:__WILDCARDMASK__} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_rip_cmd": {
+        "label": "/rip",
+        "description": "Fügt eine RIP-Konfigurationsvorlage ein",
+        "insert": "router rip\n version 2\n network ${1:__IP__}\n no auto-summary\n passive-interface gigabitethernet ${2:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_grundkonfig_cmd": {
+        "label": "/grundkonfiguration",
+        "description": "Fügt eine Grundkonfigurationsvorlage ein",
+        "insert": "configure terminal\nhostname ${1:__HOSTNAME_INPUT__}\nno ip domain-lookup\nip domain-name ${2:__DOMAINNAME_INPUT__}\nusername ${3:__USERNAME_INPUT__} algorithm-type scrypt secret ${4:__USERNAME_PASSWORD_INPUT__}\nusername ${3:__USERNAME_INPUT__} privilege 15\ncrypto key generate rsa usage-keys modulus 1024\nip ssh version 2\nline console 0\n login local\n logging synchronous\n exec-timeout 0 0\nexit\nline vty 0 4\n login local\n logging synchronous\n exec-timeout 0 0\n transport input ssh\nexit\n$0",
+        "kind": 15
+    },
+    "Template_interface_cmd": {
+        "label": "/interface",
+        "description": "Fügt eine Interface-Konfigurationsvorlage ein",
+        "insert": "interface gigabitethernet ${1:0/0}\n description ${2:Uplink}\n ip address ${3:__IP__} ${4:__SUBNETMASK__}\n no shutdown\nexit\n$0",
+        "kind": 15
     }
 }

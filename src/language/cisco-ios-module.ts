@@ -6,6 +6,8 @@ import { CiscoIosScopeProvider } from './cisco-ios-scopeProvider.js';
 import { CiscoIosCompletionProvider } from './cisco-ios-completionProvider.js';
 import { CiscoIosLinker } from './cisco-ios-linker.js';
 import { CiscoIosSemanticTokenProvider } from './cisco-ios-semanticTokenProvider.js';
+import { CiscoIosDocumentValidator } from './cisco-ios-documentValidator.js';
+import { CiscoIosHoverProvider } from './cisco-ios-hoverProvider.js';
 /**
  * Declaration of custom services - add your own service classes here.
  */
@@ -28,7 +30,8 @@ export type CiscoIosServices = LangiumServices & CiscoIosAddedServices
  */
 export const CiscoIosModule: Module<CiscoIosServices, PartialLangiumServices & CiscoIosAddedServices> = {
     validation: {
-        CiscoIosValidator: () => new CiscoIosValidator()
+        CiscoIosValidator: () => new CiscoIosValidator(),
+        DocumentValidator: (services) => new CiscoIosDocumentValidator(services)
     },
 
     references: {
@@ -37,7 +40,8 @@ export const CiscoIosModule: Module<CiscoIosServices, PartialLangiumServices & C
     },
     lsp: {
         CompletionProvider: (services) => new CiscoIosCompletionProvider(services),
-        SemanticTokenProvider: (services) => new CiscoIosSemanticTokenProvider(services)
+        SemanticTokenProvider: (services) => new CiscoIosSemanticTokenProvider(services),
+        HoverProvider: (services) => new CiscoIosHoverProvider(services),
     }
 };
 

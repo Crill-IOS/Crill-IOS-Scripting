@@ -34,7 +34,10 @@ function startLanguageClient(context: vscode.ExtensionContext): LanguageClient {
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: '*', language: 'cisco-ios' }]
+        documentSelector: [{ scheme: '*', language: 'cisco-ios' }],
+        synchronize: {
+            configurationSection: 'Crill-IOS'
+        }
     };
 
     // Create the language client and start the client.

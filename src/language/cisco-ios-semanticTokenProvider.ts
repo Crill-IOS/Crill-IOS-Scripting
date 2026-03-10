@@ -1,32 +1,57 @@
 import { SemanticTokenAcceptor, AbstractSemanticTokenProvider } from 'langium/lsp';
 import { AstNode } from 'langium';
-import { isCOMMON, isInterface_types } from './generated/ast.js';
+import { isCOMMON } from './generated/ast.js';
 
 /**
  * Contains highlighting information AstNodes
  */
 const TOKEN_MAP: Record<string, { type: string; modifier?: string; keyword?: string }> = {
-    // Allgemein
-    COMMON: { type: 'comment'},
     COMMENT: { type: 'comment' },
 
-    // Grundkonfig
-    HOSTNAME_INPUT: { type: 'string' },
-    USERNAME_INPUT: { type: 'string'},
+    // Texteingaben
     BANNER_MESSAGE: { type: 'string' },
-    DOMAINNAME_INPUT: { type: 'string' },
-    Interface_number: { type: 'string'},
-    VERSION_INPUT: { type: 'string'},
-    MODULUS_INPUT: { type: 'string'},
-    PRIVILEGE_INPUT: { type: 'string'},
-    USERNAME_PASSWORD_INPUT: { type: 'string'},
-    IP: { type: 'string'},
-    SUBNETMASK: { type: 'string'},
-    WILDCARDMASK: { type: 'string' },
-    OSPF_AREA_NUMBER: { type: 'string'},
+    DOMAINNAME_INPUT: { type: 'string' },    
+    DESCRIPTION_INPUT: { type: 'string' },
+    USERNAME_PASSWORD_INPUT: { type: 'string' },
+    USERNAME_INPUT: { type: 'string' },
+    HOSTNAME_INPUT: { type: 'string' },
+    ACL_NAME: { type: 'string' },
+
+    // Zahleneingaben
+    IP: { type: 'number' },
+    SUBNETMASK: { type: 'number' },
+    WILDCARDMASK: { type: 'number' },
+    ROUTER_ID: { type: 'number' },
     
-    // zukünftig
     OSPF_PROCESS_NUMBER: { type: 'number'},
+    OSPF_AREA_NUMBER: { type: 'number' },
+    OSPF_PASSIVE_INTERFACE_NUMBER: { type: 'number' },
+    OSPF_COST_NUMBER: { type: 'number' },
+    OSPF_PRIORITY_NUMBER: { type: 'number' },
+
+    VERSION_INPUT: { type: 'number' },
+    PRIVILEGE_INPUT: { type: 'number' },
+    MODULUS_INPUT: { type: 'number' },
+
+    INTERFACE_NUMBER_INPUT: { type: 'number' },
+    NAT_INTERFACE_NUMBER_INPUT: { type: 'number' },
+
+    ACL_PORT_NUMBER: { type: 'number' },
+    ACL_STATEMENT_NUMBER: { type: 'number' },
+    ACL_NUMBER: { type: 'number' },
+
+    CONSOLE_NUMBER: { type: 'number' },
+    VTY_NUMBER: { type: 'number' },
+    Line_ExecTimeoutValue: { type: 'number' },
+    INTERFACE_SPEED_NUMBER: { type: 'number' },
+    INTERFACE_CARRIER_DELAY_NUMBER: { type: 'number' },
+    INTERFACE_VLAN_NUMBER: { type: 'number' },
+    
+    RIP_VERSION_NUMBER: { type: 'number' },
+    RIP_PASSIVE_INTERFACE_NUMBER: { type: 'number' },
+    BGP_EBGP_MULTIHOP_NUMBER: { type: 'number' },
+    BGP_AS_NUMBER: { type: 'number' },
+    UPDATE_SOURCE_INTERFACE_NUMBER_INPUT: { type: 'number' },
 };
 
 export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider {
@@ -37,16 +62,6 @@ export class CiscoIosSemanticTokenProvider extends AbstractSemanticTokenProvider
      * @returns 
      */
     protected override highlightElement(node: AstNode, acceptor: SemanticTokenAcceptor): void {
-        // Highlights interface types like 'gigabitethernet'
-        if (isInterface_types(node)) {
-            acceptor({
-                node,
-                property: 'type',
-                type: 'variable',
-            })
-            return
-        }
-        
         // Highlights comments written after commands
         if (isCOMMON(node)) {
             if (node.$type == "COMMENTLINE" && node.$cstNode) {

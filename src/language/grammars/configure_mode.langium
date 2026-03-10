@@ -7,7 +7,7 @@ import 'enable_mode'
 //child Modes
 import 'interface_mode'
 import 'line_mode'
-import 'con_mode'
+import 'console_mode'
 import 'vty_mode'
 import 'interface_fastethernet_mode'
 import 'interface_gigabitethernet_mode'
@@ -15,27 +15,32 @@ import 'interface_vlan_mode'
 import 'ospf_mode'
 import 'rip_mode'
 import 'bgp_mode'
+import 'acl_mode'
+import 'templates'
 
 //------EXIT: CONFIGURE → ENABLE-------
-Exit_configure infers Exit:
-    Exit lines+=Enable_cmds+
+Exit_configure:
+    command='exit' CR continuation+=Enable_cmds
     ;
 
 //------CONFIGURE MODE: ENTRY-------
 Configure_cmds:
-    (
+    lines+=(
         COMMON
         | Hostname_cmd
         | Interface_cmd
         | Username_cmd
         | Banner_cmd
+        | Ip_nat_cmd
         | IP_cmd
         | Crypto_cmd
         | Line_cmd
         | Router_cmd
-        | Exit_configure
         | No_cmd
-    )
+        | Template_ospf_cmd
+        | Template_rip_cmd
+        | Template_interface_cmd
+    )* Exit_configure
     ;
 
 //------USERNAME-------
@@ -111,6 +116,7 @@ IP_cmd:
 IP_cmd_option:
     Domainname_cmd
     | SSH_cmd
+    | Ip_access_list_cmd_option
     ;
 
 Domainname_cmd:
@@ -218,9 +224,9 @@ Router_cmd:
     ;
 
 Router_cmd_option:
-    Ospf_cmd
-    | Rip_cmd
-    | Bgp_cmd
+    'ospf' process=OSPF_PROCESS_NUMBER CR Ospf_cmds
+    | 'rip' CR Rip_cmds
+    | 'bgp' asn=BGP_AS_NUMBER CR Bgp_cmds
     ;
 
 
@@ -235,11 +241,11 @@ Line_types:
     ;
 
 Line_type_console:
-    type='console' number=INT CR lines+=Line_console_cmds+
+    type='console' number=CONSOLE_NUMBER CR Line_console_cmds
     ;
 
 Line_type_vty:
-    type='vty' start=INT end=INT CR lines+=Line_vty_cmds+
+    type='vty' start=VTY_NUMBER end=VTY_NUMBER CR Line_vty_cmds
     ;
 
 //------INTERFACE MODE-------
@@ -253,19 +259,61 @@ Interface_types:
     ;
 
 Interface_type_gigabitethernet:
-    type='gigabitethernet' number=Interface_number CR lines+=Interface_gigabitethernet_cmds+;
+    type='gigabitethernet' number=INTERFACE_NUMBER_INPUT CR Interface_gigabitethernet_cmds;
 
 Interface_type_fastethernet:
-    type='fastethernet' number=Interface_number CR lines+=Interface_fastethernet_cmds+;
+    type='fastethernet' number=INTERFACE_NUMBER_INPUT CR Interface_fastethernet_cmds;
 
 Interface_type_vlan:
-    type='vlan' number=INT CR lines+=Interface_vlan_cmds+;
+    type='vlan' number=INTERFACE_VLAN_NUMBER CR Interface_vlan_cmds;
 
-
-Interface_number:
-     number= INT '/' INT Sub_Interface_number?
+Ip_access_list_cmd_option:
+    'access-list' option=Ip_access_list_option
     ;
 
-Sub_Interface_number :
-    sub = '.'INT
+Ip_access_list_option:
+      Acl_standard_cmd
+    | Acl_extended_cmd
+    ;
+
+//------IP NAT INSIDE SOURCE LIST-------
+Ip_nat_cmd:
+    'ip' option=Ip_nat_cmd_option
+    ;
+
+Ip_nat_cmd_option:
+    'nat' option=Ip_nat_inside_cmd
+    ;
+
+Ip_nat_inside_cmd:
+    'inside' option=Ip_nat_inside_source_cmd
+    ;
+
+Ip_nat_inside_source_cmd:
+    'source' option=Ip_nat_inside_source_list_cmd
+    ;
+
+Ip_nat_inside_source_list_cmd:
+    'list' listName=ACL_NAME option=Ip_nat_inside_source_list_interface_cmd
+    ;
+
+Ip_nat_inside_source_list_interface_cmd:
+    'interface' interface=Nat_interface_types option=Ip_nat_overload_cmd
+    ;
+
+Ip_nat_overload_cmd:
+    'overload' CR
+    ;
+
+Nat_interface_types:
+      Nat_interface_gigabitethernet
+    | Nat_interface_fastethernet
+    ;
+
+Nat_interface_gigabitethernet:
+    'gigabitethernet' types=NAT_INTERFACE_NUMBER_INPUT
+    ;
+
+Nat_interface_fastethernet:
+    'fastethernet' types=NAT_INTERFACE_NUMBER_INPUT
     ;

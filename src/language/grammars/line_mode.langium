@@ -1,11 +1,6 @@
 import 'common'
 import 'configure_mode'
 
-// Exit zurück in Configure-Mode
-Exit_line infers Exit:
-    Exit lines+=Configure_cmds+
-    ;
-
 // ---- Gemeinsame Subcommands (Console & VTY) ----
 
 // login
@@ -28,7 +23,7 @@ Line_LoggingOption:
 
 // exec-timeout
 ExecTimeout_cmd:
-    'exec-timeout' Line_ExecTimeoutValue
+    'exec-timeout' exectimeoutvalue=Line_ExecTimeoutValue
     ;
 
 Line_ExecTimeoutValue:
