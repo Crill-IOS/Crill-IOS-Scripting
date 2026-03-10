@@ -10,7 +10,10 @@ import { commandDetails, commandTokenDefaults } from "./details/commandDetails.j
 type TokenDefaults = Record<string, string>;
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
-
+    override readonly completionOptions = {
+        triggerCharacters: ['/']
+    };
+    
     private currentDefaults: TokenDefaults = {};
 
     constructor(private readonly services: CiscoIosServices) {
