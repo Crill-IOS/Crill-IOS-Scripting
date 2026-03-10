@@ -1,24 +1,17 @@
 import { AstNode, LangiumDocument, MaybePromise } from "langium";
 import { CompletionAcceptor, CompletionContext, DefaultCompletionProvider, NextFeature } from "langium/lsp";
-import { CompletionParams, CancellationToken, CompletionList, CompletionItem } from "vscode-languageserver";
+import { CompletionParams, CancellationToken, CompletionList, CompletionItem, Range, TextEdit } from "vscode-languageserver";
 import * as ast from "../../node_modules/langium/lib/languages/generated/ast.js";
 import { CiscoIosServices } from "./cisco-ios-module.js";
-import details from "./details/Command_Details.json";
 import { CompletionItemKind } from "vscode-languageserver-types";
+import { commandDetails, commandTokenDefaults } from "./details/commandDetails.js";
 
 
-/**
- * Object type to store completion Info from:
- * "/src/language/details/Command_Details.json"
- */
-interface CompletionInfo {
-    label: string;
-    description: string;
-    insert: string;
-    kind: number;
-}
+type TokenDefaults = Record<string, string>;
 
 export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
+
+    private currentDefaults: TokenDefaults = {};
 
     constructor(private readonly services: CiscoIosServices) {
         super(services);
@@ -44,17 +37,22 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         // Handles giving no Completion for Comments
         if (this.isCursorInComment(document, params)) return CompletionList.create([], true)
 
+        // Read user settings once per request and apply default substitutions
+        const defaults = await this.getTokenDefaults();
+        this.currentDefaults = defaults;
+
         // acceptor creates and saves completion items from a given context
         // and stores it in the "completions" array
         const acceptor: CompletionAcceptor = (context, value) => {
-            const completionItem = this.fillCompletionItem(context, value);
+            const resolved = value.insertText
+                ? { ...value, insertText: this.applyDefaults(value.insertText, defaults) }
+                : value;
+            const completionItem = this.fillCompletionItem(context, resolved as typeof value);
             if (completionItem) {
+                this.applyTemplateReplacement(document, params, completionItem);
                 completions.push(completionItem);
             }
         };
-
-        // for debugging
-        //console.log("-----------------------------------------------");
         
         //requests completion for every feature in every context
         for (const context of contexts) {
@@ -77,21 +75,20 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
      * @returns nothing (could return a maybepromise)
      */
     override completionFor(context: CompletionContext, next: NextFeature, acceptor: CompletionAcceptor): MaybePromise<void> {
-        console.log(next);
-        let detail: CompletionInfo;
-
-
-        detail = details[next.type as keyof typeof details];
+        const detail = next.type ? commandDetails[next.type] : undefined;
         //if details exist for "next.type" create 
         // a completion item with the details
         if (detail) {
+            const insertText = (next.type && this.currentDefaults[next.type] !== undefined)
+                ? this.currentDefaults[next.type]
+                : detail.insert;
             acceptor(context, {
                 label: detail.label,
                 kind: detail.kind as CompletionItemKind,
                 detail: detail.description,
                 sortText: "1",
                 insertTextFormat: 2,
-                insertText: detail.insert
+                insertText
             })
             //if no details were found use fallback instead
         } else if (ast.isKeyword(next.feature) && next.type!= "KEYWORDS" ) {
@@ -145,6 +142,64 @@ export class CiscoIosCompletionProvider extends DefaultCompletionProvider {
         }
 
         return false
+    }
+
+    /**
+     * Reads token overrides from VS Code (Crill-IOS.defaults) and merges them
+     * over the defaults declared in Command_Details.json.
+     */
+    private async getTokenDefaults(): Promise<TokenDefaults> {
+        try {
+            const cfg = await this.services.shared.workspace.ConfigurationProvider
+                .getConfiguration('Crill-IOS', 'defaults') as Record<string, unknown> | undefined;
+            const defaults = { ...commandTokenDefaults };
+            if (cfg) {
+                for (const [key, value] of Object.entries(cfg)) {
+                    if (typeof value === 'string') {
+                        defaults[key] = value;
+                    }
+                }
+            }
+            return defaults;
+        } catch {
+            return { ...commandTokenDefaults };
+        }
+    }
+
+    /**
+     * Replaces placeholder tokens in an insert text with the user's configured defaults.
+     */
+    private applyDefaults(insertText: string, defaults: TokenDefaults): string {
+        return insertText.replace(/__([A-Za-z0-9_]+)__/g, (match, tokenName: string) => {
+            return defaults[tokenName] ?? match;
+        });
+    }
+
+    private applyTemplateReplacement(document: LangiumDocument, params: CompletionParams, item: CompletionItem): void {
+        if (typeof item.label !== 'string' || !item.label.startsWith('/') || !item.insertText) {
+            return;
+        }
+
+        const text = document.textDocument.getText();
+        const offset = document.textDocument.offsetAt(params.position);
+        let start = offset;
+        while (start > 0 && !/\s/.test(text[start - 1])) {
+            start--;
+        }
+
+        if (text[start] !== '/') {
+            return;
+        }
+
+        let end = offset;
+        while (end < text.length && !/\s/.test(text[end])) {
+            end++;
+        }
+
+        item.textEdit = TextEdit.replace(Range.create(
+            document.textDocument.positionAt(start),
+            document.textDocument.positionAt(end)
+        ), item.insertText);
     }
 
     /**

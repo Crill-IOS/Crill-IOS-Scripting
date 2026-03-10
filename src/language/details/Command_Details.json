@@ -8,7 +8,7 @@
     "IP": {
         "label":"IP-Address",
         "description": "A.B.C.D",
-        "insert": "1.2.3.4",
+        "insert": "192.168.1.1",
         "kind": 12
     },
     "SUBNETMASK": {
@@ -27,7 +27,7 @@
     "HOSTNAME_INPUT":{
         "label":"<hostname>",
         "description": "Set the hostname for this device",
-        "insert": "R1",
+        "insert": "Router",
         "kind": 1
     },
     "Ip_cmd_option_address": {
@@ -51,7 +51,7 @@
     "INTERFACE_NUMBER_INPUT": {
         "label": "Interface Number",
         "description": "X/Y(.Vlan)",
-        "insert": "${1:0}/${2:0}\nip address 192.168.1.0 255.255.255.0\nno shutdown\nexit\n$0",
+        "insert": "${1:0}/${2:0}",
         "kind": 15
     },
     "UPDATE_SOURCE_INTERFACE_NUMBER_INPUT": {
@@ -123,7 +123,7 @@
      "OSPF_PROCESS_NUMBER":{
         "label":"OSPF_PROCESS_NUMBER",
         "description": "Area number",
-        "insert": "${1:10}\nnetwork 192.168.1.0 0.0.0.255 area 10\nexit\n$0",
+        "insert": "${1:10}",
         "kind": 15
     },
     "RIP_PASSIVE_INTERFACE_NUMBER":{
@@ -304,7 +304,7 @@
     "USERNAME_PASSWORD_INPUT": {
         "label": "<password>",
         "description": "Password for username",
-        "insert": "password123",
+        "insert": "Cisco123!",
         "kind": 1
     },
     "PRIVILEGE_INPUT": {
@@ -806,6 +806,12 @@
         "insert": "router-id",
         "kind": 10
     },
+    "ROUTER_ID": {
+        "label": "Router-ID",
+        "description": "A.B.C.D – eindeutige ID des Routers im OSPF-Prozess",
+        "insert": "1.1.1.1",
+        "kind": 12
+    },
     "Ospf_network_cmd": {
         "label": "network",
         "description": "Advertise network in OSPF",
@@ -957,5 +963,29 @@
         "description": "IP configuration",
         "insert": "ip",
         "kind": 10
+    },
+    "Template_ospf_cmd": {
+        "label": "/ospf",
+        "description": "Fügt eine OSPF-Konfigurationsvorlage ein",
+        "insert": "router ospf ${1:1}\n router-id ${2:1.1.1.1}\n network ${3:__IP__} ${4:__WILDCARDMASK__} area ${5:0}\n passive-interface gigabitethernet ${6:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_rip_cmd": {
+        "label": "/rip",
+        "description": "Fügt eine RIP-Konfigurationsvorlage ein",
+        "insert": "router rip\n version 2\n network ${1:__IP__}\n no auto-summary\n passive-interface gigabitethernet ${2:0/0}\n default-information originate\nexit\n$0",
+        "kind": 15
+    },
+    "Template_grundkonfig_cmd": {
+        "label": "/grundkonfiguration",
+        "description": "Fügt eine Grundkonfigurationsvorlage ein",
+        "insert": "configure terminal\nhostname ${1:__HOSTNAME_INPUT__}\nno ip domain-lookup\nip domain-name ${2:__DOMAINNAME_INPUT__}\nusername ${3:__USERNAME_INPUT__} algorithm-type scrypt secret ${4:__USERNAME_PASSWORD_INPUT__}\nusername ${3:__USERNAME_INPUT__} privilege 15\ncrypto key generate rsa usage-keys modulus 1024\nip ssh version 2\nline console 0\n login local\n logging synchronous\n exec-timeout 0 0\nexit\nline vty 0 4\n login local\n logging synchronous\n exec-timeout 0 0\n transport input ssh\nexit\n$0",
+        "kind": 15
+    },
+    "Template_interface_cmd": {
+        "label": "/interface",
+        "description": "Fügt eine Interface-Konfigurationsvorlage ein",
+        "insert": "interface gigabitethernet ${1:0/0}\n description ${2:Uplink}\n ip address ${3:__IP__} ${4:__SUBNETMASK__}\n no shutdown\nexit\n$0",
+        "kind": 15
     }
 }

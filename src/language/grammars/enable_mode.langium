@@ -10,6 +10,7 @@ Enable_cmds :
         |Configure_cmd
         |Show_cmd
         |Ping_cmd
+        |Template_grundkonfig_cmd
     )+;
 
 Ping_cmd:
@@ -41,3 +42,4 @@ Configure_cmd_options:
         'terminal' CR Configure_cmds
         |'memory' CR
     ;
+
