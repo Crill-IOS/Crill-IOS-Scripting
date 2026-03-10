@@ -2,7 +2,7 @@
     "name": "crill-ios-scripting",
     "description": "Cisco IOS scripting the easy way",
     "icon": "./logo_small.png",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "files": [
         "out/extension/main.cjs",
         "out/language/main.cjs",
